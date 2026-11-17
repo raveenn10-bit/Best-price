@@ -43,12 +43,51 @@ export interface HeroSlide {
   ctaCategory: string;
   desktopImage: string;
   mobileImage: string;
+  theme?: string;
+}
+
+export interface Brand {
+  id: string;
+  name: string;
+  category: string;
+  tag: string;
+}
+
+export interface PromoBanner {
+  id: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  category: string;
+  image: string;
+}
+
+export interface SampleReview {
+  id: string;
+  tag: string;
+  customer: string;
+  product: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export interface Faq {
+  q: string;
+  a: string;
 }
 
 export interface CartItem {
   productId: string;
   qty: number;
   variation: string;
+}
+
+export interface DemoUser {
+  name: string;
+  email: string;
+  phone?: string;
 }
 
 export interface DemoOrder {

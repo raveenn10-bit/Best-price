@@ -1,12 +1,21 @@
 import React from "react";
+import { notFound } from "next/navigation";
+import { PRODUCTS } from "@/data/storeData";
+import { ProductDetails } from "@/components/ProductDetails";
 
-export default function ProductDetailsPage() {
-  return (
-    <main className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900">Product Details</h1>
-      <p className="text-sm text-slate-600 mt-2">
-        BestPrices.lk Phase 01 Frontend Route — Ready for Firebase & Admin Dashboard integration in Phase 02.
-      </p>
-    </main>
-  );
+export function generateStaticParams() {
+  return PRODUCTS.map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const product = PRODUCTS.find((p) => p.id === id);
+  return { title: product ? `${product.name} | BestPrices.lk` : "Product Not Found | BestPrices.lk" };
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const product = PRODUCTS.find((p) => p.id === id);
+  if (!product) notFound();
+  return <ProductDetails product={product} />;
 }

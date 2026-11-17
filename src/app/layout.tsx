@@ -1,10 +1,14 @@
 import React from "react";
+import type { Metadata } from "next";
 import { StoreProvider } from "@/context/StoreContext";
+import { SiteShell } from "@/components/SiteShell";
 import "./globals.css";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "BestPrices.lk | Sri Lanka's Premier Electronics & Home Appliances Storefront",
-  description: "Phase 01 Frontend E-Commerce Storefront for BestPrices.lk — Developed by Harsh Apex Digital Solutions",
+  description:
+    "Genuine electronics, smart home appliances and kitchen essentials at transparent LKR prices with islandwide delivery across Sri Lanka.",
+  icons: { icon: "/assets/logo/BestPrices-logo.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -18,8 +22,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-white text-slate-900 antialiased">
-        <StoreProvider>{children}</StoreProvider>
+      <body className="bg-white text-slate-900 antialiased pb-20 lg:pb-0">
+        <StoreProvider>
+          <SiteShell>{children}</SiteShell>
+        </StoreProvider>
       </body>
     </html>
   );

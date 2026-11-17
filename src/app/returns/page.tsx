@@ -1,12 +1,14 @@
 import React from "react";
+import { PolicyPage } from "@/components/PolicyPage";
 
-export default function ReturnsPolicyPage() {
-  return (
-    <main className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900">Return & Refund Policy</h1>
-      <p className="text-sm text-slate-600 mt-2">
-        BestPrices.lk Phase 01 Frontend Route — Ready for Firebase & Admin Dashboard integration in Phase 02.
-      </p>
-    </main>
-  );
+export const metadata = { title: "Return & Refund Policy | BestPrices.lk" };
+
+const BULLETS = [
+  "7-Day Return Window: Eligible unopened or manufacturing-defective items may be returned within 7 calendar days of delivery with original packaging and invoice.",
+  "Inspection & Replacement: Appliances and electronics undergo technical verification prior to replacement or LKR refund issuance.",
+  "Non-Returnable Items: Opened personal care items, software codes, and physical damage caused by power surges are excluded."
+];
+
+export default function Page() {
+  return <PolicyPage title="Return & Refund Policy" bullets={BULLETS} />;
 }

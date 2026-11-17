@@ -1,12 +1,14 @@
 import React from "react";
+import { PolicyPage } from "@/components/PolicyPage";
 
-export default function DeliveryPolicyPage() {
-  return (
-    <main className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900">Delivery Policy</h1>
-      <p className="text-sm text-slate-600 mt-2">
-        BestPrices.lk Phase 01 Frontend Route — Ready for Firebase & Admin Dashboard integration in Phase 02.
-      </p>
-    </main>
-  );
+export const metadata = { title: "Delivery Policy | BestPrices.lk" };
+
+const BULLETS = [
+  "Colombo & Suburbs Express: 1 to 2 working days (Standard fee Rs. 650, or FREE on orders above Rs. 50,000).",
+  "Islandwide Outstation Delivery: 2 to 4 working days across all 25 Sri Lankan districts (Standard fee Rs. 1,250, or FREE on orders above Rs. 50,000).",
+  "Open-Box Inspection: Customers may verify external physical condition upon delivery before signing the courier receipt."
+];
+
+export default function Page() {
+  return <PolicyPage title="Delivery Policy" bullets={BULLETS} />;
 }
