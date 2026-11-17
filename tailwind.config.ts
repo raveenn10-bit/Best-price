@@ -14,6 +14,7 @@ const config: Config = {
           darkRed: "#BE123C",
           black: "#0F172A",
           charcoal: "#1E293B",
+          lightRed: "#FFF1F2",
         },
       },
       fontFamily: {

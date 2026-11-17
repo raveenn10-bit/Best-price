@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #FFFFFF;
+      color: #0F172A;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Hide scrollbars on horizontal carousels while keeping scroll functionality */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+    .product-card {
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -12px rgba(15, 23, 42, 0.12);
+      border-color: #FDA4AF;
+    }
+    .zoom-container {
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .zoom-container img {
+      transition: transform 0.35s ease-out;
+    }
+    .zoom-container:hover img {
+      transform: scale(1.18);
+    }
+  
