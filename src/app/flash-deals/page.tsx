@@ -14,7 +14,7 @@ export default function FlashDealsPage() {
     [secs, "Secs"],
   ];
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8 space-y-8">
       <div className="rounded-3xl bg-slate-950 text-white p-6 sm:p-10 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2">
           <span className="inline-flex items-center gap-1.5 bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full">

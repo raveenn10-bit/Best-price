@@ -22,7 +22,6 @@ export default function AuthPage() {
       <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-lg space-y-6">
         <div className="text-center space-y-2">
           <img src={LOGO_SRC} alt="BestPrices.lk" className="h-10 mx-auto object-contain" />
-          <span className="inline-block bg-rose-50 text-rose-600 text-[11px] font-bold px-3 py-0.5 rounded-full">Phase 01 Demo Authentication</span>
           <h1 className="font-display font-extrabold text-2xl text-slate-900">{tab === "login" ? "Welcome Back" : "Create Your Account"}</h1>
         </div>
 
@@ -76,7 +75,7 @@ export default function AuthPage() {
           <button type="submit" className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl text-sm transition">
             {tab === "login" ? "Sign In" : "Create Account"}
           </button>
-          <p className="text-[11px] text-center text-slate-400">Demo mode: details stay in this browser only. Real accounts arrive in Phase 02.</p>
+          <p className="text-[11px] text-center text-slate-400">Your account details are saved on this device.</p>
         </form>
       </div>
     </div>

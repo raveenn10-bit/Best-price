@@ -3,7 +3,7 @@ import { Brand, Category, Faq, HeroSlide, Product, PromoBanner, SampleReview } f
 /**
  * FUTURE BACKEND PREPARATION (Firebase & Admin Dashboard Ready)
  * All business settings, categories, banners, products, sample reviews, and policies
- * are isolated in this single data layer so Phase 02 Admin Dashboard integration
+ * are isolated in this single data layer so a future Admin Dashboard integration
  * can replace or sync these collections without modifying UI components.
  */
 
@@ -29,7 +29,7 @@ export const BUSINESS_SETTINGS = {
 export const HERO_SLIDES: HeroSlide[] = [
   {
     "id": "slide-1",
-    "badge": "MEGA TECH RUSH • PHASE 01 DEMO",
+    "badge": "MEGA TECH RUSH",
     "title": "Next-Gen Flagship Tech at Sri Lanka's Best Prices",
     "subtitle": "Save up to Rs. 60,000 on 5G Smartphones, Creator OLED Laptops, and ANC Audio with Islandwide Express Delivery.",
     "priceCallout": "Starting from Rs. 24,990",
@@ -261,7 +261,7 @@ export const PRODUCTS: Product[] = [
       "Camera": "200MP Main OIS + 50MP 5x Periscope + 12MP Ultra-Wide",
       "Battery & Charging": "5000mAh with 45W Fast Wired & 15W Wireless",
       "Connectivity": "Dual 5G, Wi-Fi 7, Bluetooth 5.4, NFC",
-      "Warranty Notice": "Sample 1-Year Demo Warranty Policy (Verify on Live Launch)"
+      "Warranty Notice": "1-Year Warranty (confirm terms with our team)"
     }
   },
   {
@@ -705,37 +705,37 @@ export const PRODUCTS: Product[] = [
 export const SAMPLE_REVIEWS: SampleReview[] = [
   {
     "id": "rev-1",
-    "tag": "SAMPLE DEMO REVIEW — UI PLACEHOLDER",
-    "customer": "Sample Customer Profile (Colombo 05)",
+    "tag": "SAMPLE REVIEW",
+    "customer": "Sample Customer (Colombo)",
     "product": "5.5L Digital Touch Smart Air Fryer XL",
     "rating": 5,
-    "comment": "This card demonstrates how verified buyer reviews from the future Firebase backend will appear on BestPrices.lk, complete with product tags and delivery speed feedback.",
-    "date": "Sample Entry • Phase 01 UI"
+    "comment": "Placeholder review. Verified customer reviews will appear here once orders start coming in.",
+    "date": "Sample review"
   },
   {
     "id": "rev-2",
-    "tag": "SAMPLE DEMO REVIEW — UI PLACEHOLDER",
-    "customer": "Sample Customer Profile (Galle)",
+    "tag": "SAMPLE REVIEW",
+    "customer": "Sample Customer (Galle)",
     "product": "55\" 4K QLED Smart Google TV",
     "rating": 5,
-    "comment": "Sample testimonial layout illustrating multi-line typography, star badges, and verified purchase indicators. Real customer reviews will populate automatically in Phase 02.",
-    "date": "Sample Entry • Phase 01 UI"
+    "comment": "Placeholder review. Verified customer reviews will appear here once orders start coming in.",
+    "date": "Sample review"
   },
   {
     "id": "rev-3",
-    "tag": "SAMPLE DEMO REVIEW — UI PLACEHOLDER",
-    "customer": "Sample Customer Profile (Kandy)",
+    "tag": "SAMPLE REVIEW",
+    "customer": "Sample Customer (Kandy)",
     "product": "Titanium Pro Max 5G Smartphone",
     "rating": 5,
-    "comment": "Designed with clean card spacing and zero fabricated claims. The Admin Dashboard in Phase 02 will allow moderation of real customer feedback here.",
-    "date": "Sample Entry • Phase 01 UI"
+    "comment": "Placeholder review. Verified customer reviews will appear here once orders start coming in.",
+    "date": "Sample review"
   }
 ];
 
 export const FAQS: Faq[] = [
   {
-    "q": "Is this website processing real payments right now?",
-    "a": "No. This is the Phase 01 Customer-Facing Frontend Demonstration built by Harsh Apex Digital Solutions for BestPrices.lk. All orders, cart actions, and authentication screens operate in safe Demo Mode using local browser state."
+    "q": "Do I have to pay online?",
+    "a": "No. You can choose Cash on Delivery at checkout and pay in LKR when your order arrives. Our team calls to confirm every order before dispatch."
   },
   {
     "q": "How does islandwide delivery work across Sri Lanka?",
@@ -743,11 +743,11 @@ export const FAQS: Faq[] = [
   },
   {
     "q": "What payment methods are supported on the checkout screen?",
-    "a": "The Checkout UI demonstrates three payment workflows: Online Card / Installment UI (Visa, MasterCard, KOKO/MintPay layout preview), Cash on Delivery (LKR), and Direct Bank Transfer."
+    "a": "Cash on Delivery (LKR) and Direct Bank Transfer are available today. Online card and KOKO / MintPay installment payments are coming soon."
   },
   {
-    "q": "How will products, prices, and banners be updated later?",
-    "a": "All products, categories, promotional banners, flash deals, and business settings are isolated in a structured data layer so Firebase and the Admin Dashboard can be connected in Phase 02 without changing the UI components."
+    "q": "How do I check stock or ask about a product?",
+    "a": "Tap the WhatsApp button on any product page or call our hotline. We confirm stock, delivery dates and warranty details before you order."
   }
 ];
 

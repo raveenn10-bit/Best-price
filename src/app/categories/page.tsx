@@ -8,7 +8,7 @@ export const metadata = { title: "All Categories | BestPrices.lk" };
 
 export default function CategoriesPage() {
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8 space-y-8">
       <div>
         <span className="text-xs font-extrabold uppercase tracking-wider text-rose-600">All Departments</span>
         <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-1">Browse by Product Category</h1>

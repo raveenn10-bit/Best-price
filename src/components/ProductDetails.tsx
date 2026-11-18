@@ -31,7 +31,7 @@ export function ProductDetails({ product }: { product: Product }) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 pb-28">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8 pb-28">
       <div className="flex items-center gap-2 text-xs text-slate-500 mb-6 overflow-x-auto no-scrollbar">
         <Link href="/" className="hover:text-rose-600 shrink-0">
           Home
@@ -87,7 +87,7 @@ export function ProductDetails({ product }: { product: Product }) {
           <div className="flex items-center gap-2 text-xs text-slate-500">
             <span className="text-amber-400">★★★★★</span>
             <span className="font-semibold text-slate-700">{product.rating}</span>
-            <span>({product.reviewCount} sample ratings) • {product.soldCount} sold</span>
+            <span>({product.reviewCount} ratings) • {product.soldCount} sold</span>
           </div>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{product.shortDesc}</p>
 
@@ -98,7 +98,7 @@ export function ProductDetails({ product }: { product: Product }) {
               <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full tabular-nums">Save {formatLKR(savings)}</span>
             </div>
             <p className="text-xs text-slate-500 tabular-nums">
-              Or 3x Monthly Demo Installments of <strong>{formatLKR(Math.round(product.discountPrice / 3))}</strong> (UI Preview Only)
+              Or 3 monthly installments of <strong>{formatLKR(Math.round(product.discountPrice / 3))}</strong>
             </p>
           </div>
 
@@ -200,7 +200,7 @@ export function ProductDetails({ product }: { product: Product }) {
         </div>
 
         <div className="lg:col-span-5 bg-slate-50 rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-4 h-fit">
-          <h2 className="font-display font-extrabold text-lg text-slate-900">Delivery & Demo Guarantee</h2>
+          <h2 className="font-display font-extrabold text-lg text-slate-900">Delivery & Guarantee</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-slate-600">
             <li className="flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
@@ -217,7 +217,7 @@ export function ProductDetails({ product }: { product: Product }) {
             <li className="flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <span>
-                <strong>Phase 01 Notice:</strong> Product specifications and warranty badges are structured for client catalog population.
+                <strong>Genuine Products:</strong> Brand-new stock with warranty details confirmed at the time of order.
               </span>
             </li>
           </ul>

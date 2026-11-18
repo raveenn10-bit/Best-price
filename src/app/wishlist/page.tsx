@@ -13,11 +13,11 @@ export default function WishlistPage() {
   const items = hydrated ? wishlist.map(getProductById) : [];
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-6">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8 space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
           <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Saved Wishlist ({items.length})</h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">Saved in this browser for your demo session.</p>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">Your saved products on this device.</p>
         </div>
         {items.length > 0 && (
           <button

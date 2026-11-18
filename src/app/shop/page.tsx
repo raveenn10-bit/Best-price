@@ -5,7 +5,7 @@ export const metadata = { title: "Shop All Products | BestPrices.lk" };
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="max-w-7xl mx-auto px-4 py-16 text-sm text-slate-500">Loading catalog…</div>}>
+    <Suspense fallback={<div className="w-full px-4 sm:px-6 lg:px-10 py-16 text-sm text-slate-500">Loading catalog…</div>}>
       <Catalog />
     </Suspense>
   );

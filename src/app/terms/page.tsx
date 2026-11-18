@@ -5,7 +5,7 @@ export const metadata = { title: "Terms & Conditions | BestPrices.lk" };
 
 const BULLETS = [
   "All product prices on BestPrices.lk are displayed in Sri Lankan Rupees (LKR) inclusive of applicable taxes unless stated otherwise.",
-  "Flash Deal quantities are subject to stock availability; demo stock meters illustrate real-time inventory reservation behavior.",
+  "Flash Deal quantities are subject to stock availability; stock meters show approximate remaining quantities.",
   "Storefront UI, layout, and custom frontend architecture are developed by Harsh Apex Digital Solutions for BestPrices.lk."
 ];
 

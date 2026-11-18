@@ -10,7 +10,7 @@ export default function AccountPage() {
   const router = useRouter();
   const { user, orders, hydrated, signOut, setTrackedOrderId } = useStore();
 
-  if (!hydrated) return <div className="max-w-7xl mx-auto px-4 py-16 text-sm text-slate-500">Loading account…</div>;
+  if (!hydrated) return <div className="w-full px-4 sm:px-6 lg:px-10 py-16 text-sm text-slate-500">Loading account…</div>;
 
   if (!user) {
     return (
@@ -28,7 +28,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8 space-y-8">
       <div className="bg-slate-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4 min-w-0">
           <div className="w-14 h-14 rounded-2xl bg-rose-600 flex items-center justify-center font-display font-extrabold text-xl shrink-0">

@@ -14,10 +14,9 @@ export default function AboutPage() {
           electronics, home appliances, kitchen essentials, and smart wearables in LKR.
         </p>
         <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs sm:text-sm text-slate-700">
-          <p className="font-display font-bold text-slate-900">Phase 01 Architecture — Developed by {BUSINESS_SETTINGS.developer}</p>
+          <p className="font-display font-bold text-slate-900">Designed & Developed by {BUSINESS_SETTINGS.developer}</p>
           <p>
-            Built with a modular component architecture and isolated data stores so Firebase, live inventory sync, and the Admin Dashboard can be
-            connected seamlessly in Phase 02 without modifying UI components.
+            A fast, mobile-first storefront built to make comparing and buying electronics and home appliances in Sri Lanka simple and transparent.
           </p>
         </div>
       </div>

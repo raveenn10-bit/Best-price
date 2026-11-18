@@ -11,7 +11,6 @@ import {
   HelpCircle,
   Home,
   Info,
-  LayoutGrid,
   MapPin,
   Menu,
   MessageCircle,
@@ -27,22 +26,22 @@ import {
 } from "lucide-react";
 import { BUSINESS_SETTINGS, CATEGORIES, LOGO_SRC, PRODUCTS, formatLKR, getProductById } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
-import { PAGES_REGISTRY, isActivePath, searchHref, shopHref } from "@/lib/routes";
+import { PAGES_REGISTRY, searchHref, shopHref } from "@/lib/routes";
 
 /* -------------------------------------------------------------------------- */
-/* Announcement bar + 19-page demo navigator                                  */
+/* Announcement bar                                                           */
 /* -------------------------------------------------------------------------- */
-function AnnouncementBar({ onToggleNavigator }: { onToggleNavigator: () => void }) {
+function AnnouncementBar() {
   return (
     <div className="bg-slate-950 text-white text-xs border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
+      <div className="w-full px-4 sm:px-6 lg:px-10 py-2 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
           <span className="inline-flex items-center gap-1.5 bg-rose-600 text-white font-semibold px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider shrink-0">
-            <Flame className="w-3.5 h-3.5" /> Phase 01 Demo
+            <Flame className="w-3.5 h-3.5" /> Hot Deals
           </span>
           <span className="text-slate-200 font-medium truncate">
             Islandwide Delivery Across Sri Lanka • Up to 44% OFF Flash Deals • Use Code{" "}
-            <strong className="text-rose-400">{BUSINESS_SETTINGS.demoPromoCode}</strong> for 10% Extra Demo Discount
+            <strong className="text-rose-400">{BUSINESS_SETTINGS.demoPromoCode}</strong> for 10% Extra Discount
           </span>
         </div>
         <div className="hidden md:flex items-center gap-4 text-slate-300 shrink-0">
@@ -53,51 +52,6 @@ function AnnouncementBar({ onToggleNavigator }: { onToggleNavigator: () => void 
           <Link href="/faq" className="hover:text-white flex items-center gap-1 transition">
             <HelpCircle className="w-3.5 h-3.5 text-rose-500" /> Help & FAQ
           </Link>
-          <span className="text-slate-700">|</span>
-          <button
-            type="button"
-            onClick={onToggleNavigator}
-            className="bg-slate-800 hover:bg-rose-600 text-white px-2.5 py-1 rounded-md font-medium flex items-center gap-1.5 transition"
-          >
-            <LayoutGrid className="w-3.5 h-3.5" /> All 19 Pages
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DemoNavigator({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const pathname = usePathname();
-  if (!open) return null;
-  return (
-    <div className="bg-slate-900 text-white border-b border-slate-800 shadow-inner">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Client Presentation Mode — Instant 19-Page Switcher ({BUSINESS_SETTINGS.developer})
-            </span>
-          </div>
-          <button type="button" onClick={onClose} className="text-slate-400 hover:text-white text-xs flex items-center gap-1">
-            Close <X className="w-3.5 h-3.5" />
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {PAGES_REGISTRY.map((p) => (
-            <Link
-              key={p.id}
-              href={p.href}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition ${
-                isActivePath(pathname, p.href)
-                  ? "bg-rose-600 text-white shadow-sm"
-                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
-              }`}
-            >
-              {p.label}
-            </Link>
-          ))}
         </div>
       </div>
     </div>
@@ -292,7 +246,7 @@ function MobileSearch() {
 /* -------------------------------------------------------------------------- */
 /* Header + category nav                                                      */
 /* -------------------------------------------------------------------------- */
-function Header({ onOpenMenu, onToggleNavigator }: { onOpenMenu: () => void; onToggleNavigator: () => void }) {
+function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
   const { user, wishlist, totals, hydrated } = useStore();
   const pathname = usePathname();
   const cartCount = hydrated ? totals.totalItems : 0;
@@ -305,7 +259,7 @@ function Header({ onOpenMenu, onToggleNavigator }: { onOpenMenu: () => void; onT
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3">
+      <div className="w-full px-4 sm:px-6 lg:px-10 py-3">
         <div className="flex items-center justify-between gap-3 lg:gap-6">
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
@@ -340,15 +294,6 @@ function Header({ onOpenMenu, onToggleNavigator }: { onOpenMenu: () => void; onT
                 <span className="text-xs font-bold text-slate-900 tabular-nums">011 234 5678</span>
               </div>
             </a>
-
-            <button
-              type="button"
-              onClick={onToggleNavigator}
-              title="All 19 Demo Pages"
-              className="md:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-rose-50 hover:text-rose-600 transition"
-            >
-              <LayoutGrid className="w-5 h-5" />
-            </button>
 
             <Link
               href={user ? "/account" : "/auth"}
@@ -395,7 +340,7 @@ function Header({ onOpenMenu, onToggleNavigator }: { onOpenMenu: () => void; onT
       </div>
 
       <nav className="bg-slate-900 text-white border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-4">
+        <div className="w-full px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
           <div className="flex items-center gap-1 py-1.5 flex-1 min-w-0 overflow-x-auto no-scrollbar">
             <Link
               href="/categories"
@@ -450,7 +395,7 @@ function Footer() {
   const link = "text-slate-400 hover:text-rose-400 transition";
   return (
     <footer className="bg-slate-950 text-slate-300 pt-14 pb-24 lg:pb-10 border-t border-slate-800 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="w-full px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-slate-800/80">
           <div className="lg:col-span-2 space-y-4">
             <div className="inline-flex items-center bg-white px-3.5 py-2 rounded-xl shadow-sm">
@@ -465,7 +410,7 @@ function Footer() {
                 <MapPin className="w-3.5 h-3.5 text-rose-500" /> Colombo & Islandwide Dispatch
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Phase 01 Frontend Demo
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Genuine Products
               </span>
             </div>
           </div>
@@ -673,9 +618,9 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             </div>
           </div>
           <div className="border-t border-slate-200 pt-4">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">All 19 Storefront Pages</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Quick Links</p>
             <div className="grid grid-cols-2 gap-1.5">
-              {PAGES_REGISTRY.map((p) => (
+              {PAGES_REGISTRY.filter((p) => p.id !== "product" && p.id !== "search").map((p) => (
                 <Link
                   key={p.id}
                   href={p.href}
@@ -690,7 +635,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         </div>
         <div className="p-4 border-t border-slate-200 bg-slate-900 text-white text-xs">
           <p className="font-bold">BestPrices.lk Customer Care</p>
-          <p className="text-slate-400 mt-0.5">Hotline: {BUSINESS_SETTINGS.hotline} • Demo Phase 01</p>
+          <p className="text-slate-400 mt-0.5">Hotline: {BUSINESS_SETTINGS.hotline}</p>
         </div>
       </aside>
     </>
@@ -801,7 +746,6 @@ function Toasts() {
 /* Shell                                                                      */
 /* -------------------------------------------------------------------------- */
 export function SiteShell({ children }: { children: React.ReactNode }) {
-  const [navigatorOpen, setNavigatorOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -812,9 +756,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <AnnouncementBar onToggleNavigator={() => setNavigatorOpen((o) => !o)} />
-      <DemoNavigator open={navigatorOpen} onClose={() => setNavigatorOpen(false)} />
-      <Header onOpenMenu={() => setMenuOpen(true)} onToggleNavigator={() => setNavigatorOpen((o) => !o)} />
+      <AnnouncementBar />
+      <Header onOpenMenu={() => setMenuOpen(true)} />
       <main className="min-h-[75vh]">{children}</main>
       <Footer />
       <WhatsAppWidget />

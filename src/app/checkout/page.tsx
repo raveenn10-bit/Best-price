@@ -24,11 +24,11 @@ export default function CheckoutPage() {
     if (user) setForm((f) => ({ ...f, name: f.name || user.name, email: f.email || user.email, phone: f.phone || user.phone || "" }));
   }, [user]);
 
-  if (!hydrated) return <div className="max-w-7xl mx-auto px-4 py-16 text-sm text-slate-500">Loading checkout…</div>;
+  if (!hydrated) return <div className="w-full px-4 sm:px-6 lg:px-10 py-16 text-sm text-slate-500">Loading checkout…</div>;
 
   if (cart.length === 0 && !placing) {
     return (
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8">
+      <div className="w-full px-4 sm:px-6 lg:px-10 py-8">
         <div className="bg-slate-50 rounded-3xl border border-slate-200 p-12 text-center space-y-4">
           <ShoppingBag className="w-12 h-12 text-rose-600 mx-auto" />
           <h1 className="font-display font-bold text-xl">Your Cart is Empty</h1>
@@ -45,12 +45,12 @@ export default function CheckoutPage() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8">
       <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center gap-2.5 text-xs text-amber-900">
         <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0" />
         <span>
-          <strong>Phase 01 Demo Checkout Mode:</strong> No real payments are processed and no card details are collected. Submitting this form
-          generates a demo Order Tracking ID.
+          <strong>Secure Checkout:</strong> We never ask for your card details on this page. Our team will call to confirm your order before
+          dispatch.
         </span>
       </div>
 
@@ -139,16 +139,16 @@ export default function CheckoutPage() {
 
             {paymentMethod === "online" ? (
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-2">
-                <p className="font-bold text-slate-900">Online Payment Gateway Placeholder (Phase 01)</p>
+                <p className="font-bold text-slate-900">Online Card / KOKO Payments</p>
                 <p>
-                  In Phase 02, this option connects to an authorised Sri Lankan payment gateway (PayHere / WebXPay / KOKO / MintPay hosted
-                  redirect). Card numbers are intentionally not collected in Phase 01.
+                  Online card and KOKO / MintPay payments are coming soon. For now, our team will contact you to arrange payment after you place
+                  your order.
                 </p>
               </div>
             ) : paymentMethod === "bank" ? (
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1.5">
-                <p className="font-bold text-slate-900">Sample Bank Transfer Details (Demo Only):</p>
-                <p>Bank: Sample Merchant Account • Branch: Colombo 03</p>
+                <p className="font-bold text-slate-900">Bank Transfer</p>
+                <p>Our bank account details will be sent to you by SMS and email after you place your order.</p>
                 <input type="text" placeholder="Optional transfer reference number" className="w-full mt-2 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs" />
               </div>
             ) : (
@@ -209,7 +209,7 @@ export default function CheckoutPage() {
               className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-rose-600/25 transition"
             >
               <CheckCircle2 className="w-4 h-4" />
-              <span>Place Demo Order ({formatLKR(grandTotal)})</span>
+              <span>Place Order ({formatLKR(grandTotal)})</span>
             </button>
           </div>
         </div>

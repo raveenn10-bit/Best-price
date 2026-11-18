@@ -20,13 +20,13 @@ function HeroSlider() {
 
   return (
     <section className="relative bg-slate-950 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-10">
-        <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl">
+      <div className="w-full">
+        <div className="relative overflow-hidden bg-slate-900">
           <img
             key={slide.desktopImage}
             src={slide.desktopImage}
             alt={slide.title}
-            className="hidden sm:block w-full h-[380px] lg:h-[440px] object-cover object-center opacity-55 transition-all duration-500"
+            className="hidden sm:block w-full h-[420px] lg:h-[540px] object-cover object-center opacity-55 transition-all duration-500"
           />
           <img
             key={slide.mobileImage + "-m"}
@@ -36,7 +36,7 @@ function HeroSlider() {
           />
 
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent flex items-center">
-            <div className="p-6 sm:p-10 lg:p-14 max-w-2xl space-y-4">
+            <div className="px-5 py-6 sm:px-10 lg:px-16 xl:px-24 max-w-3xl space-y-4">
               <span className="inline-flex items-center gap-1.5 bg-rose-600 text-white text-[11px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
                 <Sparkles className="w-3.5 h-3.5" /> {slide.badge}
               </span>
@@ -63,7 +63,7 @@ function HeroSlider() {
             </div>
           </div>
 
-          <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-8 flex items-center gap-2">
+          <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-10 lg:right-16 flex items-center gap-2">
             <button
               type="button"
               onClick={() => setIdx((i) => (i - 1 + total) % total)}
@@ -108,7 +108,7 @@ const BEST_SELLER_TABS = [
 
 const INFO_CARDS = [
   { icon: Truck, title: "Islandwide Delivery", body: "Colombo 1–2 days & Outstation 2–4 working days. Free delivery over Rs. 50,000." },
-  { icon: ShieldCheck, title: "Sample Warranty UI", body: "Structured warranty badge slots ready for merchant warranty terms in Phase 02." },
+  { icon: ShieldCheck, title: "Genuine Products", body: "Brand-new, genuine stock with warranty details shown on every product page." },
   { icon: CreditCard, title: "Flexible LKR Payments", body: "Online Card UI, Cash on Delivery (COD), and Bank Transfer checkout options." },
   { icon: Headphones, title: "Direct WhatsApp Support", body: "Instant WhatsApp product enquiry & live order tracking assistance." },
 ];
@@ -129,9 +129,9 @@ export default function HomePage() {
       <HeroSlider />
 
       {/* Shop by category */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-10">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-10">
         <SectionHeader eyebrow="Browse Departments" title="Shop by Category" linkHref="/categories" linkLabel="View All Categories" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 xl:gap-6">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.id}
@@ -150,7 +150,7 @@ export default function HomePage() {
 
       {/* Flash deals */}
       <section className="bg-slate-950 text-white py-10 border-y border-slate-800">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+        <div className="w-full px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-rose-600 flex items-center justify-center shadow-lg shadow-rose-600/30">
@@ -170,8 +170,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 text-slate-900">
-            {flashDeals.slice(0, 4).map((p) => (
+          <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-5 text-slate-900">
+            {flashDeals.slice(0, 5).map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
@@ -189,7 +189,7 @@ export default function HomePage() {
       </section>
 
       {/* Best sellers */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-12">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
         <SectionHeader eyebrow="Top Rated in Sri Lanka" title="Best-Selling Products">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
             {BEST_SELLER_TABS.map((tab) => (
@@ -214,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* Promo banners */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-4">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {PROMO_BANNERS.map((b) => (
             <div
@@ -246,7 +246,7 @@ export default function HomePage() {
       </section>
 
       {/* New arrivals & trending */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-12 space-y-12">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-12 space-y-12">
         <div>
           <SectionHeader eyebrow="Just Landed" title="New Arrivals" linkHref="/shop" linkLabel="Explore All" />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
@@ -267,10 +267,10 @@ export default function HomePage() {
 
       {/* Brands */}
       <section className="bg-slate-50 border-y border-slate-200 py-12">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+        <div className="w-full px-4 sm:px-6 lg:px-10">
           <SectionHeader eyebrow="Curated Catalog Brands" title="Shop by Brand">
             <span className="text-[11px] font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full w-fit">
-              Note: Sample demo brand filters — no official partnership claimed in Phase 01
+              Sample brand names — not official partners
             </span>
           </SectionHeader>
 
@@ -306,7 +306,7 @@ export default function HomePage() {
       </section>
 
       {/* Recommended */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-12">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
         <SectionHeader eyebrow="Curated For You" title="Recommended Products" linkHref="/shop" linkLabel="View Catalog" />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {recommended.map((p) => (
@@ -317,10 +317,10 @@ export default function HomePage() {
 
       {/* Reviews */}
       <section className="bg-slate-50 border-t border-slate-200 py-12">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          <SectionHeader eyebrow="Customer Feedback UI" title="Customer Reviews (Sample Layout)">
+        <div className="w-full px-4 sm:px-6 lg:px-10">
+          <SectionHeader eyebrow="Customer Feedback" title="Customer Reviews">
             <span className="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full w-fit">
-              Clearly Identified Sample Content — Phase 01 Demo
+              Sample reviews for preview
             </span>
           </SectionHeader>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
@@ -346,7 +346,7 @@ export default function HomePage() {
       </section>
 
       {/* Delivery / warranty / payment info */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-12">
+      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {INFO_CARDS.map(({ icon: Icon, title, body }) => (
             <div key={title} className="p-5 rounded-2xl bg-white border border-slate-200 flex items-start gap-3.5 shadow-sm">
@@ -363,7 +363,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 pb-6">
+      <section className="w-full px-4 sm:px-6 lg:px-10 pb-6">
         <div className="rounded-3xl bg-slate-950 text-white p-6 sm:p-10 border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl text-center lg:text-left">
             <span className="text-xs font-extrabold uppercase tracking-widest text-rose-500">VIP Price Alerts</span>

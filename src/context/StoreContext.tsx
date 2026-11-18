@@ -29,7 +29,7 @@ const DEFAULT_ORDERS: DemoOrder[] = [
   {
     id: "BP-2026-8492",
     date: "2026-11-16",
-    customerName: "Kasun Perera (Demo Order)",
+    customerName: "Kasun Perera",
     district: "Colombo",
     address: "No. 48, Havelock Road, Colombo 05",
     paymentMethod: "Cash on Delivery",
@@ -197,7 +197,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const ok = code.trim().toUpperCase() === BUSINESS_SETTINGS.demoPromoCode;
       setPromoCodeApplied(ok);
       if (ok) showToast(`Promo code ${BUSINESS_SETTINGS.demoPromoCode} applied (10% extra discount)!`);
-      else showToast(`Invalid demo code. Try ${BUSINESS_SETTINGS.demoPromoCode}`, "info");
+      else showToast(`Invalid promo code. Try ${BUSINESS_SETTINGS.demoPromoCode}`, "info");
       return ok;
     },
     [showToast]
@@ -232,7 +232,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const signIn = useCallback(
     (u: DemoUser) => {
       setUser(u);
-      showToast(`Signed in as ${u.name} (Demo Mode)`);
+      showToast(`Signed in as ${u.name}`);
     },
     [showToast]
   );
@@ -247,17 +247,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const order: DemoOrder = {
         id,
         date: new Date().toISOString().slice(0, 10),
-        customerName: name || "Demo Customer",
+        customerName: name || "Customer",
         district: selectedDistrict,
         address: address || "Colombo, Sri Lanka",
         paymentMethod:
           paymentMethod === "cod"
             ? "Cash on Delivery"
             : paymentMethod === "online"
-              ? "Online Payment UI (Demo)"
-              : "Bank Transfer (Demo)",
+              ? "Online Payment"
+              : "Bank Transfer",
         statusStep: 1,
-        statusLabel: "Order Confirmed (Demo)",
+        statusLabel: "Order Confirmed",
         total: totals.grandTotal,
         items: cart.map((item) => {
           const p = getProductById(item.productId);
@@ -268,7 +268,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setTrackedOrderId(id);
       setCart([]);
       setPromoCodeApplied(false);
-      showToast(`Demo Order ${id} placed! Redirecting to Order Tracker...`);
+      showToast(`Order ${id} placed! Redirecting to Order Tracker...`);
       return order;
     },
     [cart, paymentMethod, selectedDistrict, totals.grandTotal, showToast]

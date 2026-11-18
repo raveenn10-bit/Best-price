@@ -22,11 +22,11 @@ export default function CartPage() {
     if (promoCodeApplied) setCode(BUSINESS_SETTINGS.demoPromoCode);
   }, [promoCodeApplied]);
 
-  if (!hydrated) return <div className="max-w-7xl mx-auto px-4 py-16 text-sm text-slate-500">Loading cart…</div>;
+  if (!hydrated) return <div className="w-full px-4 sm:px-6 lg:px-10 py-16 text-sm text-slate-500">Loading cart…</div>;
   const { subtotal, totalItems, promoDiscount, shipping, grandTotal, totalSaved } = totals;
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-10 py-8">
       <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mb-6">Shopping Cart ({totalItems} Items)</h1>
 
       {cart.length === 0 ? (
