@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react";
+import { Mail, MapPin, PhoneCall } from "lucide-react";
 import { BUSINESS_SETTINGS } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
 import { whatsappLink } from "@/components/SiteShell";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 const input = "w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-rose-600";
 
@@ -34,9 +35,9 @@ export default function ContactPage() {
             href={whatsappLink("Hello BestPrices.lk! I have a question.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl"
+            className="inline-flex items-center gap-2 mt-2 bg-[#25D366] hover:bg-[#1ebe5b] text-white font-bold text-xs px-4 py-2.5 rounded-xl"
           >
-            <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
+            <WhatsAppIcon className="w-4 h-4" /> Chat on WhatsApp
           </a>
         </div>
       </div>

@@ -2,12 +2,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Heart, MessageCircle, ShoppingCart, Zap, ZoomIn } from "lucide-react";
+import { CheckCircle2, Heart, ShoppingCart, Zap, ZoomIn } from "lucide-react";
 import { Product } from "@/types/store";
 import { PRODUCTS, formatLKR } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
 import { ProductCard } from "@/components/ProductCard";
 import { whatsappLink } from "@/components/SiteShell";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { shopHref } from "@/lib/routes";
 
 export function ProductDetails({ product }: { product: Product }) {
@@ -179,7 +180,7 @@ export function ProductDetails({ product }: { product: Product }) {
               rel="noopener noreferrer"
               className="w-full py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-600" />
+              <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
               <span>Enquire via WhatsApp for Stock & Delivery</span>
             </a>
           </div>

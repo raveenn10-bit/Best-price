@@ -13,7 +13,6 @@ import {
   Info,
   MapPin,
   Menu,
-  MessageCircle,
   PhoneCall,
   Search,
   ShieldCheck,
@@ -27,6 +26,7 @@ import {
 import { BUSINESS_SETTINGS, CATEGORIES, LOGO_SRC, PRODUCTS, formatLKR, getProductById } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
 import { PAGES_REGISTRY, searchHref, shopHref } from "@/lib/routes";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 /* -------------------------------------------------------------------------- */
 /* Announcement bar                                                           */
@@ -495,12 +495,12 @@ function WhatsAppWidget() {
     <div className={`fixed ${raised ? "bottom-36" : "bottom-20"} lg:bottom-6 right-4 z-40 flex flex-col items-end`}>
       {open && (
         <div className="mb-3 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-          <div className="bg-emerald-600 text-white p-4 flex items-center justify-between">
+          <div className="bg-[#25D366] text-white p-4 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center font-bold">BP</div>
+              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center"><WhatsAppIcon className="w-5 h-5" /></div>
               <div>
                 <h4 className="font-bold text-sm leading-tight">BestPrices.lk Concierge</h4>
-                <p className="text-[11px] text-emerald-100">Typically replies in under 5 mins</p>
+                <p className="text-[11px] text-white/85">Typically replies in under 5 mins</p>
               </div>
             </div>
             <button type="button" onClick={() => setOpen(false)} className="text-white/80 hover:text-white" aria-label="Close">
@@ -516,16 +516,16 @@ function WhatsAppWidget() {
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
               placeholder="Type your question (e.g. Fridge stock)..."
-              className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-none focus:border-emerald-600"
+              className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-none focus:border-[#25D366]"
             />
             <a
               href={whatsappLink(msg || "Hello BestPrices.lk! I would like to enquire about a product on your website.")}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition"
+              className="w-full bg-[#25D366] hover:bg-[#1ebe5b] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition"
             >
-              <MessageCircle className="w-4 h-4" /> Start WhatsApp Chat
+              <WhatsAppIcon className="w-4 h-4" /> Start WhatsApp Chat
             </a>
           </div>
         </div>
@@ -533,11 +533,13 @@ function WhatsAppWidget() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="WhatsApp Support"
-        className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-full shadow-lg shadow-emerald-600/30 flex items-center gap-2 font-bold text-xs sm:text-sm transition transform hover:scale-105 active:scale-95"
+        aria-label="Chat with us on WhatsApp"
+        className="group relative w-[72px] h-[72px] rounded-full bg-[#25D366]/15 flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
       >
-        <MessageCircle className="w-5 h-5 fill-white text-emerald-500" />
-        <span className="hidden sm:inline">WhatsApp Enquiry</span>
+        <span className="absolute inset-0 rounded-full bg-[#25D366]/20 animate-wa-pulse" />
+        <span className="relative w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-[#25D366]/40 group-hover:bg-[#1ebe5b] transition-colors">
+          <WhatsAppIcon className="w-8 h-8" />
+        </span>
       </button>
     </div>
   );
