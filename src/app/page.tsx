@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Star, Truck, Banknote, Headphones } from "lucide-react";
 import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEWS } from "@/data/storeData";
 import { useCountdown } from "@/components/Countdown";
+import { CategoryCircles } from "@/components/CategoryCircles";
 import { ProductRow, SectionTitle } from "@/components/ProductRow";
 import { shopHref, searchHref } from "@/lib/routes";
 
@@ -19,13 +20,13 @@ function HeroSlider() {
   return (
     <section className="relative w-full overflow-hidden bg-navy-900" aria-roledescription="carousel">
       <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${idx * 100}%)` }}>
-        {HERO_SLIDES.map((slide) => (
-          <div key={slide.id} className="relative w-full shrink-0 h-[420px] sm:h-[420px] lg:h-[486px]">
-            <img src={slide.desktopImage} alt="" className="hidden sm:block absolute inset-0 w-full h-full object-cover" />
-            <img src={slide.mobileImage} alt="" className="sm:hidden absolute inset-0 w-full h-full object-cover" />
+        {HERO_SLIDES.map((slide, i) => (
+          <div key={slide.id} className="relative w-full shrink-0 h-[420px] sm:h-[460px] lg:h-[520px] overflow-hidden">
+            <img key={`d-${idx === i}`} src={slide.desktopImage} alt="" className={`hidden sm:block absolute inset-0 w-full h-full object-cover ${idx === i ? "ken-burns" : ""}`} />
+            <img key={`m-${idx === i}`} src={slide.mobileImage} alt="" className={`sm:hidden absolute inset-0 w-full h-full object-cover ${idx === i ? "ken-burns" : ""}`} />
             <div className="absolute inset-0 bg-[#05182F]/80 sm:bg-transparent sm:bg-gradient-to-r sm:from-[#05182F]/95 sm:via-[#05182F]/70 sm:to-transparent" />
             <div className="relative h-full w-full px-5 sm:px-10 lg:px-16 xl:px-24 flex items-center">
-              <div className="max-w-xl text-white space-y-3 sm:space-y-4">
+              <div key={`t-${idx === i}`} className={`max-w-xl text-white space-y-3 sm:space-y-4 pb-8 sm:pb-10 ${idx === i ? "hero-in" : ""}`}>
                 <span className="inline-block bg-deal text-[#080808] text-xs font-bold px-3 py-1 rounded-[24px_0_24px_24px]">{slide.badge}</span>
                 <h2 className="text-[28px] sm:text-[40px] lg:text-[52px] font-extrabold leading-[1.05] tracking-tight">{slide.title}</h2>
                 <p className="text-sm sm:text-base text-white/80 max-w-lg">{slide.subtitle}</p>
@@ -33,7 +34,7 @@ function HeroSlider() {
                 <div className="flex flex-wrap gap-3 pt-1">
                   <Link
                     href={shopHref({ category: slide.ctaCategory })}
-                    className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm px-6 py-3 rounded-full transition"
+                    className="btn-shine inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm px-6 py-3 rounded-full transition hover:-translate-y-0.5"
                   >
                     {slide.ctaPrimary} <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -63,7 +64,7 @@ function HeroSlider() {
       >
         <ChevronRight className="w-5 h-5" />
       </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 flex gap-2">
         {HERO_SLIDES.map((s, i) => (
           <button
             key={s.id}
@@ -78,37 +79,11 @@ function HeroSlider() {
   );
 }
 
-/* --------------------------- Category tile strip -------------------------- */
-const firstImage = (cat: string) => PRODUCTS.find((p) => p.category === cat)?.image || PRODUCTS[0].image;
-const TILE_STRIP = [
-  { label: "New Arrivals", href: "/shop", image: PRODUCTS.find((p) => p.category === "tv-audio" && p.isNewArrival)?.image || PRODUCTS[4].image, tint: "bg-primary-50" },
-  { label: "Flash Deals", href: "/flash-deals", image: PRODUCTS.find((p) => p.category === "kitchen-appliances" && p.isFlashDeal)?.image || PRODUCTS[5].image, tint: "bg-[#FFFBE6]" },
-  ...CATEGORIES.map((c) => ({ label: c.name, href: shopHref({ category: c.id }), image: c.image || firstImage(c.id), tint: "bg-[#F4F6F9]" })),
-  { label: "Shop All", href: "/shop", image: PRODUCTS[2].image, tint: "bg-[#F4F6F9]" },
-];
-
-function CategoryStrip() {
-  return (
-    <section className="w-full px-4 sm:px-6 lg:px-10 py-6 sm:py-8 bg-white">
-      <div className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar snap-x">
-        {TILE_STRIP.map((t) => (
-          <Link key={t.label} href={t.href} className="group snap-start shrink-0 flex-1 min-w-[108px] sm:min-w-[123px] max-w-[180px] text-center">
-            <div className={`${t.tint} rounded-[20px] h-[120px] sm:h-[140px] p-3 flex items-center justify-center border border-transparent group-hover:border-primary-200 transition`}>
-              <img src={t.image} alt="" className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" />
-            </div>
-            <span className="block mt-2 text-xs sm:text-[13px] font-semibold text-ink leading-tight group-hover:text-primary-600">{t.label}</span>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 /* ----------------------------- Countdown banner --------------------------- */
 function DealsCountdownBanner() {
   const { hrs, mins, secs } = useCountdown();
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-10 pb-8 bg-white">
+    <section className="w-full px-4 sm:px-6 lg:px-10 py-8 bg-white">
       <div className="relative overflow-hidden rounded-[22px] bg-gradient-to-r from-[#05182F] via-primary-800 to-primary-600 text-white px-6 sm:px-10 py-8 sm:py-10 flex flex-col lg:flex-row items-center justify-between gap-6">
         <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5" />
         <div className="absolute right-40 -bottom-24 w-56 h-56 rounded-full bg-deal/10" />
@@ -125,12 +100,12 @@ function DealsCountdownBanner() {
               [secs, "Seconds"],
             ].map(([v, l]) => (
               <div key={l} className="w-[76px] sm:w-[92px] rounded-2xl bg-white/10 backdrop-blur border border-white/15 py-3 text-center">
-                <span className="block text-3xl sm:text-4xl font-black">{v}</span>
+                <span key={v} className="flip-in block text-3xl sm:text-4xl font-black">{v}</span>
                 <span className="text-[11px] uppercase tracking-wider text-white/70">{l}</span>
               </div>
             ))}
           </div>
-          <Link href="/flash-deals" className="bg-deal hover:brightness-95 text-[#080808] font-bold text-sm px-7 py-3 rounded-full transition">
+          <Link href="/flash-deals" className="soft-pulse btn-shine bg-deal hover:brightness-95 text-[#080808] font-bold text-sm px-7 py-3 rounded-full transition">
             Browse Deals
           </Link>
         </div>
@@ -196,7 +171,7 @@ export default function HomePage() {
     <>
       <h1 className="sr-only">BestPrices.lk — online shopping for electronics and home appliances in Sri Lanka</h1>
       <HeroSlider />
-      <CategoryStrip />
+      <CategoryCircles />
       <DealsCountdownBanner />
 
       <div className="bg-[#F6F6F6]">

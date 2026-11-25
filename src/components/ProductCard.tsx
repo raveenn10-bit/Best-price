@@ -19,7 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col items-start gap-1.5">
         {product.isFlashDeal && (
-          <span className="bg-deal text-[#080808] text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-[24px_0_24px_24px] leading-none">
+          <span className="wiggle bg-deal text-[#080808] text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-[24px_0_24px_24px] leading-none">
             ⚡ DEAL
           </span>
         )}
@@ -99,7 +99,7 @@ export function ProductCard({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => addToCart(product.id, 1)}
-            className="w-full border-2 border-primary-600 text-primary-700 hover:bg-primary-600 hover:text-white text-xs sm:text-sm font-bold py-2 rounded-full transition active:scale-[0.98]"
+            className="btn-shine w-full border-2 border-primary-600 text-primary-700 hover:bg-primary-600 hover:text-white text-xs sm:text-sm font-bold py-2 rounded-full transition active:scale-[0.98]"
           >
             Add to cart
           </button>

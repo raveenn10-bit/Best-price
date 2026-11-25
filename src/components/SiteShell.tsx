@@ -30,6 +30,7 @@ import { BUSINESS_SETTINGS, CATEGORIES, LOGO_SRC, PRODUCTS, formatLKR, getProduc
 import { useStore } from "@/context/StoreContext";
 import { PAGES_REGISTRY, searchHref, shopHref } from "@/lib/routes";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 /* -------------------------------------------------------------------------- */
 /* Promo bar (scrolling trust messages)                                       */
@@ -285,7 +286,7 @@ function Header({ onOpenMenu, onOpenCategories }: { onOpenMenu: () => void; onOp
             className="relative w-10 h-10 rounded-full border-[2.4px] border-primary-600 text-[#333] flex items-center justify-center hover:bg-primary-50 transition"
           >
             <Heart className="w-[18px] h-[18px]" />
-            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+            <span key={wishCount} className="pop-in absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
               {wishCount}
             </span>
           </Link>
@@ -293,7 +294,7 @@ function Header({ onOpenMenu, onOpenCategories }: { onOpenMenu: () => void; onOp
           <Link href="/cart" aria-label={`Cart (${cartCount} items)`} className="flex items-center gap-2.5 pl-2 sm:pl-3 h-10">
             <span className="relative">
               <ShoppingBag className="w-7 h-7 text-ink" />
-              <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-price text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+              <span key={cartCount} className="pop-in absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-price text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
                 {cartCount}
               </span>
             </span>
@@ -325,11 +326,11 @@ function Header({ onOpenMenu, onOpenCategories }: { onOpenMenu: () => void; onOp
             >
               <Zap className="w-4 h-4 fill-deal" /> Deals
             </Link>
-            <Link href="/shop" className="px-3 py-1.5 rounded-full text-sm font-medium shrink-0 hover:bg-white/10 transition">
+            <Link href="/shop" className="nav-underline px-3 py-1.5 rounded-full text-sm font-medium shrink-0 hover:bg-white/10 transition">
               Shop
             </Link>
             {QUICK_NAV.map((l) => (
-              <Link key={l.label} href={l.href} className="px-3 py-1.5 rounded-full text-sm font-medium text-white/90 shrink-0 hover:bg-white/10 hover:text-white transition">
+              <Link key={l.label} href={l.href} className="nav-underline px-3 py-1.5 rounded-full text-sm font-medium text-white/90 shrink-0 hover:bg-white/10 hover:text-white transition">
                 {l.label}
               </Link>
             ))}
@@ -833,6 +834,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <div className="bottom-glow" aria-hidden="true" />
       <WhatsAppWidget />
       <BackToTop />
+      <ScrollReveal />
       <CategoryDrawer open={catsOpen} onClose={() => setCatsOpen(false)} />
       <MobileBottomNav />
       <MobileDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
