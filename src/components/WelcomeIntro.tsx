@@ -19,6 +19,8 @@ export function WelcomeIntro() {
   const [leaving, setLeaving] = useState(false);
   const [data, setData] = useState<Glyphs | null>(null);
   const [soundBlocked, setSoundBlocked] = useState(false);
+  const [waitingTap, setWaitingTap] = useState(false);
+  const capRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const gsapRef = useRef<GsapNS | null>(null);
@@ -124,9 +126,22 @@ export function WelcomeIntro() {
             tickRef.current = tick;
             gsap.ticker.add(tick);
           }).catch(() => {
-            // Autoplay with sound was blocked: write silently, offer sound
+            // Browser blocked sound until the visitor interacts. Wait for the first
+            // tap / click / key press anywhere, then write + speak together.
             setSoundBlocked(true);
-            startClock();
+            setWaitingTap(true);
+            document.documentElement.classList.remove("intro-active");
+            if (capRef.current) clearTimeout(capRef.current);
+            const onGesture = () => {
+              window.removeEventListener("pointerdown", onGesture, true);
+              window.removeEventListener("keydown", onGesture, true);
+              setWaitingTap(false);
+              document.documentElement.classList.add("intro-active");
+              capRef.current = setTimeout(leave, 9000);
+              run(true);
+            };
+            window.addEventListener("pointerdown", onGesture, true);
+            window.addEventListener("keydown", onGesture, true);
           });
         } else startClock();
       } else startClock();
@@ -145,10 +160,10 @@ export function WelcomeIntro() {
     if ((window as unknown as { __bpPreloaderDone?: boolean }).__bpPreloaderDone) go();
     else window.addEventListener("bp:preloader-done", go, { once: true });
     // Safety net: never hold the site longer than this
-    const cap = setTimeout(leave, 9000);
+    capRef.current = setTimeout(leave, 9000);
     return () => {
       window.removeEventListener("bp:preloader-done", go);
-      clearTimeout(cap);
+      if (capRef.current) clearTimeout(capRef.current);
     };
   }, [data, gone, run, leave]);
 
@@ -197,14 +212,15 @@ export function WelcomeIntro() {
       </div>
 
       <div className="welcome-actions">
-        {soundBlocked && !leaving && (
-          <button type="button" onClick={() => run(true)} className="welcome-btn">
-            <Volume2 className="w-4 h-4" /> Play with sound
+        {waitingTap ? (
+          <span className="welcome-btn welcome-tap">
+            <Volume2 className="w-4 h-4" /> Tap anywhere to enter with sound
+          </span>
+        ) : (
+          <button type="button" onClick={leave} className="welcome-btn welcome-btn-ghost" aria-label="Skip intro">
+            Skip <X className="w-3.5 h-3.5" />
           </button>
         )}
-        <button type="button" onClick={leave} className="welcome-btn welcome-btn-ghost" aria-label="Skip intro">
-          Skip <X className="w-3.5 h-3.5" />
-        </button>
       </div>
     </div>
   );
