@@ -66,7 +66,7 @@ function TileVisual({ t }: { t: Tile }) {
 
 export function CategoryCircles() {
   return (
-    <section className="relative z-10 w-full px-4 sm:px-6 lg:px-10 -mt-8 sm:-mt-12">
+    <section className="relative z-10 w-full px-4 sm:px-6 lg:px-10 pt-5 sm:pt-8">
       <div className="bg-white rounded-[24px] shadow-[0_10px_40px_-12px_rgba(5,69,141,0.25)] border border-slate-100 px-3 sm:px-6 py-6 sm:py-8">
         <div className="grid grid-rows-2 grid-flow-col auto-cols-[96px] sm:auto-cols-[132px] lg:grid-flow-row lg:grid-rows-none lg:grid-cols-8 lg:auto-cols-auto gap-x-3 sm:gap-x-5 gap-y-6 sm:gap-y-8 overflow-x-auto no-scrollbar lg:overflow-visible pb-1">
           {TILES.map((t, i) => (

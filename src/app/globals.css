@@ -282,3 +282,51 @@
     animation: none !important;
   }
 }
+
+/* ======================= Hero banner slider ======================= */
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.03); }
+}
+.hero-zoom { animation: heroZoom 6s ease-out forwards; }
+@keyframes dotFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Animated neon frame laid over the Blackout Friday artwork */
+.neon-frame {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 4px rgba(255, 79, 216, 0.95)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 22px rgba(34, 211, 238, 0.45));
+  animation: neonFlicker 4s ease-in-out infinite;
+}
+.neon-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: clamp(2px, 0.28vw, 5px);
+  background: linear-gradient(90deg, #ff2fd1, #ff8a3d, #ffe14d, #22d3ee, #a855f7, #ff2fd1);
+  background-size: 300% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: neonFlow 3.5s linear infinite;
+}
+@keyframes neonFlow {
+  from { background-position: 0% 50%; }
+  to { background-position: 300% 50%; }
+}
+@keyframes neonFlicker {
+  0%, 100% { opacity: 1; }
+  40% { opacity: 0.75; }
+  42% { opacity: 1; }
+  44% { opacity: 0.55; }
+  46% { opacity: 1; }
+  70% { opacity: 0.85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom, .neon-frame, .neon-frame::before { animation: none !important; }
+}

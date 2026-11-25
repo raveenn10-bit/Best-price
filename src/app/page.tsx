@@ -5,79 +5,9 @@ import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Star, Truck, Bankno
 import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEWS } from "@/data/storeData";
 import { useCountdown } from "@/components/Countdown";
 import { CategoryCircles } from "@/components/CategoryCircles";
+import { HeroBanners } from "@/components/HeroBanners";
 import { ProductRow, SectionTitle } from "@/components/ProductRow";
 import { shopHref, searchHref } from "@/lib/routes";
-
-/* ---------------------------------- Hero ---------------------------------- */
-function HeroSlider() {
-  const [idx, setIdx] = useState(0);
-  const total = HERO_SLIDES.length;
-  useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % total), 6000);
-    return () => clearInterval(id);
-  }, [idx, total]);
-
-  return (
-    <section className="relative w-full overflow-hidden bg-navy-900" aria-roledescription="carousel">
-      <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${idx * 100}%)` }}>
-        {HERO_SLIDES.map((slide, i) => (
-          <div key={slide.id} className="relative w-full shrink-0 h-[420px] sm:h-[460px] lg:h-[520px] overflow-hidden">
-            <img key={`d-${idx === i}`} src={slide.desktopImage} alt="" className={`hidden sm:block absolute inset-0 w-full h-full object-cover ${idx === i ? "ken-burns" : ""}`} />
-            <img key={`m-${idx === i}`} src={slide.mobileImage} alt="" className={`sm:hidden absolute inset-0 w-full h-full object-cover ${idx === i ? "ken-burns" : ""}`} />
-            <div className="absolute inset-0 bg-[#05182F]/80 sm:bg-transparent sm:bg-gradient-to-r sm:from-[#05182F]/95 sm:via-[#05182F]/70 sm:to-transparent" />
-            <div className="relative h-full w-full px-5 sm:px-10 lg:px-16 xl:px-24 flex items-center">
-              <div key={`t-${idx === i}`} className={`max-w-xl text-white space-y-3 sm:space-y-4 pb-8 sm:pb-10 ${idx === i ? "hero-in" : ""}`}>
-                <span className="inline-block bg-deal text-[#080808] text-xs font-bold px-3 py-1 rounded-[24px_0_24px_24px]">{slide.badge}</span>
-                <h2 className="text-[28px] sm:text-[40px] lg:text-[52px] font-extrabold leading-[1.05] tracking-tight">{slide.title}</h2>
-                <p className="text-sm sm:text-base text-white/80 max-w-lg">{slide.subtitle}</p>
-                <p className="text-lg sm:text-2xl font-extrabold text-deal tabular-nums">{slide.priceCallout}</p>
-                <div className="flex flex-wrap gap-3 pt-1">
-                  <Link
-                    href={shopHref({ category: slide.ctaCategory })}
-                    className="btn-shine inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm px-6 py-3 rounded-full transition hover:-translate-y-0.5"
-                  >
-                    {slide.ctaPrimary} <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link href="/flash-deals" className="inline-flex items-center bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-sm px-6 py-3 rounded-full transition">
-                    Browse Deals
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <button
-        type="button"
-        onClick={() => setIdx((i) => (i - 1 + total) % total)}
-        aria-label="Previous slide"
-        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-ink items-center justify-center shadow-lg"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-      <button
-        type="button"
-        onClick={() => setIdx((i) => (i + 1) % total)}
-        aria-label="Next slide"
-        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-ink items-center justify-center shadow-lg"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
-      <div className="absolute bottom-14 sm:bottom-16 left-1/2 -translate-x-1/2 flex gap-2">
-        {HERO_SLIDES.map((s, i) => (
-          <button
-            key={s.id}
-            type="button"
-            onClick={() => setIdx(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-2.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-2.5 bg-white/50 hover:bg-white/80"}`}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ----------------------------- Countdown banner --------------------------- */
 function DealsCountdownBanner() {
@@ -170,7 +100,7 @@ export default function HomePage() {
   return (
     <>
       <h1 className="sr-only">BestPrices.lk — online shopping for electronics and home appliances in Sri Lanka</h1>
-      <HeroSlider />
+      <HeroBanners />
       <CategoryCircles />
       <DealsCountdownBanner />
 
