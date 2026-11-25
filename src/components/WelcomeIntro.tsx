@@ -1,11 +1,13 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Volume2, X } from "lucide-react";
+import { Volume2 } from "lucide-react";
 
 type GsapNS = typeof import("gsap").gsap;
 type Glyphs = typeof import("@/data/welcomeGlyphs");
 
-const HOLD_AFTER = 0.35; // seconds the finished sentence stays before the fade
+// Handwriting is stretched to 5 s (voiceover is ~3 s and starts with it)
+const WRITE_SECONDS = 5;
+const HOLD_AFTER = 0.5; // seconds the finished sentence stays before the fade
 const FADE_OUT = 0.9;
 
 /**
@@ -85,10 +87,12 @@ export function WelcomeIntro() {
       if (reduce.current) {
         gsap.set(paths, { strokeDashoffset: 0, fillOpacity: 1, opacity: 1 });
         if (swash) gsap.set(swash, { strokeDashoffset: 0, opacity: 1 });
-        tl.to({}, { duration: data.WELCOME_DURATION });
+        tl.to({}, { duration: WRITE_SECONDS });
       } else {
+        const k = WRITE_SECONDS / data.WELCOME_DURATION;
         paths.forEach((p) => {
-          const g = data.WELCOME_GLYPHS[Number(p.dataset.g)];
+          const g0 = data.WELCOME_GLYPHS[Number(p.dataset.g)];
+          const g = { start: g0.start * k, dur: g0.dur * k };
           const len = Math.ceil(p.getTotalLength()) + 2;
           gsap.set(p, { strokeDasharray: len, strokeDashoffset: len, fillOpacity: 0, opacity: 0 });
           // Pen stroke traces the letter while it fades in, then the ink fills
@@ -98,33 +102,23 @@ export function WelcomeIntro() {
         if (swash) {
           const len = Math.ceil(swash.getTotalLength()) + 2;
           gsap.set(swash, { strokeDasharray: len, strokeDashoffset: len, opacity: 0 });
-          tl.to(swash, { strokeDashoffset: 0, opacity: 1, duration: data.WELCOME_SWASH.dur, ease: "power2.out" }, data.WELCOME_SWASH.start);
+          tl.to(swash, { strokeDashoffset: 0, opacity: 1, duration: data.WELCOME_SWASH.dur * k, ease: "power2.out" }, data.WELCOME_SWASH.start * k);
         }
-        // Guarantee the timeline is exactly the voiceover length
-        tl.to({}, { duration: 0.001 }, data.WELCOME_DURATION - 0.001);
+        tl.to({}, { duration: 0.001 }, WRITE_SECONDS - 0.001);
       }
       tlRef.current = tl;
 
       const startClock = () => tl.play(0);
 
       if (withSound && audio) {
+        audio.muted = false;
+        audio.volume = 1;
         audio.currentTime = 0;
         const p = audio.play();
         if (p) {
           p.then(() => {
             setSoundBlocked(false);
-            // Lock the drawing to the audio clock so words and handwriting never drift apart
-            tl.pause(0);
-            const tick = () => {
-              if (audio.paused || audio.ended) {
-                if (tl.time() < tl.duration()) tl.play();
-                stopSync();
-                return;
-              }
-              tl.time(Math.min(audio.currentTime, tl.duration()));
-            };
-            tickRef.current = tick;
-            gsap.ticker.add(tick);
+            startClock();
           }).catch(() => {
             // Browser blocked sound until the visitor interacts. Wait for the first
             // tap / click / key press anywhere, then write + speak together.
@@ -132,16 +126,15 @@ export function WelcomeIntro() {
             setWaitingTap(true);
             document.documentElement.classList.remove("intro-active");
             if (capRef.current) clearTimeout(capRef.current);
+            const EVENTS = ["click", "touchend", "keydown"] as const;
             const onGesture = () => {
-              window.removeEventListener("pointerdown", onGesture, true);
-              window.removeEventListener("keydown", onGesture, true);
+              EVENTS.forEach((ev) => window.removeEventListener(ev, onGesture, true));
               setWaitingTap(false);
               document.documentElement.classList.add("intro-active");
-              capRef.current = setTimeout(leave, 9000);
-              run(true);
+              capRef.current = setTimeout(leave, 12000);
+              run(true); // calls audio.play() inside the gesture, which iOS/Safari require
             };
-            window.addEventListener("pointerdown", onGesture, true);
-            window.addEventListener("keydown", onGesture, true);
+            EVENTS.forEach((ev) => window.addEventListener(ev, onGesture, true));
           });
         } else startClock();
       } else startClock();
@@ -160,7 +153,7 @@ export function WelcomeIntro() {
     if ((window as unknown as { __bpPreloaderDone?: boolean }).__bpPreloaderDone) go();
     else window.addEventListener("bp:preloader-done", go, { once: true });
     // Safety net: never hold the site longer than this
-    capRef.current = setTimeout(leave, 9000);
+    capRef.current = setTimeout(leave, 12000);
     return () => {
       window.removeEventListener("bp:preloader-done", go);
       if (capRef.current) clearTimeout(capRef.current);
@@ -175,9 +168,8 @@ export function WelcomeIntro() {
   if (gone) return null;
 
   return (
-    <div className={`welcome-intro ${leaving ? "is-leaving" : ""}`} aria-live="polite">
+    <div className={`welcome-intro ${leaving ? "is-leaving" : ""} ${waitingTap ? "is-waiting" : ""}`} aria-live="polite">
       <audio ref={audioRef} preload="auto" playsInline>
-        <source src="/audio/welcome-voiceover.webm" type="audio/webm; codecs=opus" />
         <source src="/audio/welcome-voiceover.m4a" type="audio/mp4" />
       </audio>
 
@@ -212,14 +204,10 @@ export function WelcomeIntro() {
       </div>
 
       <div className="welcome-actions">
-        {waitingTap ? (
+        {waitingTap && (
           <span className="welcome-btn welcome-tap">
             <Volume2 className="w-4 h-4" /> Tap anywhere to enter with sound
           </span>
-        ) : (
-          <button type="button" onClick={leave} className="welcome-btn welcome-btn-ghost" aria-label="Skip intro">
-            Skip <X className="w-3.5 h-3.5" />
-          </button>
         )}
       </div>
     </div>

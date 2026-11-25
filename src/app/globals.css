@@ -676,6 +676,9 @@ html.pl-lock, html.pl-lock body { overflow: hidden; }
   align-items: center;
   justify-content: center;
   pointer-events: none; /* never blocks the site */
+  /* Blur the website behind the handwriting */
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
   transition: opacity 0.9s cubic-bezier(0.65, 0, 0.35, 1), transform 0.9s cubic-bezier(0.65, 0, 0.35, 1), filter 0.9s ease, visibility 0.9s;
   animation: plAutoHide 0.6s ease 14s forwards;
 }
@@ -710,3 +713,5 @@ html.intro-active .hero-copy { opacity: 0; transform: translateY(18px); transiti
 }
 .welcome-tap { animation: heroIn 0.5s ease both, softPulseRed 1.8s ease-in-out 0.5s infinite; }
 @keyframes softPulseRed { 0%,100% { box-shadow: 0 0 0 0 rgba(230,0,0,0.55); } 50% { box-shadow: 0 0 0 12px rgba(230,0,0,0); } }
+/* While waiting for the first tap the site stays sharp */
+.welcome-intro.is-waiting { -webkit-backdrop-filter: none; backdrop-filter: none; background: transparent; }
