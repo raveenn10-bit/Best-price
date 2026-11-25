@@ -87,7 +87,7 @@ export function HeroBanners() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#1a0f2e] select-none"
+      className="hero-banners relative w-full max-w-[1400px] mx-auto overflow-hidden bg-[#1a0f2e] select-none"
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}
@@ -112,12 +112,14 @@ export function HeroBanners() {
             href={b.href}
             draggable={false}
             onClick={(e) => moved.current && e.preventDefault()}
-            className="relative block w-full shrink-0 aspect-[2/1] max-h-[600px] overflow-hidden"
+            className="relative block w-full shrink-0 overflow-hidden"
             aria-hidden={i !== idx}
             tabIndex={i === idx ? 0 : -1}
           >
-            {/* Soft blurred backdrop fills any space around the artwork */}
-            <img src={b.src} alt="" aria-hidden="true" draggable={false} loading="lazy" className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-70" />
+            {/* Soft blurred backdrop fills any space around the artwork and the strip below it */}
+            <img src={b.src} alt="" aria-hidden="true" draggable={false} loading="lazy" className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-80" />
+            <span className="absolute inset-x-0 bottom-0 h-[var(--hero-strip)] bg-gradient-to-b from-transparent to-black/30" aria-hidden="true" />
+            <span className="relative block w-full aspect-[2/1] max-h-[560px]">
             <span className={`relative block h-full max-w-full mx-auto overflow-hidden ${i === idx ? "hero-zoom" : ""}`} style={{ aspectRatio: b.ratio }}>
               <img
                 src={b.src}
@@ -142,6 +144,9 @@ export function HeroBanners() {
                 />
               ))}
             </span>
+            </span>
+            {/* Strip under the artwork that the category card overlaps */}
+            <span className="relative block h-[var(--hero-strip)]" aria-hidden="true" />
           </Link>
         ))}
       </div>
@@ -150,7 +155,7 @@ export function HeroBanners() {
         type="button"
         onClick={() => go(idx - 1)}
         aria-label="Previous banner"
-        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
+        className="hidden sm:flex absolute left-4 top-[calc((100%-var(--hero-strip))/2)] -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -158,13 +163,13 @@ export function HeroBanners() {
         type="button"
         onClick={() => go(idx + 1)}
         aria-label="Next banner"
-        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
+        className="hidden sm:flex absolute right-4 top-[calc((100%-var(--hero-strip))/2)] -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
       >
         <ChevronRight className="w-5 h-5" />
       </button>
 
       {/* Dots with progress fill */}
-      <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 sm:gap-2 bg-black/25 backdrop-blur-sm rounded-full px-2.5 py-1.5">
+      <div className="hidden sm:flex absolute bottom-[calc(var(--hero-strip)+10px)] left-1/2 -translate-x-1/2 items-center gap-1.5 sm:gap-2 bg-black/25 backdrop-blur-sm rounded-full px-2.5 py-1.5">
         {BANNERS.map((b, i) => (
           <button
             key={b.id}

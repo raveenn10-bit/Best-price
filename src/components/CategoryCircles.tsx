@@ -64,28 +64,50 @@ function TileVisual({ t }: { t: Tile }) {
   return <img src={t.image} alt="" loading="lazy" className="w-[78%] h-[78%] object-contain mix-blend-multiply" />;
 }
 
-export function CategoryCircles() {
+function Circle({ t, hidden }: { t: Tile; hidden?: boolean }) {
   return (
-    <section className="relative z-10 w-full px-4 sm:px-6 lg:px-10 pt-5 sm:pt-8">
-      <div className="bg-white rounded-[24px] shadow-[0_10px_40px_-12px_rgba(5,69,141,0.25)] border border-slate-100 px-3 sm:px-6 py-6 sm:py-8">
-        <div className="grid grid-rows-2 grid-flow-col auto-cols-[96px] sm:auto-cols-[132px] lg:grid-flow-row lg:grid-rows-none lg:grid-cols-8 lg:auto-cols-auto gap-x-3 sm:gap-x-5 gap-y-6 sm:gap-y-8 overflow-x-auto no-scrollbar lg:overflow-visible pb-1">
-          {TILES.map((t, i) => (
-            <Link key={t.label} href={t.href} className="cat-tile group flex flex-col items-center text-center" data-reveal style={{ ["--reveal-delay" as string]: `${(i % 8) * 50}ms` }}>
-              <span className="relative block w-[86px] h-[86px] sm:w-[118px] sm:h-[118px] lg:w-[124px] lg:h-[124px] xl:w-[132px] xl:h-[132px]">
-                <span className="cat-ring" aria-hidden="true" />
-                <span className="cat-circle relative w-full h-full rounded-full overflow-hidden flex items-center justify-center">
-                  <TileVisual t={t} />
-                </span>
-                {t.hot && (
-                  <span className="wiggle absolute -top-1 -right-1 sm:top-0 sm:right-0 bg-gradient-to-br from-[#ffb400] to-[#e52329] text-white text-[10px] sm:text-xs font-black italic px-2 py-1 rounded-full shadow-md border-2 border-white">
-                    🔥HOT
-                  </span>
-                )}
-              </span>
-              <span className="mt-2.5 text-[12px] sm:text-[15px] font-bold text-ink leading-tight group-hover:text-primary-600 transition-colors">{t.label}</span>
-            </Link>
-          ))}
-        </div>
+    <Link
+      href={t.href}
+      aria-hidden={hidden || undefined}
+      tabIndex={hidden ? -1 : undefined}
+      className="cat-tile group shrink-0 w-[96px] sm:w-[128px] lg:w-[140px] px-1 sm:px-1.5 flex flex-col items-center text-center"
+    >
+      <span className="relative block w-[80px] h-[80px] sm:w-[104px] sm:h-[104px] lg:w-[112px] lg:h-[112px]">
+        <span className="cat-ring" aria-hidden="true" />
+        <span className="cat-circle relative w-full h-full rounded-full overflow-hidden flex items-center justify-center">
+          <TileVisual t={t} />
+        </span>
+        {t.hot && (
+          <span className="wiggle absolute -top-1 -right-2 bg-gradient-to-br from-[#ffb400] to-[#e52329] text-white text-[10px] sm:text-[11px] font-black italic px-2 py-0.5 rounded-full shadow-md border-2 border-white">
+            🔥HOT
+          </span>
+        )}
+      </span>
+      <span className="mt-2 text-[12px] sm:text-sm font-bold text-ink leading-tight group-hover:text-primary-600 transition-colors">{t.label}</span>
+    </Link>
+  );
+}
+
+/** One endlessly scrolling row of circles (content duplicated for a seamless loop). */
+function MarqueeRow({ tiles, reverse = false }: { tiles: Tile[]; reverse?: boolean }) {
+  return (
+    <div className="cat-marquee group/row overflow-hidden">
+      <div className={`cat-marquee-track flex w-max ${reverse ? "cat-marquee-reverse" : ""}`}>
+        {[...tiles, ...tiles].map((t, i) => (
+          <Circle key={`${t.label}-${i}`} t={t} hidden={i >= tiles.length} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function CategoryCircles() {
+  const half = Math.ceil(TILES.length / 2);
+  return (
+    <section className="relative z-10 w-full max-w-[1320px] mx-auto px-3 sm:px-6 -mt-[24px] sm:-mt-[50px] lg:-mt-[64px]" aria-label="Shop by category">
+      <div className="bg-white rounded-[20px] sm:rounded-[24px] shadow-[0_18px_50px_-18px_rgba(5,69,141,0.35)] border border-slate-100 py-5 sm:py-7 space-y-5 sm:space-y-7">
+        <MarqueeRow tiles={TILES.slice(0, half)} />
+        <MarqueeRow tiles={TILES.slice(half)} reverse />
       </div>
     </section>
   );

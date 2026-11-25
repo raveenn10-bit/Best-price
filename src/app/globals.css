@@ -479,3 +479,26 @@
   .brand-title { color: #fff; background: none; }
   .brand-tilt { transform: none; }
 }
+
+/* Endless category circle rows */
+.cat-marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  padding: 10px 0 4px;
+}
+.cat-marquee-track { animation: catScroll 45s linear infinite; }
+.cat-marquee-reverse { animation-direction: reverse; animation-duration: 50s; }
+.cat-marquee:hover .cat-marquee-track,
+.cat-marquee:focus-within .cat-marquee-track { animation-play-state: paused; }
+@keyframes catScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cat-marquee { overflow-x: auto; }
+  .cat-marquee-track { animation: none; }
+}
+
+.hero-banners { --hero-strip: 28px; }
+@media (min-width: 640px) { .hero-banners { --hero-strip: 56px; } }
+@media (min-width: 1024px) { .hero-banners { --hero-strip: 72px; } }
