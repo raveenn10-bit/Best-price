@@ -628,3 +628,26 @@ html { -webkit-text-size-adjust: 100%; }
   .kb-in-left, .kb-in-right, .kb-out-up, .hero-grain, .hero-sweep, .hero-count, .hero-caption { animation: none; }
   .hero-sweep { display: none; }
 }
+
+/* ======================= Preloader ======================= */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.55s ease, visibility 0.55s ease, transform 0.55s ease;
+  /* Safety net: if scripts never run, fade out on its own */
+  animation: plAutoHide 0.5s ease 7s forwards;
+}
+.preloader.is-hidden { opacity: 0; visibility: hidden; transform: scale(1.03); pointer-events: none; }
+.pl-skip .preloader { display: none; }
+html.pl-lock, html.pl-lock body { overflow: hidden; }
+@keyframes plAutoHide { to { opacity: 0; visibility: hidden; } }
+.preloader-inner { width: min(86vw, 520px); display: flex; flex-direction: column; align-items: center; }
+.preloader-video { width: 100%; height: auto; aspect-ratio: 840 / 375; object-fit: contain; background: #fff; }
+.preloader-bar { width: 170px; height: 3px; border-radius: 3px; background: #ececec; overflow: hidden; margin-top: 18px; }
+.preloader-bar span { display: block; height: 100%; background: #e60000; border-radius: 3px; transition: width 0.3s linear; }
+.preloader-label { margin-top: 12px; font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: #9a9a9a; }
