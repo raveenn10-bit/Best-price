@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Star, Truck, Banknote, Headphones } from "lucide-react";
 import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEWS } from "@/data/storeData";
 import { useCountdown } from "@/components/Countdown";
-import { CategoryCircles } from "@/components/CategoryCircles";
 import { HeroBanners } from "@/components/HeroBanners";
 import { BrandShowcase } from "@/components/BrandShowcase";
 import { ProductRow, SectionTitle } from "@/components/ProductRow";
@@ -102,7 +101,6 @@ export default function HomePage() {
     <>
       <h1 className="sr-only">BestPrices.lk — online shopping for electronics and home appliances in Sri Lanka</h1>
       <HeroBanners />
-      <CategoryCircles />
       <DealsCountdownBanner />
 
       <div className="bg-[#F6F6F6]">
