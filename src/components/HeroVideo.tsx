@@ -224,3 +224,96 @@ export function MobileHeroVideo() {
     </div>
   );
 }
+
+/**
+ * Desktop/tablet hero: the landscape brand film, edge to edge, looping, with the overlay.
+ * Loads after the page is idle; poster shows instantly; pauses when scrolled away.
+ */
+export function DesktopHeroVideo() {
+  const wrap = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLVideoElement>(null);
+  const [src, setSrc] = useState<string | undefined>(undefined);
+  const [muted, setMuted] = useState(true);
+  const [light, setLight] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 639px)").matches) return; // phones use MobileHeroVideo
+    const isLight = prefersLightMode();
+    setLight(isLight);
+    if (!isLight) whenIdle(() => setSrc(HERO_VIDEO.desktop.src));
+    const el = wrap.current;
+    if (!el) return;
+
+    // Pause off-screen + gentle scroll parallax (transform only)
+    const io = new IntersectionObserver(([e]) => {
+      const v = ref.current;
+      if (!v || !v.src) return;
+      if (e.isIntersecting) v.play().catch(() => {});
+      else v.pause();
+    });
+    io.observe(el);
+    let raf = 0;
+    const onScroll = () => {
+      if (raf || isLight) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const h = el.offsetHeight || 1;
+        const y = Math.min(window.scrollY, h);
+        el.style.setProperty("--hero-scroll", `${(y * 0.3).toFixed(1)}px`);
+        el.style.setProperty("--hero-fade", (Math.min(y / h, 1) * 0.6).toFixed(3));
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (ref.current) ref.current.muted = muted;
+  }, [muted]);
+
+  return (
+    <section ref={wrap} className="hidden sm:block hero-cine hero-art relative w-full overflow-hidden bg-black" aria-label="BestPrices.lk">
+      <div className="hero-parallax absolute inset-0">
+        <video
+          ref={ref}
+          src={src}
+          poster={HERO_VIDEO.desktop.poster}
+          muted
+          loop
+          playsInline
+          autoPlay={!light}
+          preload={src ? "auto" : "none"}
+          aria-label={HERO_VIDEO.alt}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+      <div className="absolute inset-0 z-[3] bg-gradient-to-r from-black/85 via-black/45 to-transparent" aria-hidden="true" />
+      <span className="hero-vignette" aria-hidden="true" />
+      <span className="hero-grain" aria-hidden="true" />
+      <span className="hero-scrollfade" aria-hidden="true" />
+      <div className="absolute inset-0 z-[4] flex items-center px-8 lg:px-16 xl:px-24">
+        <HeroOverlay />
+      </div>
+      <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-8 z-[5]">
+        {src ? (
+          <MuteButton muted={muted} onToggle={() => setMuted((m) => !m)} />
+        ) : (
+          light && (
+            <button
+              type="button"
+              onClick={() => setSrc(HERO_VIDEO.desktop.src)}
+              aria-label="Play video"
+              className="w-12 h-12 rounded-full bg-white/90 text-ink flex items-center justify-center shadow-lg"
+            >
+              <Play className="w-5 h-5 fill-current" />
+            </button>
+          )
+        )}
+      </div>
+    </section>
+  );
+}
