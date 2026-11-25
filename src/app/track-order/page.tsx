@@ -17,7 +17,7 @@ export default function TrackOrderPage() {
     <div className="max-w-4xl mx-auto px-3 sm:px-6 py-8 space-y-6">
       <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-5">
         <div>
-          <span className="text-xs font-extrabold uppercase tracking-wider text-rose-600">Order Tracker</span>
+          <span className="text-xs font-extrabold uppercase tracking-wider text-primary-600">Order Tracker</span>
           <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-1">Track Your BestPrices.lk Order</h1>
         </div>
 
@@ -33,16 +33,16 @@ export default function TrackOrderPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Enter Order ID (e.g. BP-2026-8492)"
-            className="flex-1 px-4 py-3 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-none focus:border-rose-600"
+            className="flex-1 px-4 py-3 rounded-xl border border-slate-300 text-sm font-semibold focus:outline-none focus:border-primary-600"
           />
-          <button type="submit" className="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
+          <button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
             Track Order
           </button>
         </form>
 
         {hydrated && !order && (
           <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
-            <PackageSearch className="w-8 h-8 text-rose-600 mx-auto" />
+            <PackageSearch className="w-8 h-8 text-primary-600 mx-auto" />
             <p className="font-display font-bold text-slate-900">No order found for &quot;{trackedOrderId}&quot;</p>
             <p className="text-xs text-slate-500">
               Check the ID and try again.{orders[0] ? ` Your most recent order is ${orders[0].id}.` : ""}
@@ -65,7 +65,7 @@ export default function TrackOrderPage() {
               </div>
               <div className="sm:text-right">
                 <p className="text-xs text-slate-500">Total Amount</p>
-                <p className="font-display font-extrabold text-base text-rose-600 tabular-nums">{formatLKR(order.total)}</p>
+                <p className="font-display font-extrabold text-base text-primary-600 tabular-nums">{formatLKR(order.total)}</p>
               </div>
             </div>
 
@@ -75,11 +75,11 @@ export default function TrackOrderPage() {
                 return (
                   <div
                     key={label}
-                    className={`p-3 rounded-xl border ${done ? "border-rose-500 bg-rose-50/60 text-slate-900" : "border-slate-200 bg-white text-slate-400"} text-center`}
+                    className={`p-3 rounded-xl border ${done ? "border-primary-500 bg-primary-50/60 text-slate-900" : "border-slate-200 bg-white text-slate-400"} text-center`}
                   >
                     <div
                       className={`w-7 h-7 rounded-full mx-auto mb-1.5 flex items-center justify-center text-xs font-bold ${
-                        done ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-400"
+                        done ? "bg-primary-600 text-white" : "bg-slate-100 text-slate-400"
                       }`}
                     >
                       {idx + 1}

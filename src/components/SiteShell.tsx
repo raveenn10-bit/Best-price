@@ -3,7 +3,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  ArrowUp,
+  Banknote,
   CheckCircle2,
+  Mail,
   ChevronRight,
   Flame,
   Grid,
@@ -29,32 +32,29 @@ import { PAGES_REGISTRY, searchHref, shopHref } from "@/lib/routes";
 import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 
 /* -------------------------------------------------------------------------- */
-/* Announcement bar                                                           */
+/* Promo bar (scrolling trust messages)                                       */
 /* -------------------------------------------------------------------------- */
+const PROMO_MESSAGES = [
+  { icon: ShieldCheck, text: "100% Genuine Products" },
+  { icon: Zap, text: "Daily Tech Deals — Up to 44% OFF" },
+  { icon: Truck, text: "Islandwide Delivery Across Sri Lanka" },
+  { icon: Banknote, text: "Cash on Delivery Available" },
+  { icon: Flame, text: "Use Code BEST10 for 10% Extra Discount" },
+];
+
 function AnnouncementBar() {
+  const items = [...PROMO_MESSAGES, ...PROMO_MESSAGES];
   return (
-    <div className="bg-slate-950 text-white text-xs border-b border-slate-800">
-      <div className="w-full px-4 sm:px-6 lg:px-10 py-2 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 sm:gap-4 overflow-x-auto no-scrollbar">
-          <span className="inline-flex items-center gap-1.5 bg-rose-600 text-white font-semibold px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider shrink-0">
-            <Flame className="w-3.5 h-3.5" /> Hot Deals
+    <section className="bg-[#09080B] text-white text-[13px] sm:text-sm font-medium h-10 sm:h-[50px] flex items-center overflow-hidden" aria-label="Store highlights">
+      <div className="animate-marquee gap-10 sm:gap-14 pl-6">
+        {items.map(({ icon: Icon, text }, i) => (
+          <span key={i} className="inline-flex items-center gap-2 shrink-0 whitespace-nowrap">
+            <Icon className="w-4 h-4 text-deal" />
+            {text}
           </span>
-          <span className="text-slate-200 font-medium truncate">
-            Islandwide Delivery Across Sri Lanka • Up to 44% OFF Flash Deals • Use Code{" "}
-            <strong className="text-rose-400">{BUSINESS_SETTINGS.demoPromoCode}</strong> for 10% Extra Discount
-          </span>
-        </div>
-        <div className="hidden md:flex items-center gap-4 text-slate-300 shrink-0">
-          <Link href="/track-order" className="hover:text-white flex items-center gap-1 transition">
-            <Truck className="w-3.5 h-3.5 text-rose-500" /> Track Order
-          </Link>
-          <span className="text-slate-700">|</span>
-          <Link href="/faq" className="hover:text-white flex items-center gap-1 transition">
-            <HelpCircle className="w-3.5 h-3.5 text-rose-500" /> Help & FAQ
-          </Link>
-        </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -102,7 +102,7 @@ function AutocompleteDropdown({
                 onPick();
                 router.push(`/product/${p.id}`);
               }}
-              className="w-full p-3 hover:bg-rose-50/50 flex items-center justify-between gap-3 text-left transition"
+              className="w-full p-3 hover:bg-primary-50/50 flex items-center justify-between gap-3 text-left transition"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <img src={p.image} alt={p.name} className="w-11 h-11 rounded-lg object-contain border border-slate-200 bg-white shrink-0" />
@@ -114,7 +114,7 @@ function AutocompleteDropdown({
                 </div>
               </div>
               <div className="text-right shrink-0">
-                <span className="block text-xs font-extrabold text-rose-600 tabular-nums">{formatLKR(p.discountPrice)}</span>
+                <span className="block text-xs font-extrabold text-primary-600 tabular-nums">{formatLKR(p.discountPrice)}</span>
                 <span className="text-[10px] text-slate-400 line-through tabular-nums">{formatLKR(p.originalPrice)}</span>
               </div>
             </button>
@@ -125,7 +125,7 @@ function AutocompleteDropdown({
               onPick();
               router.push(searchHref(query, category));
             }}
-            className="w-full py-2.5 px-4 bg-slate-900 text-white text-xs font-bold text-center hover:bg-rose-600 transition"
+            className="w-full py-2.5 px-4 bg-slate-900 text-white text-xs font-bold text-center hover:bg-primary-600 transition"
           >
             View All Search Results for &quot;{query}&quot; →
           </button>
@@ -138,7 +138,6 @@ function AutocompleteDropdown({
 function DesktopSearch() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("all");
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -151,49 +150,37 @@ function DesktopSearch() {
   }, []);
 
   return (
-    <div ref={wrapRef} className="hidden md:block flex-1 max-w-2xl relative">
+    <div ref={wrapRef} className="hidden md:block flex-1 max-w-[620px] relative">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setOpen(false);
-          router.push(searchHref(query.trim(), category));
+          router.push(searchHref(query.trim()));
         }}
-        className="flex items-center w-full rounded-xl border-2 border-slate-200 focus-within:border-rose-600 bg-slate-50/70 focus-within:bg-white overflow-hidden transition-all shadow-sm"
+        className="flex items-center h-11 rounded-full bg-[#F3F5F8] border border-transparent focus-within:border-primary-300 focus-within:bg-white transition"
       >
-        <select
-          aria-label="Search Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="bg-transparent text-xs font-semibold text-slate-700 pl-3.5 pr-2 py-2.5 border-r border-slate-200 focus:outline-none cursor-pointer"
-        >
-          <option value="all">All Categories</option>
-          {CATEGORIES.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
         <input
           type="search"
           value={query}
-          placeholder="Search smartphones, 4K TVs, inverter fridges, air fryers..."
+          placeholder="What are you looking for?"
           autoComplete="off"
+          aria-label="Search products"
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          className="w-full px-3.5 py-2.5 text-sm text-slate-900 bg-transparent focus:outline-none"
+          className="flex-1 min-w-0 h-full pl-5 pr-3 text-sm text-ink bg-transparent focus:outline-none placeholder:text-slate-400"
         />
         <button
           type="submit"
-          className="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 font-semibold text-sm flex items-center gap-1.5 transition shrink-0"
+          aria-label="Search"
+          className="w-9 h-9 mr-1 rounded-full bg-primary-100/70 hover:bg-primary-600 hover:text-white text-ink flex items-center justify-center transition"
         >
           <Search className="w-4 h-4" />
-          <span>Search</span>
         </button>
       </form>
-      {open && query.trim() && <AutocompleteDropdown query={query} category={category} onPick={() => setOpen(false)} />}
+      {open && query.trim() && <AutocompleteDropdown query={query} category="all" onPick={() => setOpen(false)} />}
     </div>
   );
 }
@@ -213,29 +200,29 @@ function MobileSearch() {
   }, []);
 
   return (
-    <div ref={wrapRef} className="mt-2.5 md:hidden relative">
+    <div ref={wrapRef} className="md:hidden relative px-4 pb-3">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setOpen(false);
           router.push(searchHref(query.trim()));
         }}
-        className="flex items-center w-full rounded-xl border border-slate-300 focus-within:border-rose-600 bg-slate-50 focus-within:bg-white overflow-hidden"
+        className="flex items-center h-11 rounded-full bg-[#F3F5F8] border border-transparent focus-within:border-primary-300 focus-within:bg-white"
       >
-        <Search className="w-4 h-4 text-slate-400 ml-3 shrink-0" />
         <input
           type="search"
           value={query}
-          placeholder="Search products, brands or categories..."
+          placeholder="What are you looking for?"
           autoComplete="off"
+          aria-label="Search products"
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
           }}
-          className="w-full px-2.5 py-2 text-sm text-slate-900 bg-transparent focus:outline-none"
+          className="flex-1 min-w-0 h-full pl-5 pr-2 text-sm text-ink bg-transparent focus:outline-none"
         />
-        <button type="submit" className="bg-rose-600 text-white px-3.5 py-2 text-xs font-semibold shrink-0">
-          Go
+        <button type="submit" aria-label="Search" className="w-9 h-9 mr-1 rounded-full bg-primary-100/70 text-ink flex items-center justify-center">
+          <Search className="w-4 h-4" />
         </button>
       </form>
       {open && query.trim() && <AutocompleteDropdown query={query} category="all" onPick={() => setOpen(false)} />}
@@ -244,144 +231,112 @@ function MobileSearch() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Header + category nav                                                      */
+/* Header + navy category nav                                                 */
 /* -------------------------------------------------------------------------- */
-function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
+const QUICK_NAV = [
+  { label: "Mobile Phones", href: shopHref({ category: "mobiles" }) },
+  { label: "Laptops", href: shopHref({ category: "laptops" }) },
+  { label: "TV & Audio", href: shopHref({ category: "tv-audio" }) },
+  { label: "Home Appliances", href: shopHref({ category: "home-appliances" }) },
+  { label: "Kitchen", href: shopHref({ category: "kitchen-appliances" }) },
+  { label: "Smart Watches", href: shopHref({ category: "wearables" }) },
+];
+
+function Header({ onOpenMenu, onOpenCategories }: { onOpenMenu: () => void; onOpenCategories: () => void }) {
   const { user, wishlist, totals, hydrated } = useStore();
   const pathname = usePathname();
   const cartCount = hydrated ? totals.totalItems : 0;
   const wishCount = hydrated ? wishlist.length : 0;
 
-  const navPill = (href: string, active: boolean) =>
-    `px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 transition ${
-      active ? "bg-slate-800 text-white" : "text-slate-200 hover:text-white hover:bg-slate-800"
-    }`;
-
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-      <div className="w-full px-4 sm:px-6 lg:px-10 py-3">
-        <div className="flex items-center justify-between gap-3 lg:gap-6">
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={onOpenMenu}
-              aria-label="Open Menu"
-              className="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 active:scale-95 transition"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-            <Link href="/" className="flex items-center gap-2 group">
-              <img
-                src={LOGO_SRC}
-                alt="BestPrices.lk Official Logo"
-                className="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-[1.02]"
-              />
-            </Link>
-          </div>
-
-          <DesktopSearch />
-
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            <a
-              href="tel:+94112345678"
-              className="hidden xl:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-rose-200 transition"
-            >
-              <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                <PhoneCall className="w-4 h-4" />
-              </div>
-              <div className="text-left leading-tight">
-                <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">24/7 Support</span>
-                <span className="text-xs font-bold text-slate-900 tabular-nums">011 234 5678</span>
-              </div>
-            </a>
-
-            <Link
-              href={user ? "/account" : "/auth"}
-              className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition"
-            >
-              <User className="w-5 h-5 text-slate-700" />
-              <div className="hidden sm:block text-left leading-tight">
-                <span className="block text-[10px] text-slate-500 font-medium">{user ? user.name.split(" ")[0] : "Sign In"}</span>
-                <span className="text-xs font-bold text-slate-900">Account</span>
-              </div>
-            </Link>
-
-            <Link
-              href="/wishlist"
-              className="relative flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200 hover:border-rose-200 hover:bg-rose-50/40 transition"
-              aria-label="Wishlist"
-            >
-              <Heart className="w-5 h-5 text-slate-700" />
-              <span className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full bg-slate-900 text-white text-[11px] font-bold flex items-center justify-center tabular-nums">
-                {wishCount}
-              </span>
-            </Link>
-
-            <Link
-              href="/cart"
-              className="relative flex items-center gap-2.5 p-2 sm:px-3.5 sm:py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-600/20 transition"
-              aria-label="Shopping Cart"
-            >
-              <div className="relative">
-                <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-slate-950 text-white text-[10px] font-bold flex items-center justify-center tabular-nums border border-white/20">
-                  {cartCount}
-                </span>
-              </div>
-              <div className="hidden sm:block text-left leading-tight">
-                <span className="block text-[10px] text-rose-100 font-medium">My Cart</span>
-                <span className="text-xs font-bold text-white tabular-nums">{formatLKR(hydrated ? totals.subtotal : 0)}</span>
-              </div>
-            </Link>
-          </div>
+    <header className="sticky top-0 z-40 bg-white shadow-[0_1px_5px_rgba(0,0,0,0.07)]">
+      <div className="w-full px-4 sm:px-6 lg:px-10 h-[68px] sm:h-[82px] flex items-center justify-between gap-4 lg:gap-8">
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={onOpenMenu}
+            aria-label="Open menu"
+            className="lg:hidden w-10 h-10 -ml-2 rounded-full text-ink hover:bg-slate-100 flex items-center justify-center"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <Link href="/" aria-label="BestPrices.lk home" className="flex items-center">
+            <img src={LOGO_SRC} alt="BestPrices.lk" className="h-9 sm:h-11 w-auto object-contain" />
+          </Link>
         </div>
 
-        <MobileSearch />
+        <DesktopSearch />
+
+        <div className="flex items-center gap-1 sm:gap-3 shrink-0">
+          <Link
+            href={user ? "/account" : "/auth"}
+            className="flex items-center gap-2.5 px-2 sm:px-3 h-10 rounded-full hover:bg-slate-50 transition"
+          >
+            <User className="w-6 h-6 text-ink" />
+            <span className="hidden lg:block leading-tight text-left">
+              <span className="block text-xs text-slate-500">{user ? `Hello, ${user.name.split(" ")[0]}` : "Hello, sign in"}</span>
+              <span className="block text-sm font-bold text-ink">My account</span>
+            </span>
+          </Link>
+
+          <Link
+            href="/wishlist"
+            aria-label={`Wishlist (${wishCount})`}
+            className="relative w-10 h-10 rounded-full border-[2.4px] border-primary-600 text-[#333] flex items-center justify-center hover:bg-primary-50 transition"
+          >
+            <Heart className="w-[18px] h-[18px]" />
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+              {wishCount}
+            </span>
+          </Link>
+
+          <Link href="/cart" aria-label={`Cart (${cartCount} items)`} className="flex items-center gap-2.5 pl-2 sm:pl-3 h-10">
+            <span className="relative">
+              <ShoppingBag className="w-7 h-7 text-ink" />
+              <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-1 rounded-full bg-price text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+                {cartCount}
+              </span>
+            </span>
+            <span className="hidden sm:block leading-tight">
+              <span className="block text-xs text-slate-500">Cart</span>
+              <span className="block text-sm font-bold text-ink tabular-nums">LKR {(hydrated ? totals.subtotal : 0).toLocaleString("en-LK")}</span>
+            </span>
+          </Link>
+        </div>
       </div>
 
-      <nav className="bg-slate-900 text-white border-t border-slate-800">
-        <div className="w-full px-4 sm:px-6 lg:px-10 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-1 py-1.5 flex-1 min-w-0 overflow-x-auto no-scrollbar">
-            <Link
-              href="/categories"
-              className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shrink-0 mr-2 transition"
-            >
-              <Grid className="w-4 h-4" />
-              <span>All Categories</span>
-            </Link>
-            <Link href="/" className={navPill("/", pathname === "/")}>
-              Home
-            </Link>
+      <MobileSearch />
+
+      <nav className="bg-navy text-white" aria-label="Main">
+        <div className="w-full px-4 sm:px-6 lg:px-10 h-12 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onOpenCategories}
+            className="flex items-center gap-2 pr-4 mr-1 h-full text-sm sm:text-[15px] font-semibold shrink-0 border-r border-white/15 hover:text-deal transition"
+          >
+            <Menu className="w-5 h-5" /> All Categories
+          </button>
+          <div className="flex-1 min-w-0 flex items-center gap-1 overflow-x-auto no-scrollbar">
             <Link
               href="/flash-deals"
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-400 hover:bg-slate-800 flex items-center gap-1 shrink-0 transition ${
-                pathname === "/flash-deals" ? "bg-slate-800" : ""
+              className={`px-3 py-1.5 rounded-full text-sm font-semibold shrink-0 flex items-center gap-1 text-deal hover:bg-white/10 transition ${
+                pathname === "/flash-deals" ? "bg-white/10" : ""
               }`}
             >
-              <Zap className="w-3.5 h-3.5 fill-amber-400" /> Flash Deals
+              <Zap className="w-4 h-4 fill-deal" /> Deals
             </Link>
-            <Link href="/shop" className={navPill("/shop", pathname === "/shop")}>
-              Shop All
+            <Link href="/shop" className="px-3 py-1.5 rounded-full text-sm font-medium shrink-0 hover:bg-white/10 transition">
+              Shop
             </Link>
-            {CATEGORIES.map((c) => (
-              <Link
-                key={c.id}
-                href={shopHref({ category: c.id })}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 shrink-0 transition"
-              >
-                {c.name}
+            {QUICK_NAV.map((l) => (
+              <Link key={l.label} href={l.href} className="px-3 py-1.5 rounded-full text-sm font-medium text-white/90 shrink-0 hover:bg-white/10 hover:text-white transition">
+                {l.label}
               </Link>
             ))}
           </div>
-          <div className="hidden lg:flex items-center gap-3 text-xs text-slate-300 shrink-0 pl-4">
-            <Link href="/about" className="hover:text-white transition">
-              About Us
-            </Link>
-            <span className="text-slate-700">•</span>
-            <Link href="/contact" className="hover:text-white transition">
-              Contact
-            </Link>
-          </div>
+          <a href="tel:+94112345678" className="hidden lg:flex items-center gap-2 text-sm font-semibold shrink-0 hover:text-deal transition">
+            <PhoneCall className="w-4 h-4" /> {BUSINESS_SETTINGS.hotline}
+          </a>
         </div>
       </nav>
     </header>
@@ -389,86 +344,174 @@ function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
 }
 
 /* -------------------------------------------------------------------------- */
+/* All-categories drawer (mega menu)                                          */
+/* -------------------------------------------------------------------------- */
+function CategoryDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [active, setActive] = useState(CATEGORIES[0].id);
+  const cat = CATEGORIES.find((c) => c.id === active) || CATEGORIES[0];
+  const items = PRODUCTS.filter((p) => p.category === cat.id);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute left-0 top-0 bottom-0 w-full max-w-[880px] bg-white shadow-2xl flex flex-col">
+        <div className="bg-navy text-white h-14 px-5 flex items-center justify-between shrink-0">
+          <span className="font-bold text-base">All Categories</span>
+          <button type="button" onClick={onClose} aria-label="Close categories" className="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        <div className="flex-1 min-h-0 flex flex-col sm:flex-row">
+          <div className="sm:w-60 shrink-0 border-b sm:border-b-0 sm:border-r border-slate-200 p-3 flex sm:flex-col gap-1 overflow-x-auto sm:overflow-y-auto no-scrollbar">
+            {CATEGORIES.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onMouseEnter={() => setActive(c.id)}
+                onClick={() => setActive(c.id)}
+                className={`text-left px-4 py-2.5 rounded-lg text-sm font-semibold shrink-0 transition ${
+                  active === c.id ? "bg-primary-50 text-primary-600" : "text-[#30343B] hover:bg-slate-50"
+                }`}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+          <div className="flex-1 overflow-y-auto p-5 sm:p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-ink">{cat.name}</h2>
+              <Link href={shopHref({ category: cat.id })} onClick={onClose} className="text-sm font-semibold text-primary-600 hover:underline">
+                View all
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {cat.subcategories.map((s) => (
+                <Link
+                  key={s}
+                  href={shopHref({ category: cat.id })}
+                  onClick={onClose}
+                  className="px-3.5 py-1.5 rounded-full border border-[#DEDEDE] text-sm font-medium text-[#171717] hover:border-primary-600 hover:text-primary-600 transition"
+                >
+                  {s}
+                </Link>
+              ))}
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {items.map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/product/${p.id}`}
+                  onClick={onClose}
+                  className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 hover:border-primary-300 transition"
+                >
+                  <img src={p.image} alt="" className="w-14 h-14 object-contain shrink-0" />
+                  <span className="min-w-0">
+                    <span className="block text-xs font-semibold text-ink line-clamp-2">{p.name}</span>
+                    <span className="block text-xs font-bold text-price mt-0.5 tabular-nums">LKR {p.discountPrice.toLocaleString("en-LK")}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* Footer                                                                     */
 /* -------------------------------------------------------------------------- */
 function Footer() {
-  const link = "text-slate-400 hover:text-rose-400 transition";
+  const link = "text-[#A1A1AA] hover:text-white transition";
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-14 pb-24 lg:pb-10 border-t border-slate-800 mt-16">
+    <footer className="bg-[#09090B] text-[#A1A1AA] pt-14 pb-24 lg:pb-10">
       <div className="w-full px-4 sm:px-6 lg:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-slate-800/80">
-          <div className="lg:col-span-2 space-y-4">
-            <div className="inline-flex items-center bg-white px-3.5 py-2 rounded-xl shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 pb-12 border-b border-white/10">
+          <div className="space-y-5">
+            <div className="inline-flex items-center bg-white px-3.5 py-2 rounded-xl">
               <img src={LOGO_SRC} alt="BestPrices.lk" className="h-9 w-auto object-contain" />
             </div>
-            <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              Sri Lanka&apos;s modern online destination for genuine electronics, smart home appliances, kitchen essentials, and
-              personal tech at transparent LKR prices with islandwide delivery.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 text-xs bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
-                <MapPin className="w-3.5 h-3.5 text-rose-500" /> Colombo & Islandwide Dispatch
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-xs bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-slate-300">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Genuine Products
-              </span>
+            <div>
+              <p className="text-white font-bold text-lg">Inquiries? Call Us!</p>
+              <a href="tel:+94112345678" className="block text-2xl font-extrabold text-white mt-1 hover:text-primary-400 tabular-nums">
+                {BUSINESS_SETTINGS.hotline}
+              </a>
             </div>
-          </div>
-
-          <div>
-            <h4 className="text-white font-display font-bold text-sm uppercase tracking-wider mb-4">Departments</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href={shopHref({ category: "mobiles" })} className={link}>Mobiles & Smartphones</Link></li>
-              <li><Link href={shopHref({ category: "laptops" })} className={link}>Laptops & Computing</Link></li>
-              <li><Link href={shopHref({ category: "tv-audio" })} className={link}>4K Smart TVs & Audio</Link></li>
-              <li><Link href={shopHref({ category: "home-appliances" })} className={link}>Refrigerators & Washers</Link></li>
-              <li><Link href={shopHref({ category: "kitchen-appliances" })} className={link}>Kitchen Appliances</Link></li>
-              <li><Link href={shopHref({ category: "wearables" })} className={link}>Smart Watches & Wearables</Link></li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 mt-0.5 text-primary-400 shrink-0" /> {BUSINESS_SETTINGS.headOffice}
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-primary-400 shrink-0" />
+                <a href={`mailto:${BUSINESS_SETTINGS.supportEmail}`} className={link}>
+                  {BUSINESS_SETTINGS.supportEmail}
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <WhatsAppIcon className="w-4 h-4 text-[#25D366] shrink-0" />
+                <a href={whatsappLink("Hello BestPrices.lk!")} target="_blank" rel="noopener noreferrer" className={link}>
+                  Chat on WhatsApp
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-display font-bold text-sm uppercase tracking-wider mb-4">Customer Hub</h4>
+            <h4 className="text-white font-bold text-base mb-4">Let Us Help You</h4>
             <ul className="space-y-2.5 text-sm">
-              <li><Link href="/auth" className={link}>Login / Register</Link></li>
-              <li><Link href="/account" className={link}>My Account Dashboard</Link></li>
+              <li><Link href="/account" className={link}>My Account</Link></li>
               <li><Link href="/track-order" className={link}>Order Tracking</Link></li>
-              <li><Link href="/wishlist" className={link}>Saved Wishlist</Link></li>
-              <li><Link href="/cart" className={link}>Shopping Cart</Link></li>
-              <li><Link href="/flash-deals" className={link}>Flash Deals Countdown</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-display font-bold text-sm uppercase tracking-wider mb-4">Company & Policies</h4>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link href="/about" className={link}>About BestPrices.lk</Link></li>
-              <li><Link href="/contact" className={link}>Contact & Showrooms</Link></li>
-              <li><Link href="/faq" className={link}>Frequently Asked Questions</Link></li>
+              <li><Link href="/faq" className={link}>FAQs</Link></li>
               <li><Link href="/delivery" className={link}>Delivery Policy</Link></li>
-              <li><Link href="/returns" className={link}>Return & Refund Policy</Link></li>
+              <li><Link href="/returns" className={link}>Return & Refund</Link></li>
               <li><Link href="/privacy" className={link}>Privacy Policy</Link></li>
               <li><Link href="/terms" className={link}>Terms & Conditions</Link></li>
             </ul>
           </div>
+
+          <div>
+            <h4 className="text-white font-bold text-base mb-4">Get to Know Us</h4>
+            <ul className="space-y-2.5 text-sm">
+              <li><Link href="/about" className={link}>About Us</Link></li>
+              <li><Link href="/flash-deals" className={link}>All Deals</Link></li>
+              <li><Link href="/shop" className={link}>Shop All Products</Link></li>
+              <li><Link href="/categories" className={link}>All Categories</Link></li>
+              <li><Link href="/wishlist" className={link}>Wishlist</Link></li>
+              <li><Link href="/contact" className={link}>Contact Us</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold text-base mb-4">Shop by Department</h4>
+            <ul className="space-y-2.5 text-sm">
+              {CATEGORIES.map((c) => (
+                <li key={c.id}>
+                  <Link href={shopHref({ category: c.id })} className={link}>
+                    {c.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
-            <span>
-              © 2026 <strong className="text-white">BestPrices.lk</strong>. All Rights Reserved.
-            </span>
-            <span className="hidden sm:inline text-slate-700">|</span>
-            <span>
-              Designed & Developed by{" "}
-              <a href={BUSINESS_SETTINGS.developerUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-rose-400 hover:text-rose-300">
-                {BUSINESS_SETTINGS.developer}
-              </a>
-            </span>
-          </div>
+        <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs">
+          <span className="text-center lg:text-left">
+            © {new Date().getFullYear()} <strong className="text-white">BestPrices.lk</strong>. All Rights Reserved. • Designed & Developed by{" "}
+            <a href={BUSINESS_SETTINGS.developerUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-primary-400">
+              {BUSINESS_SETTINGS.developer}
+            </a>
+          </span>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {["VISA / MasterCard", "Cash on Delivery (LKR)", "Bank Transfer", "KOKO / MintPay Ready"].map((m) => (
-              <span key={m} className="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300 font-medium">
+            {["Cash on Delivery", "Bank Transfer", "Islandwide Delivery"].map((m) => (
+              <span key={m} className="px-3 py-1.5 rounded-md bg-white/5 border border-white/10 text-white/80 font-semibold">
                 {m}
               </span>
             ))}
@@ -492,7 +535,7 @@ function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState("");
   return (
-    <div className={`fixed ${raised ? "bottom-36" : "bottom-20"} lg:bottom-6 right-4 z-40 flex flex-col items-end`}>
+    <div className={`fixed ${raised ? "bottom-36" : "bottom-20"} lg:bottom-6 left-3 sm:left-5 z-40 flex flex-col items-start`}>
       {open && (
         <div className="mb-3 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
           <div className="bg-[#25D366] text-white p-4 flex items-center justify-between">
@@ -552,7 +595,7 @@ function MobileBottomNav() {
   const pathname = usePathname();
   const { user, totals, hydrated } = useStore();
   const tab = (active: boolean) =>
-    `flex flex-col items-center justify-center gap-1 ${active ? "text-rose-600" : "text-slate-600 hover:text-rose-600"}`;
+    `flex flex-col items-center justify-center gap-1 ${active ? "text-primary-600" : "text-slate-600 hover:text-primary-600"}`;
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(15,23,42,0.06)]">
       <div className="grid grid-cols-5 h-16">
@@ -564,15 +607,15 @@ function MobileBottomNav() {
           <Grid className="w-5 h-5" />
           <span className="text-[10px] font-semibold">Categories</span>
         </Link>
-        <Link href="/flash-deals" className="flex flex-col items-center justify-center gap-1 text-rose-600">
-          <div className="w-9 h-9 rounded-full bg-rose-600 text-white flex items-center justify-center -mt-3 shadow-md shadow-rose-600/30">
+        <Link href="/flash-deals" className="flex flex-col items-center justify-center gap-1 text-primary-600">
+          <div className="w-9 h-9 rounded-full bg-primary-600 text-white flex items-center justify-center -mt-3 shadow-md shadow-primary-600/30">
             <Zap className="w-4 h-4 fill-white" />
           </div>
           <span className="text-[10px] font-bold">Deals</span>
         </Link>
         <Link href="/cart" className={`relative ${tab(pathname === "/cart")}`}>
           <ShoppingBag className="w-5 h-5" />
-          <span className="absolute top-1.5 right-5 min-w-[16px] h-4 px-1 rounded-full bg-rose-600 text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
+          <span className="absolute top-1.5 right-5 min-w-[16px] h-4 px-1 rounded-full bg-primary-600 text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
             {hydrated ? totals.totalItems : 0}
           </span>
           <span className="text-[10px] font-semibold">Cart</span>
@@ -611,7 +654,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                   key={c.id}
                   href={shopHref({ category: c.id })}
                   onClick={onClose}
-                  className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-800 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-between"
+                  className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-800 hover:bg-primary-50 hover:text-primary-600 flex items-center justify-between"
                 >
                   <span>{c.name}</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -627,7 +670,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
                   key={p.id}
                   href={p.href}
                   onClick={onClose}
-                  className="text-left px-2.5 py-2 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-rose-600 hover:text-white text-slate-700 truncate transition"
+                  className="text-left px-2.5 py-2 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-primary-600 hover:text-white text-slate-700 truncate transition"
                 >
                   {p.label}
                 </Link>
@@ -668,7 +711,7 @@ function QuickViewModal() {
           type="button"
           onClick={closeQuickView}
           aria-label="Close"
-          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-600 hover:text-white flex items-center justify-center text-slate-600 transition"
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-primary-600 hover:text-white flex items-center justify-center text-slate-600 transition"
         >
           <X className="w-5 h-5" />
         </button>
@@ -678,14 +721,14 @@ function QuickViewModal() {
           </div>
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="bg-rose-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-full">-{product.discountPct}% OFF</span>
+              <span className="bg-primary-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-full">-{product.discountPct}% OFF</span>
               <span className="text-xs font-semibold text-emerald-600">{product.stockCount} Units Available</span>
             </div>
             <h2 className="font-display font-extrabold text-xl sm:text-2xl text-slate-900">{product.name}</h2>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{product.shortDesc}</p>
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
               <div className="flex items-baseline gap-2">
-                <span className="font-display font-extrabold text-2xl text-rose-600 tabular-nums">{formatLKR(product.discountPrice)}</span>
+                <span className="font-display font-extrabold text-2xl text-price tabular-nums">{formatLKR(product.discountPrice)}</span>
                 <span className="text-sm text-slate-400 line-through tabular-nums">{formatLKR(product.originalPrice)}</span>
               </div>
               <p className="text-xs text-slate-500 mt-1">
@@ -699,7 +742,7 @@ function QuickViewModal() {
                   addToCart(product.id, 1);
                   closeQuickView();
                 }}
-                className="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-5 rounded-xl text-sm flex items-center justify-center gap-2 transition"
+                className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-5 rounded-xl text-sm flex items-center justify-center gap-2 transition"
               >
                 <ShoppingCart className="w-4 h-4" /> Add to Cart
               </button>
@@ -729,11 +772,11 @@ function Toasts() {
         <div
           key={t.id}
           className={`pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl text-white text-xs font-semibold shadow-xl border-l-4 ${
-            t.type === "success" ? "bg-slate-900 border-rose-500" : "bg-rose-600 border-white"
+            t.type === "success" ? "bg-slate-900 border-primary-500" : "bg-primary-600 border-white"
           } animate-toast-in`}
         >
           {t.type === "success" ? (
-            <CheckCircle2 className="w-4 h-4 text-rose-400 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-primary-400 shrink-0" />
           ) : (
             <Info className="w-4 h-4 text-white shrink-0" />
           )}
@@ -747,22 +790,49 @@ function Toasts() {
 /* -------------------------------------------------------------------------- */
 /* Shell                                                                      */
 /* -------------------------------------------------------------------------- */
+function BackToTop() {
+  const pathname = usePathname();
+  const raised = pathname.startsWith("/product/");
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  if (!show) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+      className={`fixed ${raised ? "bottom-36" : "bottom-24"} lg:bottom-8 right-4 sm:right-6 z-40 w-[52px] h-[52px] rounded-full bg-primary-700 hover:bg-primary-800 text-white border border-white/50 shadow-lg flex items-center justify-center transition`}
+    >
+      <ArrowUp className="w-5 h-5" />
+    </button>
+  );
+}
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [catsOpen, setCatsOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     setMenuOpen(false);
+    setCatsOpen(false);
     window.scrollTo({ top: 0 });
   }, [pathname]);
 
   return (
     <>
       <AnnouncementBar />
-      <Header onOpenMenu={() => setMenuOpen(true)} />
+      <Header onOpenMenu={() => setMenuOpen(true)} onOpenCategories={() => setCatsOpen(true)} />
       <main className="min-h-[75vh]">{children}</main>
       <Footer />
       <WhatsAppWidget />
+      <BackToTop />
+      <CategoryDrawer open={catsOpen} onClose={() => setCatsOpen(false)} />
       <MobileBottomNav />
       <MobileDrawer open={menuOpen} onClose={() => setMenuOpen(false)} />
       <QuickViewModal />

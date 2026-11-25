@@ -7,7 +7,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 py-10 space-y-6">
       <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 space-y-5">
-        <span className="text-xs font-extrabold uppercase tracking-wider text-rose-600">About BestPrices.lk</span>
+        <span className="text-xs font-extrabold uppercase tracking-wider text-primary-600">About BestPrices.lk</span>
         <h1 className="font-display font-extrabold text-2xl sm:text-4xl text-slate-900">Sri Lanka&apos;s Next-Generation E-Commerce Storefront</h1>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
           <strong>BestPrices.lk</strong> is engineered to bring Sri Lankan shoppers a clean, fast, and transparent way to compare and purchase consumer

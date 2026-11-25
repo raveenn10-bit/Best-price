@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { LOGO_SRC } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
 
-const input = "w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-rose-600";
+const input = "w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-primary-600";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function AuthPage() {
               autoComplete={tab === "login" ? "current-password" : "new-password"}
             />
           </div>
-          <button type="submit" className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl text-sm transition">
+          <button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl text-sm transition">
             {tab === "login" ? "Sign In" : "Create Account"}
           </button>
           <p className="text-[11px] text-center text-slate-400">Your account details are saved on this device.</p>

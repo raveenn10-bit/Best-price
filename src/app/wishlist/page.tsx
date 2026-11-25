@@ -26,7 +26,7 @@ export default function WishlistPage() {
               items.forEach((p) => addToCart(p.id, 1));
               router.push("/cart");
             }}
-            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition"
+            className="bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition"
           >
             Move All to Cart
           </button>
@@ -35,7 +35,7 @@ export default function WishlistPage() {
 
       {!hydrated ? null : items.length === 0 ? (
         <div className="bg-slate-50 rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-          <Heart className="w-10 h-10 text-rose-500 mx-auto" />
+          <Heart className="w-10 h-10 text-primary-500 mx-auto" />
           <h3 className="font-display font-bold text-lg">Your Wishlist is Empty</h3>
           <p className="text-xs sm:text-sm text-slate-500">Tap the heart icon on any product card to save items for comparison.</p>
           <Link href="/shop" className="inline-block bg-slate-950 text-white text-xs font-bold px-5 py-2.5 rounded-xl">

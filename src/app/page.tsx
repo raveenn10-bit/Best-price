@@ -1,397 +1,344 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, CreditCard, Headphones, ShieldCheck, Sparkles, Truck, Zap } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Star, Truck, Banknote, Headphones } from "lucide-react";
 import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEWS } from "@/data/storeData";
-import { ProductCard } from "@/components/ProductCard";
-import { CountdownBoxes } from "@/components/Countdown";
-import { SectionHeader } from "@/components/SectionHeader";
-import { useStore } from "@/context/StoreContext";
-import { shopHref } from "@/lib/routes";
+import { useCountdown } from "@/components/Countdown";
+import { ProductRow, SectionTitle } from "@/components/ProductRow";
+import { shopHref, searchHref } from "@/lib/routes";
 
+/* ---------------------------------- Hero ---------------------------------- */
 function HeroSlider() {
   const [idx, setIdx] = useState(0);
   const total = HERO_SLIDES.length;
   useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % total), 7000);
+    const id = setInterval(() => setIdx((i) => (i + 1) % total), 6000);
     return () => clearInterval(id);
   }, [idx, total]);
-  const slide = HERO_SLIDES[idx];
 
   return (
-    <section className="relative bg-slate-950 overflow-hidden">
-      <div className="w-full">
-        <div className="relative overflow-hidden bg-slate-900">
-          <img
-            key={slide.desktopImage}
-            src={slide.desktopImage}
-            alt={slide.title}
-            className="hidden sm:block w-full h-[420px] lg:h-[540px] object-cover object-center opacity-55 transition-all duration-500"
-          />
-          <img
-            key={slide.mobileImage + "-m"}
-            src={slide.mobileImage}
-            alt={slide.title}
-            className="block sm:hidden w-full h-[400px] object-cover object-center opacity-45"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent flex items-center">
-            <div className="px-5 py-6 sm:px-10 lg:px-16 xl:px-24 max-w-3xl space-y-4">
-              <span className="inline-flex items-center gap-1.5 bg-rose-600 text-white text-[11px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full">
-                <Sparkles className="w-3.5 h-3.5" /> {slide.badge}
-              </span>
-              <h1 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white leading-tight">{slide.title}</h1>
-              <p className="text-slate-300 text-xs sm:text-base leading-relaxed max-w-xl">{slide.subtitle}</p>
-              <div className="flex items-center gap-3 pt-1">
-                <span className="text-amber-400 font-display font-extrabold text-sm sm:text-lg tabular-nums">{slide.priceCallout}</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <Link
-                  href={shopHref({ category: slide.ctaCategory })}
-                  className="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl flex items-center gap-2 shadow-lg shadow-rose-600/30 transition"
-                >
-                  <span>{slide.ctaPrimary}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/flash-deals"
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-xs sm:text-sm px-5 py-3.5 rounded-xl transition"
-                >
-                  View Flash Deals
-                </Link>
+    <section className="relative w-full overflow-hidden bg-navy-900" aria-roledescription="carousel">
+      <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${idx * 100}%)` }}>
+        {HERO_SLIDES.map((slide) => (
+          <div key={slide.id} className="relative w-full shrink-0 h-[420px] sm:h-[420px] lg:h-[486px]">
+            <img src={slide.desktopImage} alt="" className="hidden sm:block absolute inset-0 w-full h-full object-cover" />
+            <img src={slide.mobileImage} alt="" className="sm:hidden absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-[#05182F]/80 sm:bg-transparent sm:bg-gradient-to-r sm:from-[#05182F]/95 sm:via-[#05182F]/70 sm:to-transparent" />
+            <div className="relative h-full w-full px-5 sm:px-10 lg:px-16 xl:px-24 flex items-center">
+              <div className="max-w-xl text-white space-y-3 sm:space-y-4">
+                <span className="inline-block bg-deal text-[#080808] text-xs font-bold px-3 py-1 rounded-[24px_0_24px_24px]">{slide.badge}</span>
+                <h2 className="text-[28px] sm:text-[40px] lg:text-[52px] font-extrabold leading-[1.05] tracking-tight">{slide.title}</h2>
+                <p className="text-sm sm:text-base text-white/80 max-w-lg">{slide.subtitle}</p>
+                <p className="text-lg sm:text-2xl font-extrabold text-deal tabular-nums">{slide.priceCallout}</p>
+                <div className="flex flex-wrap gap-3 pt-1">
+                  <Link
+                    href={shopHref({ category: slide.ctaCategory })}
+                    className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm px-6 py-3 rounded-full transition"
+                  >
+                    {slide.ctaPrimary} <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link href="/flash-deals" className="inline-flex items-center bg-white/10 hover:bg-white/20 border border-white/30 text-white font-bold text-sm px-6 py-3 rounded-full transition">
+                    Browse Deals
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
+        ))}
+      </div>
 
-          <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-10 lg:right-16 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setIdx((i) => (i - 1 + total) % total)}
-              aria-label="Previous Slide"
-              className="w-9 h-9 rounded-full bg-slate-900/80 hover:bg-rose-600 text-white border border-white/15 flex items-center justify-center transition"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <div className="flex items-center gap-1.5 px-2">
-              {HERO_SLIDES.map((s, i) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setIdx(i)}
-                  aria-label={`Slide ${i + 1}`}
-                  className={`h-2 rounded-full transition-all ${i === idx ? "w-7 bg-rose-500" : "w-2 bg-white/40 hover:bg-white"}`}
-                />
-              ))}
+      <button
+        type="button"
+        onClick={() => setIdx((i) => (i - 1 + total) % total)}
+        aria-label="Previous slide"
+        className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-ink items-center justify-center shadow-lg"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setIdx((i) => (i + 1) % total)}
+        aria-label="Next slide"
+        className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-ink items-center justify-center shadow-lg"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {HERO_SLIDES.map((s, i) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => setIdx(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-2.5 rounded-full transition-all ${i === idx ? "w-8 bg-white" : "w-2.5 bg-white/50 hover:bg-white/80"}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------- Category tile strip -------------------------- */
+const firstImage = (cat: string) => PRODUCTS.find((p) => p.category === cat)?.image || PRODUCTS[0].image;
+const TILE_STRIP = [
+  { label: "New Arrivals", href: "/shop", image: PRODUCTS.find((p) => p.category === "tv-audio" && p.isNewArrival)?.image || PRODUCTS[4].image, tint: "bg-primary-50" },
+  { label: "Flash Deals", href: "/flash-deals", image: PRODUCTS.find((p) => p.category === "kitchen-appliances" && p.isFlashDeal)?.image || PRODUCTS[5].image, tint: "bg-[#FFFBE6]" },
+  ...CATEGORIES.map((c) => ({ label: c.name, href: shopHref({ category: c.id }), image: c.image || firstImage(c.id), tint: "bg-[#F4F6F9]" })),
+  { label: "Shop All", href: "/shop", image: PRODUCTS[2].image, tint: "bg-[#F4F6F9]" },
+];
+
+function CategoryStrip() {
+  return (
+    <section className="w-full px-4 sm:px-6 lg:px-10 py-6 sm:py-8 bg-white">
+      <div className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar snap-x">
+        {TILE_STRIP.map((t) => (
+          <Link key={t.label} href={t.href} className="group snap-start shrink-0 flex-1 min-w-[108px] sm:min-w-[123px] max-w-[180px] text-center">
+            <div className={`${t.tint} rounded-[20px] h-[120px] sm:h-[140px] p-3 flex items-center justify-center border border-transparent group-hover:border-primary-200 transition`}>
+              <img src={t.image} alt="" className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" />
             </div>
-            <button
-              type="button"
-              onClick={() => setIdx((i) => (i + 1) % total)}
-              aria-label="Next Slide"
-              className="w-9 h-9 rounded-full bg-slate-900/80 hover:bg-rose-600 text-white border border-white/15 flex items-center justify-center transition"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <span className="block mt-2 text-xs sm:text-[13px] font-semibold text-ink leading-tight group-hover:text-primary-600">{t.label}</span>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------- Countdown banner --------------------------- */
+function DealsCountdownBanner() {
+  const { hrs, mins, secs } = useCountdown();
+  return (
+    <section className="w-full px-4 sm:px-6 lg:px-10 pb-8 bg-white">
+      <div className="relative overflow-hidden rounded-[22px] bg-gradient-to-r from-[#05182F] via-primary-800 to-primary-600 text-white px-6 sm:px-10 py-8 sm:py-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5" />
+        <div className="absolute right-40 -bottom-24 w-56 h-56 rounded-full bg-deal/10" />
+        <div className="relative text-center lg:text-left">
+          <span className="inline-block bg-deal text-[#080808] text-xs font-bold px-3 py-1 rounded-full mb-3">LIMITED TIME</span>
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight">MEGA FLASH SALE</h2>
+          <p className="text-white/75 text-sm sm:text-base mt-2">Up to 44% off smartphones, TVs, laptops and home appliances — while stocks last.</p>
+        </div>
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="flex gap-2 sm:gap-3 tabular-nums">
+            {[
+              [hrs, "Hours"],
+              [mins, "Minutes"],
+              [secs, "Seconds"],
+            ].map(([v, l]) => (
+              <div key={l} className="w-[76px] sm:w-[92px] rounded-2xl bg-white/10 backdrop-blur border border-white/15 py-3 text-center">
+                <span className="block text-3xl sm:text-4xl font-black">{v}</span>
+                <span className="text-[11px] uppercase tracking-wider text-white/70">{l}</span>
+              </div>
+            ))}
           </div>
+          <Link href="/flash-deals" className="bg-deal hover:brightness-95 text-[#080808] font-bold text-sm px-7 py-3 rounded-full transition">
+            Browse Deals
+          </Link>
         </div>
       </div>
     </section>
   );
 }
 
-const BEST_SELLER_TABS = [
-  { id: "all", label: "All Best Sellers" },
-  { id: "mobiles", label: "Mobiles" },
-  { id: "home-appliances", label: "Home Appliances" },
-  { id: "kitchen-appliances", label: "Kitchen" },
-  { id: "tv-audio", label: "TV & Audio" },
+/* -------------------------------- Sections -------------------------------- */
+const POPULAR_SEARCHES = [
+  "5G Smartphones",
+  "Gaming Laptops",
+  "4K Smart TV",
+  "Air Fryer",
+  "Inverter Refrigerator",
+  "Washing Machine",
+  "Smart Watch",
+  "Noise Cancelling Headphones",
+  "Inverter AC",
+  "Party Speaker",
+  "Microwave Oven",
+  "Espresso Machine",
 ];
 
-const INFO_CARDS = [
-  { icon: Truck, title: "Islandwide Delivery", body: "Colombo 1–2 days & Outstation 2–4 working days. Free delivery over Rs. 50,000." },
-  { icon: ShieldCheck, title: "Genuine Products", body: "Brand-new, genuine stock with warranty details shown on every product page." },
-  { icon: CreditCard, title: "Flexible LKR Payments", body: "Online Card UI, Cash on Delivery (COD), and Bank Transfer checkout options." },
-  { icon: Headphones, title: "Direct WhatsApp Support", body: "Instant WhatsApp product enquiry & live order tracking assistance." },
+function CategoryImageTiles({ ids }: { ids: string[] }) {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+      {ids.map((id) => {
+        const c = CATEGORIES.find((x) => x.id === id);
+        if (!c) return null;
+        return (
+          <Link
+            key={c.id}
+            href={shopHref({ category: c.id })}
+            className="group bg-white rounded-[18px] border border-[#E9E9E9] shadow-card p-4 flex flex-col items-center text-center hover:border-primary-200 hover:shadow-cardHover transition"
+          >
+            <div className="h-28 sm:h-32 w-full flex items-center justify-center">
+              <img src={c.image} alt="" className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" />
+            </div>
+            <span className="mt-3 text-sm font-bold text-ink group-hover:text-primary-600">{c.name}</span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+const TRUST = [
+  { icon: ShieldCheck, title: "100% Genuine Products", body: "Brand-new stock, sourced from trusted suppliers." },
+  { icon: Truck, title: "Islandwide Delivery", body: "Colombo in 1–2 days, outstation in 2–4 working days." },
+  { icon: Banknote, title: "Cash on Delivery", body: "Pay in LKR when your order reaches your door." },
+  { icon: Headphones, title: "Friendly Support", body: "Call or WhatsApp us for stock and delivery checks." },
 ];
 
 export default function HomePage() {
-  const { showToast } = useStore();
-  const [bestTab, setBestTab] = useState("all");
-  const [email, setEmail] = useState("");
-
-  const flashDeals = PRODUCTS.filter((p) => p.isFlashDeal);
-  const bestSellers = PRODUCTS.filter((p) => (bestTab === "all" ? p.isBestSeller : p.category === bestTab)).slice(0, 8);
-  const newArrivals = PRODUCTS.filter((p) => p.isNewArrival).slice(0, 4);
-  const trending = PRODUCTS.filter((p) => p.isTrending).slice(0, 4);
-  const recommended = PRODUCTS.filter((p) => p.isRecommended).slice(0, 4);
+  const newArrivals = PRODUCTS.filter((p) => p.isNewArrival);
+  const flash = PRODUCTS.filter((p) => p.isFlashDeal);
+  const best = PRODUCTS.filter((p) => p.isBestSeller);
+  const trending = PRODUCTS.filter((p) => p.isTrending);
+  const recommended = PRODUCTS.filter((p) => p.isRecommended);
 
   return (
     <>
+      <h1 className="sr-only">BestPrices.lk — online shopping for electronics and home appliances in Sri Lanka</h1>
       <HeroSlider />
+      <CategoryStrip />
+      <DealsCountdownBanner />
 
-      {/* Shop by category */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-10">
-        <SectionHeader eyebrow="Browse Departments" title="Shop by Category" linkHref="/categories" linkLabel="View All Categories" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 xl:gap-6">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.id}
-              href={shopHref({ category: cat.id })}
-              className="group bg-white hover:bg-rose-50/40 rounded-2xl border border-slate-200 hover:border-rose-300 p-4 text-center flex flex-col items-center transition shadow-sm hover:shadow-md"
-            >
-              <div className="w-20 h-20 rounded-2xl bg-slate-50 group-hover:bg-white p-2.5 flex items-center justify-center mb-3 border border-slate-100">
-                <img src={cat.image} alt={cat.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300" />
-              </div>
-              <h3 className="font-display font-bold text-xs sm:text-sm text-slate-900 group-hover:text-rose-600">{cat.name}</h3>
-              <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{cat.shortDesc}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <div className="bg-[#F6F6F6]">
+        <div className="w-full px-4 sm:px-6 lg:px-10 py-10 sm:py-14 space-y-14 sm:space-y-16">
+          <section>
+            <SectionTitle title="NEW ARRIVALS ⭐" href="/shop" />
+            <ProductRow products={newArrivals} />
+          </section>
 
-      {/* Flash deals */}
-      <section className="bg-slate-950 text-white py-10 border-y border-slate-800">
-        <div className="w-full px-4 sm:px-6 lg:px-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-rose-600 flex items-center justify-center shadow-lg shadow-rose-600/30">
-                <Zap className="w-6 h-6 fill-white" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="font-display font-extrabold text-xl sm:text-2xl text-white">Flash Price Rush</h2>
-                  <span className="bg-rose-600/20 text-rose-400 border border-rose-500/30 text-[11px] font-bold px-2.5 py-0.5 rounded-full">LIVE NOW</span>
-                </div>
-                <p className="text-xs text-slate-400 mt-0.5">Limited-stock daily markdowns inspired by Sri Lanka&apos;s top appliance flash sales</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Offer Ends In:</span>
-              <CountdownBoxes />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-5 text-slate-900">
-            {flashDeals.slice(0, 5).map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-
-          <div className="mt-6 text-center">
-            <Link
-              href="/flash-deals"
-              className="inline-flex items-center gap-2 bg-white hover:bg-rose-600 text-slate-950 hover:text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl transition"
-            >
-              <span>Explore All {flashDeals.length} Flash Deals</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Best sellers */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
-        <SectionHeader eyebrow="Top Rated in Sri Lanka" title="Best-Selling Products">
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
-            {BEST_SELLER_TABS.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setBestTab(tab.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold shrink-0 transition ${
-                  bestTab === tab.id ? "bg-rose-600 text-white shadow-sm" : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </SectionHeader>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-          {bestSellers.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
-
-      {/* Promo banners */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          {PROMO_BANNERS.map((b) => (
-            <div
-              key={b.id}
-              className="relative rounded-3xl overflow-hidden border border-slate-200 bg-slate-900 min-h-[240px] sm:min-h-[270px] flex items-center group"
-            >
-              <img
-                src={b.image}
-                alt={b.title}
-                className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="relative z-10 p-6 sm:p-8 max-w-md space-y-3 text-white">
-                <span className="inline-block bg-rose-600 text-white text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full">
-                  {b.badge}
-                </span>
-                <h3 className="font-display font-extrabold text-xl sm:text-2xl leading-snug">{b.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-200">{b.subtitle}</p>
-                <Link
-                  href={shopHref({ category: b.category })}
-                  className="bg-white hover:bg-rose-600 text-slate-950 hover:text-white font-bold text-xs px-4 py-2.5 rounded-xl inline-flex items-center gap-1.5 transition"
-                >
-                  <span>{b.ctaText}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* New arrivals & trending */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-12 space-y-12">
-        <div>
-          <SectionHeader eyebrow="Just Landed" title="New Arrivals" linkHref="/shop" linkLabel="Explore All" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-            {newArrivals.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
-        <div>
-          <SectionHeader eyebrow="Most Viewed This Week" title="Trending Products" linkHref="/shop" linkLabel="See Trending" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-            {trending.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Brands */}
-      <section className="bg-slate-50 border-y border-slate-200 py-12">
-        <div className="w-full px-4 sm:px-6 lg:px-10">
-          <SectionHeader eyebrow="Curated Catalog Brands" title="Shop by Brand">
-            <span className="text-[11px] font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full w-fit">
-              Sample brand names — not official partners
-            </span>
-          </SectionHeader>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 mb-8">
-            {BRANDS.map((b) => (
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            {PROMO_BANNERS.map((b) => (
               <Link
                 key={b.id}
-                href={shopHref({ brand: b.id })}
-                className="bg-white hover:bg-rose-600 group rounded-xl border border-slate-200 hover:border-rose-600 p-3.5 text-center transition shadow-sm"
+                href={shopHref({ category: b.category })}
+                className="group relative overflow-hidden rounded-[22px] min-h-[220px] sm:min-h-[260px] flex items-end"
               >
-                <span className="block font-display font-extrabold text-sm text-slate-900 group-hover:text-white">{b.name}</span>
-                <span className="block text-[10px] text-slate-400 group-hover:text-rose-100 mt-0.5 truncate">{b.category}</span>
+                <img src={b.image} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                <div className="relative p-6 sm:p-8 text-white">
+                  <span className="inline-block bg-deal text-[#080808] text-[11px] font-bold px-2.5 py-1 rounded-full mb-2">{b.badge}</span>
+                  <h3 className="text-2xl sm:text-[32px] font-extrabold leading-tight">{b.title}</h3>
+                  <p className="text-sm text-white/80 mt-1 max-w-md">{b.subtitle}</p>
+                  <span className="inline-flex items-center gap-1.5 mt-3 text-sm font-bold text-white group-hover:text-deal">
+                    {b.ctaText} <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
               </Link>
             ))}
-          </div>
+          </section>
 
-          <div className="overflow-hidden rounded-2xl bg-white border border-slate-200 py-4 px-2">
-            <div className="animate-marquee flex items-center gap-8">
-              {[...BRANDS, ...BRANDS].map((b, i) => (
+          <section>
+            <SectionTitle title="FLASH DEALS ⚡" href="/flash-deals" />
+            <ProductRow products={flash} />
+          </section>
+
+          <section>
+            <h2 className="text-xl sm:text-[26px] font-bold text-[#171717] mb-4">Popular Searches</h2>
+            <div className="flex flex-wrap gap-2.5">
+              {POPULAR_SEARCHES.map((q) => (
                 <Link
-                  key={`${b.id}-${i}`}
-                  href={shopHref({ brand: b.id })}
-                  className="flex items-center gap-2.5 px-5 py-2 rounded-xl bg-slate-50 hover:bg-rose-50 border border-slate-200/70 shrink-0 transition"
+                  key={q}
+                  href={searchHref(q.split(" ").slice(-2).join(" "))}
+                  className="bg-white px-[18px] py-2.5 rounded-full border border-[#DEDEDE] text-sm font-semibold text-[#171717] hover:border-primary-600 hover:text-primary-600 transition"
                 >
-                  <span className="w-2 h-2 rounded-full bg-rose-600" />
-                  <span className="font-display font-extrabold text-sm text-slate-800 tracking-tight">{b.name}</span>
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase">{b.tag}</span>
+                  {q}
                 </Link>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Recommended */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
-        <SectionHeader eyebrow="Curated For You" title="Recommended Products" linkHref="/shop" linkLabel="View Catalog" />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-          {recommended.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+          <section>
+            <SectionTitle title="BEST SELLERS ⭐" href="/shop" />
+            <CategoryImageTiles ids={CATEGORIES.map((c) => c.id)} />
+            <div className="mt-6">
+              <ProductRow products={best} />
+            </div>
+          </section>
 
-      {/* Reviews */}
-      <section className="bg-slate-50 border-t border-slate-200 py-12">
-        <div className="w-full px-4 sm:px-6 lg:px-10">
-          <SectionHeader eyebrow="Customer Feedback" title="Customer Reviews">
-            <span className="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full w-fit">
-              Sample reviews for preview
-            </span>
-          </SectionHeader>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            {SAMPLE_REVIEWS.map((r) => (
-              <div key={r.id} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">{r.tag}</span>
-                    <div className="flex items-center text-amber-400 text-xs shrink-0">★★★★★</div>
+          <section>
+            <SectionTitle title="TRENDING NOW 🔥" href="/shop" />
+            <ProductRow products={trending} />
+          </section>
+
+          <section>
+            <SectionTitle title="TRENDING BRANDS" />
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+              {BRANDS.map((b) => (
+                <Link
+                  key={b.id}
+                  href={shopHref({ brand: b.id })}
+                  className="group bg-white rounded-[18px] border border-[#E9E9E9] h-24 sm:h-28 flex flex-col items-center justify-center text-center px-3 hover:border-primary-300 hover:shadow-cardHover transition"
+                >
+                  <span className="text-lg sm:text-xl font-black tracking-tight text-ink group-hover:text-primary-600">{b.name}</span>
+                  <span className="text-[11px] text-slate-400 mt-0.5 truncate max-w-full">{b.tag}</span>
+                </Link>
+              ))}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-3">Sample brand names shown for preview.</p>
+          </section>
+
+          <section>
+            <SectionTitle title="RECOMMENDED FOR YOU" href="/shop" />
+            <ProductRow products={recommended} />
+          </section>
+
+          <section>
+            <SectionTitle title="Customer Reviews ⭐" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+              {SAMPLE_REVIEWS.map((r) => (
+                <div key={r.id} className="bg-white rounded-[18px] border border-[#E9E9E9] p-5 sm:p-6 shadow-card">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-[15px] text-ink">{r.customer}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{r.tag}</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">&ldquo;{r.comment}&rdquo;</p>
+                  <div className="flex gap-0.5 my-2 text-[#FBBC05]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">{r.comment}</p>
+                  <p className="text-xs text-primary-600 font-semibold mt-3">{r.product}</p>
                 </div>
-                <div className="pt-3 border-t border-slate-100">
-                  <p className="text-xs font-bold text-slate-900">{r.customer}</p>
-                  <p className="text-[11px] text-rose-600 font-medium">
-                    {r.product} • {r.date}
-                  </p>
+              ))}
+            </div>
+          </section>
+
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {TRUST.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="bg-white rounded-[18px] border border-[#E9E9E9] p-5 flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-[15px] text-ink">{title}</h3>
+                  <p className="text-sm text-slate-500 mt-0.5">{body}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Delivery / warranty / payment info */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {INFO_CARDS.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="p-5 rounded-2xl bg-white border border-slate-200 flex items-start gap-3.5 shadow-sm">
-              <div className="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-                <Icon className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-display font-bold text-sm text-slate-900">{title}</h3>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">{body}</p>
-              </div>
+          <section className="bg-white rounded-[22px] border border-[#E9E9E9] p-6 sm:p-10 text-[15px] text-slate-600 leading-relaxed space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-ink">Online Shopping in Sri Lanka | BestPrices.lk – Your Trusted Electronics Store</h2>
+            <p>
+              BestPrices.lk brings you genuine smartphones, laptops, 4K smart TVs, home appliances, kitchen essentials and smart wearables at
+              transparent LKR prices, with islandwide delivery to every district in Sri Lanka.
+            </p>
+            <h3 className="text-lg font-bold text-ink pt-2">100% Genuine Products You Can Trust</h3>
+            <p>
+              Every product is brand new and comes with clear warranty details. Not sure which model fits your needs? Message us on WhatsApp and
+              our team will help you compare before you buy.
+            </p>
+            <h3 className="text-lg font-bold text-ink pt-2">What You Can Buy from BestPrices.lk</h3>
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+              {CATEGORIES.map((c) => (
+                <Link key={c.id} href={shopHref({ category: c.id })} className="text-primary-600 font-semibold hover:underline">
+                  {c.name}
+                </Link>
+              ))}
             </div>
-          ))}
+          </section>
         </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="w-full px-4 sm:px-6 lg:px-10 pb-6">
-        <div className="rounded-3xl bg-slate-950 text-white p-6 sm:p-10 border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl text-center lg:text-left">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-rose-500">VIP Price Alerts</span>
-            <h2 className="font-display font-extrabold text-xl sm:text-2xl">Subscribe for Flash Deal Alerts & Exclusive LKR Vouchers</h2>
-            <p className="text-xs sm:text-sm text-slate-400">Get notified first when weekend appliance price drops go live on BestPrices.lk.</p>
-          </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              showToast(`Subscribed ${email} to BestPrices.lk Flash Deal alerts!`);
-              setEmail("");
-            }}
-            className="w-full lg:w-auto flex flex-col sm:flex-row gap-2.5 sm:min-w-[420px]"
-          >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address..."
-              className="flex-1 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white focus:outline-none focus:border-rose-500"
-            />
-            <button type="submit" className="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shrink-0 transition">
-              Subscribe Now
-            </button>
-          </form>
-        </div>
-      </section>
+      </div>
     </>
   );
 }

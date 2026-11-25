@@ -17,8 +17,8 @@ export function CountdownBoxes({ size = "md" }: { size?: "md" | "lg" }) {
   const { hrs, mins, secs } = useCountdown();
   const box =
     size === "lg"
-      ? "bg-rose-600 text-white px-4 py-2 rounded-xl text-center min-w-[64px]"
-      : "bg-rose-600 text-white px-3 py-1.5 rounded-xl text-center min-w-[52px]";
+      ? "bg-primary-600 text-white px-4 py-2 rounded-xl text-center min-w-[64px]"
+      : "bg-primary-600 text-white px-3 py-1.5 rounded-xl text-center min-w-[52px]";
   const num = size === "lg" ? "block font-display font-extrabold text-xl leading-none" : "block font-display font-extrabold text-base leading-none";
   const items: [string, string][] = [
     [hrs, "Hrs"],
@@ -29,7 +29,7 @@ export function CountdownBoxes({ size = "md" }: { size?: "md" | "lg" }) {
     <div className="flex items-center gap-1.5 tabular-nums">
       {items.map(([v, l], i) => (
         <React.Fragment key={l}>
-          {i > 0 && <span className="font-bold text-rose-500">:</span>}
+          {i > 0 && <span className="font-bold text-primary-500">:</span>}
           <div className={box}>
             <span className={num}>{v}</span>
             <span className="text-[9px] uppercase opacity-80">{l}</span>

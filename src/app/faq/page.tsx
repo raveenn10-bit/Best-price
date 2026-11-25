@@ -9,10 +9,10 @@ export default function FaqPage() {
       <h1 className="font-display font-extrabold text-2xl sm:text-3xl text-slate-900">Frequently Asked Questions</h1>
       <div className="space-y-3">
         {FAQS.map((item) => (
-          <details key={item.q} className="group bg-white rounded-2xl border border-slate-200 p-5 open:border-rose-300">
+          <details key={item.q} className="group bg-white rounded-2xl border border-slate-200 p-5 open:border-primary-300">
             <summary className="font-display font-bold text-sm sm:text-base text-slate-900 cursor-pointer flex items-center justify-between gap-3 list-none">
               <span>{item.q}</span>
-              <span className="text-rose-600 font-extrabold transition-transform group-open:rotate-45">+</span>
+              <span className="text-primary-600 font-extrabold transition-transform group-open:rotate-45">+</span>
             </summary>
             <p className="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">{item.a}</p>
           </details>

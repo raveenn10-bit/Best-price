@@ -12,7 +12,7 @@ const METHODS: { id: PaymentMethod; title: string; sub: string; icon: typeof Ban
   { id: "bank", title: "Bank Transfer", sub: "Quote slip reference", icon: Landmark },
 ];
 
-const input = "w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-rose-600";
+const input = "w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:border-primary-600";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -30,10 +30,10 @@ export default function CheckoutPage() {
     return (
       <div className="w-full px-4 sm:px-6 lg:px-10 py-8">
         <div className="bg-slate-50 rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-          <ShoppingBag className="w-12 h-12 text-rose-600 mx-auto" />
+          <ShoppingBag className="w-12 h-12 text-primary-600 mx-auto" />
           <h1 className="font-display font-bold text-xl">Your Cart is Empty</h1>
           <p className="text-xs sm:text-sm text-slate-500">Add a product to your cart before checking out.</p>
-          <Link href="/shop" className="inline-block bg-rose-600 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
+          <Link href="/shop" className="inline-block bg-primary-600 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
             Start Shopping
           </Link>
         </div>
@@ -127,10 +127,10 @@ export default function CheckoutPage() {
                   type="button"
                   onClick={() => setPaymentMethod(id)}
                   className={`p-4 rounded-2xl border-2 text-left transition ${
-                    paymentMethod === id ? "border-rose-600 bg-rose-50/50" : "border-slate-200 hover:border-slate-300"
+                    paymentMethod === id ? "border-primary-600 bg-primary-50/50" : "border-slate-200 hover:border-slate-300"
                   }`}
                 >
-                  <Icon className="w-5 h-5 text-rose-600 mb-2" />
+                  <Icon className="w-5 h-5 text-primary-600 mb-2" />
                   <p className="font-display font-bold text-xs sm:text-sm text-slate-900">{title}</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">{sub}</p>
                 </button>
@@ -200,13 +200,13 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-lg font-display font-extrabold text-slate-950 pt-2 border-t border-slate-200">
                 <span>Total</span>
-                <span className="text-rose-600">{formatLKR(grandTotal)}</span>
+                <span className="text-primary-600">{formatLKR(grandTotal)}</span>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-rose-600/25 transition"
+              className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary-600/25 transition"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Place Order ({formatLKR(grandTotal)})</span>

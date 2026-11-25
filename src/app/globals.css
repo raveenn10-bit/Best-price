@@ -5,11 +5,11 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: #FFFFFF;
-      color: #0F172A;
+      color: #202630;
       overflow-x: hidden;
     }
     h1, h2, h3, h4, .font-display {
-      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
     .tabular-nums {
       font-variant-numeric: tabular-nums;
@@ -38,9 +38,22 @@
       transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
     }
     .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px -12px rgba(15, 23, 42, 0.12);
-      border-color: #FDA4AF;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -10px rgba(5, 69, 141, 0.18);
+      border-color: #B9D7F1;
+    }
+    .product-card .card-tools {
+      opacity: 0;
+      transform: translateX(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .product-card:hover .card-tools,
+    .product-card:focus-within .card-tools {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    @media (hover: none) {
+      .product-card .card-tools { opacity: 1; transform: none; }
     }
     .zoom-container {
       overflow: hidden;
@@ -61,7 +74,7 @@
   animation: toastIn 0.25s ease-out;
 }
 ::selection {
-  background: #e11d48;
+  background: #1c75bc;
   color: #fff;
 }
 
@@ -75,4 +88,11 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .animate-wa-pulse { animation: none; }
+}
+
+.section-title {
+  color: #05458D;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }

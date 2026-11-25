@@ -16,10 +16,10 @@ export default function AccountPage() {
     return (
       <div className="max-w-md mx-auto px-4 py-16">
         <div className="bg-white rounded-3xl border border-slate-200 p-8 text-center space-y-4 shadow-sm">
-          <UserRound className="w-10 h-10 text-rose-600 mx-auto" />
+          <UserRound className="w-10 h-10 text-primary-600 mx-auto" />
           <h1 className="font-display font-extrabold text-xl text-slate-900">Sign in to view your account</h1>
           <p className="text-xs sm:text-sm text-slate-500">Track orders, manage your saved address and view your order history.</p>
-          <Link href="/auth" className="inline-block bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm px-6 py-3 rounded-xl">
+          <Link href="/auth" className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm px-6 py-3 rounded-xl">
             Sign In / Register
           </Link>
         </div>
@@ -31,11 +31,11 @@ export default function AccountPage() {
     <div className="w-full px-4 sm:px-6 lg:px-10 py-8 space-y-8">
       <div className="bg-slate-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4 min-w-0">
-          <div className="w-14 h-14 rounded-2xl bg-rose-600 flex items-center justify-center font-display font-extrabold text-xl shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-primary-600 flex items-center justify-center font-display font-extrabold text-xl shrink-0">
             {user.name.slice(0, 1).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-rose-400">My Account Dashboard</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-primary-400">My Account Dashboard</span>
             <h1 className="font-display font-extrabold text-xl sm:text-2xl truncate">{user.name}</h1>
             <p className="text-xs text-slate-400 truncate">
               {user.email}
@@ -53,7 +53,7 @@ export default function AccountPage() {
               signOut();
               router.push("/auth");
             }}
-            className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl"
+            className="bg-primary-600 hover:bg-primary-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl"
           >
             Sign Out
           </button>
@@ -77,7 +77,7 @@ export default function AccountPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="font-display font-extrabold text-sm text-rose-600 tabular-nums">{formatLKR(o.total)}</span>
+                  <span className="font-display font-extrabold text-sm text-primary-600 tabular-nums">{formatLKR(o.total)}</span>
                   <button
                     type="button"
                     onClick={() => {
@@ -100,7 +100,7 @@ export default function AccountPage() {
             <p className="font-bold text-slate-900">{user.name}</p>
             <p>{orders[0]?.address || "No address saved yet — it will be saved with your first order."}</p>
             {orders[0] && <p>{orders[0].district} District, Sri Lanka</p>}
-            <p className="pt-1 text-rose-600 font-semibold">Default Shipping & Billing Address</p>
+            <p className="pt-1 text-primary-600 font-semibold">Default Shipping & Billing Address</p>
           </div>
         </div>
       </div>

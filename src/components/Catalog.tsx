@@ -66,7 +66,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
 
   const pill = (active: boolean) =>
     `w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition ${
-      active ? "bg-rose-600 text-white" : "bg-slate-50 text-slate-700 hover:bg-slate-100"
+      active ? "bg-primary-600 text-white" : "bg-slate-50 text-slate-700 hover:bg-slate-100"
     }`;
 
   const controls = (
@@ -78,7 +78,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
           value={f.searchQuery}
           placeholder="Filter by model or keyword..."
           onChange={(e) => set({ searchQuery: e.target.value })}
-          className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-rose-600"
+          className="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-primary-600"
         />
       </div>
 
@@ -117,7 +117,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
       <div>
         <div className="flex items-center justify-between text-xs font-bold mb-2">
           <span className="uppercase tracking-wider text-slate-500">Max Price</span>
-          <span className="text-rose-600 tabular-nums">{formatLKR(f.maxPrice)}</span>
+          <span className="text-primary-600 tabular-nums">{formatLKR(f.maxPrice)}</span>
         </div>
         <input
           type="range"
@@ -126,7 +126,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
           step={10000}
           value={f.maxPrice}
           onChange={(e) => set({ maxPrice: Number(e.target.value) })}
-          className="w-full accent-rose-600 cursor-pointer"
+          className="w-full accent-primary-600 cursor-pointer"
         />
         <div className="flex justify-between text-[10px] text-slate-400 mt-1 tabular-nums">
           <span>Rs. 20,000</span>
@@ -159,7 +159,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
-            <Link href="/" className="hover:text-rose-600">
+            <Link href="/" className="hover:text-primary-600">
               Home
             </Link>
             <span>/</span>
@@ -192,10 +192,10 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
       </div>
 
       {drawerOpen && (
-        <div className="lg:hidden my-4 p-5 rounded-2xl bg-white border-2 border-rose-200 shadow-lg">
+        <div className="lg:hidden my-4 p-5 rounded-2xl bg-white border-2 border-primary-200 shadow-lg">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-display font-bold text-sm">Filter Products</h3>
-            <button type="button" onClick={() => setDrawerOpen(false)} className="text-xs font-bold text-rose-600">
+            <button type="button" onClick={() => setDrawerOpen(false)} className="text-xs font-bold text-primary-600">
               Done
             </button>
           </div>
@@ -215,7 +215,7 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
               Showing <strong className="text-slate-900">{filtered.length}</strong> products
             </span>
             {hasActive && (
-              <button type="button" onClick={reset} className="text-rose-600 font-bold hover:underline">
+              <button type="button" onClick={reset} className="text-primary-600 font-bold hover:underline">
                 Clear active filters
               </button>
             )}
@@ -223,19 +223,19 @@ export function Catalog({ isSearchView = false }: { isSearchView?: boolean }) {
 
           {filtered.length === 0 ? (
             <div className="bg-slate-50 rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-              <div className="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-primary-100 text-primary-600 flex items-center justify-center mx-auto">
                 <SearchX className="w-7 h-7" />
               </div>
               <h3 className="font-display font-bold text-lg text-slate-900">No Matching Products Found</h3>
               <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
                 Try widening your maximum LKR price slider or clearing your category/brand filters.
               </p>
-              <button type="button" onClick={reset} className="bg-rose-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl">
+              <button type="button" onClick={reset} className="bg-primary-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl">
                 Reset Filters
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
               {filtered.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}

@@ -31,10 +31,10 @@ export default function CartPage() {
 
       {cart.length === 0 ? (
         <div className="bg-slate-50 rounded-3xl border border-slate-200 p-12 text-center space-y-4">
-          <ShoppingBag className="w-12 h-12 text-rose-600 mx-auto" />
+          <ShoppingBag className="w-12 h-12 text-primary-600 mx-auto" />
           <h2 className="font-display font-bold text-xl">Your Shopping Cart is Empty</h2>
           <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">Browse our Flash Deals or Best Sellers to add products to your cart.</p>
-          <Link href="/shop" className="inline-block bg-rose-600 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
+          <Link href="/shop" className="inline-block bg-primary-600 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl">
             Start Shopping
           </Link>
         </div>
@@ -53,8 +53,8 @@ export default function CartPage() {
                       <img src={p.image} alt={p.name} className="w-20 h-20 rounded-xl object-contain border border-slate-100 p-1.5" />
                     </Link>
                     <div className="min-w-0">
-                      <span className="text-[11px] font-bold text-rose-600">{p.brand}</span>
-                      <Link href={`/product/${p.id}`} className="block font-display font-bold text-sm sm:text-base text-slate-900 hover:text-rose-600">
+                      <span className="text-[11px] font-bold text-primary-600">{p.brand}</span>
+                      <Link href={`/product/${p.id}`} className="block font-display font-bold text-sm sm:text-base text-slate-900 hover:text-primary-600">
                         {p.name}
                       </Link>
                       <p className="text-xs text-slate-500 mt-0.5">Option: {item.variation}</p>
@@ -79,7 +79,7 @@ export default function CartPage() {
                       <span className="block font-display font-extrabold text-sm sm:text-base text-slate-950 tabular-nums">
                         {formatLKR(p.discountPrice * item.qty)}
                       </span>
-                      <button type="button" onClick={() => removeFromCart(idx)} className="text-[11px] text-rose-600 hover:underline font-semibold">
+                      <button type="button" onClick={() => removeFromCart(idx)} className="text-[11px] text-primary-600 hover:underline font-semibold">
                         Remove
                       </button>
                     </div>
@@ -95,7 +95,7 @@ export default function CartPage() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-600 mb-1.5">
-                  Promo Code (Try <span className="text-rose-600">{BUSINESS_SETTINGS.demoPromoCode}</span>)
+                  Promo Code (Try <span className="text-primary-600">{BUSINESS_SETTINGS.demoPromoCode}</span>)
                 </label>
                 <form
                   className="flex gap-2"
@@ -111,7 +111,7 @@ export default function CartPage() {
                     placeholder={`Enter code ${BUSINESS_SETTINGS.demoPromoCode}`}
                     className="flex-1 min-w-0 px-3 py-2 rounded-xl border border-slate-300 text-xs uppercase bg-white"
                   />
-                  <button type="submit" className="bg-slate-900 hover:bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
+                  <button type="submit" className="bg-slate-900 hover:bg-primary-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
                     Apply
                   </button>
                 </form>
@@ -151,14 +151,14 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between text-base font-display font-extrabold text-slate-950 pt-3 border-t border-slate-200">
                   <span>Total Payable</span>
-                  <span className="text-rose-600">{formatLKR(grandTotal)}</span>
+                  <span className="text-primary-600">{formatLKR(grandTotal)}</span>
                 </div>
                 <p className="text-[11px] text-emerald-700 font-semibold">Total Savings on this order: {formatLKR(totalSaved)}</p>
               </div>
 
               <Link
                 href="/checkout"
-                className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition"
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary-600/20 transition"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />

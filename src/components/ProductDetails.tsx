@@ -34,11 +34,11 @@ export function ProductDetails({ product }: { product: Product }) {
   return (
     <div className="w-full px-4 sm:px-6 lg:px-10 py-8 pb-28">
       <div className="flex items-center gap-2 text-xs text-slate-500 mb-6 overflow-x-auto no-scrollbar">
-        <Link href="/" className="hover:text-rose-600 shrink-0">
+        <Link href="/" className="hover:text-primary-600 shrink-0">
           Home
         </Link>
         <span>/</span>
-        <Link href={shopHref({ category: product.category })} className="hover:text-rose-600 shrink-0">
+        <Link href={shopHref({ category: product.category })} className="hover:text-primary-600 shrink-0">
           {product.categoryLabel}
         </Link>
         <span>/</span>
@@ -48,7 +48,7 @@ export function ProductDetails({ product }: { product: Product }) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-6 space-y-4">
           <div className="zoom-container aspect-square rounded-3xl border border-slate-200 bg-white p-6 sm:p-10 flex items-center justify-center relative shadow-sm">
-            <span className="absolute top-4 left-4 z-10 bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full">
+            <span className="absolute top-4 left-4 z-10 bg-primary-600 text-white text-xs font-extrabold px-3 py-1 rounded-full">
               SAVE {product.discountPct}%
             </span>
             <span className="absolute bottom-4 right-4 z-10 bg-slate-900/80 text-white text-[11px] font-medium px-3 py-1 rounded-full flex items-center gap-1">
@@ -65,7 +65,7 @@ export function ProductDetails({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setGalleryIdx(i)}
                   className={`w-20 h-20 rounded-2xl border-2 p-2 bg-white shrink-0 transition ${
-                    galleryIdx === i ? "border-rose-600 shadow-sm" : "border-slate-200 hover:border-slate-400"
+                    galleryIdx === i ? "border-primary-600 shadow-sm" : "border-slate-200 hover:border-slate-400"
                   }`}
                 >
                   <img src={src} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-contain" />
@@ -77,7 +77,7 @@ export function ProductDetails({ product }: { product: Product }) {
 
         <div className="lg:col-span-6 space-y-5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full">{product.brand}</span>
+            <span className="text-xs font-extrabold uppercase tracking-wider text-primary-600 bg-primary-50 px-3 py-1 rounded-full">{product.brand}</span>
             <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
               In Stock ({product.stockCount} Available)
             </span>
@@ -94,7 +94,7 @@ export function ProductDetails({ product }: { product: Product }) {
 
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
             <div className="flex items-baseline gap-3 flex-wrap">
-              <span className="font-display font-extrabold text-2xl sm:text-3xl text-rose-600 tabular-nums">{formatLKR(product.discountPrice)}</span>
+              <span className="font-display font-extrabold text-2xl sm:text-3xl text-price tabular-nums">{formatLKR(product.discountPrice)}</span>
               <span className="text-base text-slate-400 line-through tabular-nums">{formatLKR(product.originalPrice)}</span>
               <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full tabular-nums">Save {formatLKR(savings)}</span>
             </div>
@@ -116,7 +116,7 @@ export function ProductDetails({ product }: { product: Product }) {
                     onClick={() => setSelected((s) => ({ ...s, [name]: opt }))}
                     className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition ${
                       selected[name] === opt
-                        ? "border-rose-600 bg-rose-50 text-rose-700"
+                        ? "border-primary-600 bg-primary-50 text-primary-700"
                         : "border-slate-200 bg-white text-slate-700 hover:border-slate-400"
                     }`}
                   >
@@ -156,7 +156,7 @@ export function ProductDetails({ product }: { product: Product }) {
               <button
                 type="button"
                 onClick={() => buyNow(qty)}
-                className="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-rose-600/25 transition"
+                className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-bold text-sm py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-600/25 transition"
               >
                 <Zap className="w-4 h-4" />
                 <span>Buy Now</span>
@@ -166,11 +166,11 @@ export function ProductDetails({ product }: { product: Product }) {
                 type="button"
                 onClick={() => toggleWishlist(product.id)}
                 className={`p-3.5 rounded-xl border ${
-                  isWished ? "border-rose-600 bg-rose-50 text-rose-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"
+                  isWished ? "border-primary-600 bg-primary-50 text-primary-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"
                 } transition`}
                 aria-label="Save to Wishlist"
               >
-                <Heart className={`w-5 h-5 ${isWished ? "fill-rose-600" : ""}`} />
+                <Heart className={`w-5 h-5 ${isWished ? "fill-primary-600" : ""}`} />
               </button>
             </div>
 
@@ -204,19 +204,19 @@ export function ProductDetails({ product }: { product: Product }) {
           <h2 className="font-display font-extrabold text-lg text-slate-900">Delivery & Guarantee</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-slate-600">
             <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-primary-600 shrink-0 mt-0.5" />
               <span>
                 <strong>Colombo & Suburbs:</strong> Express 1–2 working day delivery (Rs. 650 or Free over Rs. 50,000).
               </span>
             </li>
             <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-primary-600 shrink-0 mt-0.5" />
               <span>
                 <strong>Outstation Islandwide:</strong> Insured courier delivery in 2–4 working days.
               </span>
             </li>
             <li className="flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-primary-600 shrink-0 mt-0.5" />
               <span>
                 <strong>Genuine Products:</strong> Brand-new stock with warranty details confirmed at the time of order.
               </span>
@@ -237,13 +237,13 @@ export function ProductDetails({ product }: { product: Product }) {
       <div className="lg:hidden fixed bottom-16 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2.5 flex items-center justify-between gap-3 shadow-lg">
         <div className="min-w-0">
           <span className="block text-[10px] text-slate-500 font-medium truncate max-w-[140px]">{product.name}</span>
-          <span className="font-display font-extrabold text-sm text-rose-600 tabular-nums">{formatLKR(product.discountPrice)}</span>
+          <span className="font-display font-extrabold text-sm text-primary-600 tabular-nums">{formatLKR(product.discountPrice)}</span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           <button type="button" onClick={() => addToCart(product.id, 1, variationSummary)} className="bg-slate-950 text-white text-xs font-bold px-4 py-2.5 rounded-xl">
             Add to Cart
           </button>
-          <button type="button" onClick={() => buyNow(1)} className="bg-rose-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl">
+          <button type="button" onClick={() => buyNow(1)} className="bg-primary-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl">
             Buy Now
           </button>
         </div>
