@@ -3,13 +3,13 @@
 @tailwind utilities;
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
       background-color: #FFFFFF;
       color: #202630;
       overflow-x: hidden;
     }
     h1, h2, h3, h4, .font-display {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
     }
     .tabular-nums {
       font-variant-numeric: tabular-nums;
@@ -100,41 +100,68 @@
 /* Animated colour-shifting glow along the bottom of the screen */
 .bottom-glow {
   position: fixed;
-  left: -10%;
-  right: -10%;
+  left: 0;
+  right: 0;
   bottom: -70px;
   height: 170px;
   pointer-events: none;
   z-index: 30;
-  filter: blur(48px);
-  opacity: 0.55;
-  background: linear-gradient(90deg, #ff8a3d, #ff4fa3, #8b5cf6, #1c75bc, #22d3ee, #ff8a3d);
-  background-size: 300% 100%;
-  animation: glowShift 12s linear infinite, glowBreathe 6s ease-in-out infinite;
+  overflow: hidden;
+  opacity: 0.5;
+  contain: strict;
 }
-@keyframes glowShift {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
+.bottom-glow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
+  background:
+    radial-gradient(closest-side, rgba(255, 138, 61, 0.9), transparent) 0% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(255, 79, 163, 0.9), transparent) 10% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(139, 92, 246, 0.9), transparent) 20% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(28, 117, 188, 0.9), transparent) 30% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(34, 211, 238, 0.9), transparent) 40% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(255, 138, 61, 0.9), transparent) 50% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(255, 79, 163, 0.9), transparent) 60% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(139, 92, 246, 0.9), transparent) 70% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(28, 117, 188, 0.9), transparent) 80% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(34, 211, 238, 0.9), transparent) 90% 60% / 20% 100% no-repeat,
+    radial-gradient(closest-side, rgba(255, 138, 61, 0.9), transparent) 100% 60% / 20% 100% no-repeat;
+  will-change: transform;
+  animation: glowSlide 16s linear infinite;
 }
-@keyframes glowBreathe {
-  0%, 100% { opacity: 0.45; transform: scaleY(1); }
-  50% { opacity: 0.7; transform: scaleY(1.15); }
+@keyframes glowSlide {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 @media (max-width: 1023px) {
-  .bottom-glow { bottom: -40px; height: 140px; opacity: 0.45; }
+  .bottom-glow { bottom: -40px; height: 140px; opacity: 0.4; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bottom-glow { animation: none; }
+  .bottom-glow::before { animation: none; }
 }
 
 /* Animated gradient pill (used on product cards) */
 .animated-gradient {
-  background: linear-gradient(90deg, #1c75bc, #4f46e5, #1c75bc, #22a6e0);
-  background-size: 300% 100%;
-  animation: glowShift 6s linear infinite;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1c75bc;
+}
+.animated-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 300%;
+  z-index: -1;
+  background: linear-gradient(90deg, #1c75bc, #4f46e5, #1c75bc, #22a6e0, #1c75bc, #4f46e5, #1c75bc);
+  will-change: transform;
+  animation: glowSlide 6s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .animated-gradient { animation: none; }
+  .animated-gradient::before { animation: none; }
 }
 
 /* ======================= Site-wide motion system ======================= */
@@ -173,17 +200,16 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -75%;
+  left: 0;
   width: 50%;
   height: 100%;
   background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.55), transparent);
-  transform: skewX(-20deg);
   z-index: -1;
   animation: shine 3.2s ease-in-out infinite;
 }
 @keyframes shine {
-  0% { left: -75%; }
-  55%, 100% { left: 130%; }
+  0% { transform: translate3d(-150%, 0, 0) skewX(-20deg); }
+  55%, 100% { transform: translate3d(260%, 0, 0) skewX(-20deg); }
 }
 
 /* Soft pulse for important CTAs */
@@ -298,8 +324,8 @@
 .neon-frame {
   position: absolute;
   pointer-events: none;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 4px rgba(255, 79, 216, 0.95)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 22px rgba(34, 211, 238, 0.45));
+  filter: drop-shadow(0 0 8px rgba(255, 79, 216, 0.85));
+  will-change: opacity;
   animation: neonFlicker 4s ease-in-out infinite;
 }
 .neon-frame::before {
@@ -341,9 +367,9 @@
   max-height: 620px;
   border-radius: 9999px;
   background: radial-gradient(circle, var(--brand-accent) 0%, transparent 65%);
-  opacity: 0.22;
-  filter: blur(30px);
+  opacity: 0.25;
   z-index: -1;
+  will-change: transform;
   pointer-events: none;
 }
 .brand-orb-1 { top: -30%; left: -10%; animation: orbDrift1 14s ease-in-out infinite; }
@@ -362,13 +388,11 @@
   z-index: -1;
   pointer-events: none;
   opacity: 0.18;
+  right: auto;
+  width: 200%;
   background: repeating-linear-gradient(115deg, transparent 0 60px, rgba(255, 255, 255, 0.5) 60px 61px, transparent 61px 140px);
-  background-size: 300% 100%;
-  animation: streakMove 12s linear infinite;
-}
-@keyframes streakMove {
-  from { background-position: 0 0; }
-  to { background-position: 100% 0; }
+  will-change: transform;
+  animation: glowSlide 24s linear infinite;
 }
 .brand-chip { animation: softPulse 2.2s ease-in-out infinite; }
 .brand-title {
@@ -397,16 +421,18 @@
 }
 .brand-shine {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 35%;
   pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.35) 48%, transparent 60%);
-  background-size: 250% 100%;
-  mix-blend-mode: overlay;
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.22) 50%, transparent 100%);
+  will-change: transform;
   animation: bannerShine 4.8s ease-in-out infinite;
 }
 @keyframes bannerShine {
-  0% { background-position: 150% 0; }
-  55%, 100% { background-position: -60% 0; }
+  0% { transform: translate3d(-120%, 0, 0); }
+  55%, 100% { transform: translate3d(320%, 0, 0); }
 }
 .brand-spot {
   position: absolute;
@@ -414,8 +440,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
-  mix-blend-mode: soft-light;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
 }
 .brand-tilt:hover .brand-spot { opacity: 1; }
 
@@ -502,3 +527,13 @@
 .hero-banners { --hero-strip: 28px; }
 @media (min-width: 640px) { .hero-banners { --hero-strip: 56px; } }
 @media (min-width: 1024px) { .hero-banners { --hero-strip: 72px; } }
+
+/* ======================= Performance ======================= */
+html { -webkit-text-size-adjust: 100%; }
+/* Skip rendering work for sections far below the fold until they're near */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+/* Pause decorative loops while their section is off-screen (toggled by ScrollReveal) */
+.offscreen-paused, .offscreen-paused * { animation-play-state: paused !important; }

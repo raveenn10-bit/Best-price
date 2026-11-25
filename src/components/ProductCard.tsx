@@ -66,6 +66,7 @@ export function ProductCard({ product }: { product: Product }) {
           src={product.image}
           alt={product.name}
           loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
         />
       </Link>

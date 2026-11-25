@@ -28,8 +28,8 @@ const config: Config = {
         ink: "#202630",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Inter", "system-ui", "sans-serif"],
+        sans: ["'Inter Variable'", "Inter", "system-ui", "sans-serif"],
+        display: ["'Inter Variable'", "Inter", "system-ui", "sans-serif"],
       },
       boxShadow: {
         card: "0 1px 8px rgba(0,0,0,0.05)",

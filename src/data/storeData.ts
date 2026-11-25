@@ -7,7 +7,7 @@ import { Brand, Category, Faq, HeroSlide, Product, PromoBanner, SampleReview } f
  * can replace or sync these collections without modifying UI components.
  */
 
-export const LOGO_SRC = "/assets/logo/BestPrices-logo.png";
+export const LOGO_SRC = "/assets/logo/BestPrices-logo.webp";
 
 export const BUSINESS_SETTINGS = {
   "name": "BestPrices.lk",
@@ -35,8 +35,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     "priceCallout": "Starting from Rs. 24,990",
     "ctaPrimary": "Shop Flagship Tech",
     "ctaCategory": "mobiles",
-    "desktopImage": "/assets/banners/hero-tech.jpg",
-    "mobileImage": "/assets/banners/promo-mobile.jpg",
+    "desktopImage": "/assets/banners/hero-tech.webp",
+    "mobileImage": "/assets/banners/promo-mobile.webp",
     "theme": "dark"
   },
   {
@@ -47,8 +47,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     "priceCallout": "Up to 41% OFF Flash Deals",
     "ctaPrimary": "Explore Appliances",
     "ctaCategory": "home-appliances",
-    "desktopImage": "/assets/banners/hero-appliances.jpg",
-    "mobileImage": "/assets/banners/promo-kitchen.jpg",
+    "desktopImage": "/assets/banners/hero-appliances.webp",
+    "mobileImage": "/assets/banners/promo-kitchen.webp",
     "theme": "dark"
   },
   {
@@ -59,8 +59,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     "priceCallout": "Save Rs. 55,000 Today",
     "ctaPrimary": "View TV & Audio",
     "ctaCategory": "tv-audio",
-    "desktopImage": "/assets/banners/hero-tv-gaming.jpg",
-    "mobileImage": "/assets/banners/hero-tv-gaming.jpg",
+    "desktopImage": "/assets/banners/hero-tv-gaming.webp",
+    "mobileImage": "/assets/banners/hero-tv-gaming.webp",
     "theme": "dark"
   }
 ];
@@ -71,7 +71,7 @@ export const CATEGORIES: Category[] = [
     "name": "Mobiles & Tablets",
     "shortDesc": "5G Smartphones, Tablets & Fast Chargers",
     "icon": "smartphone",
-    "image": "/assets/products/smartphone-5g.jpg",
+    "image": "/assets/products/smartphone-5g.webp",
     "subcategories": [
       "5G Smartphones",
       "Android Tablets",
@@ -84,7 +84,7 @@ export const CATEGORIES: Category[] = [
     "name": "Laptops & Computing",
     "shortDesc": "Ultrabooks, Gaming Laptops & Monitors",
     "icon": "laptop",
-    "image": "/assets/products/ultrabook-pro.jpg",
+    "image": "/assets/products/ultrabook-pro.webp",
     "subcategories": [
       "Creator Ultrabooks",
       "Office Notebooks",
@@ -97,7 +97,7 @@ export const CATEGORIES: Category[] = [
     "name": "TV & Home Audio",
     "shortDesc": "4K QLED Google TVs, Soundbars & Headphones",
     "icon": "tv",
-    "image": "/assets/products/qled-tv-55.jpg",
+    "image": "/assets/products/qled-tv-55.webp",
     "subcategories": [
       "43\" - 65\" Smart TVs",
       "Party Speakers",
@@ -110,7 +110,7 @@ export const CATEGORIES: Category[] = [
     "name": "Home Appliances",
     "shortDesc": "Inverter Fridges, Washing Machines & ACs",
     "icon": "refrigerator",
-    "image": "/assets/products/inverter-fridge.jpg",
+    "image": "/assets/products/inverter-fridge.webp",
     "subcategories": [
       "Double Door Fridges",
       "Front Load Washers",
@@ -123,7 +123,7 @@ export const CATEGORIES: Category[] = [
     "name": "Kitchen Appliances",
     "shortDesc": "Digital Air Fryers, Espresso & Microwaves",
     "icon": "utensils",
-    "image": "/assets/products/air-fryer-xl.jpg",
+    "image": "/assets/products/air-fryer-xl.webp",
     "subcategories": [
       "Air Fryers",
       "Espresso Machines",
@@ -136,7 +136,7 @@ export const CATEGORIES: Category[] = [
     "name": "Smart Wearables",
     "shortDesc": "AMOLED Fitness Watches & Wireless Earbuds",
     "icon": "watch",
-    "image": "/assets/products/smartwatch-ultra.jpg",
+    "image": "/assets/products/smartwatch-ultra.webp",
     "subcategories": [
       "GPS Smartwatches",
       "TWS Earbuds",
@@ -205,7 +205,7 @@ export const PROMO_BANNERS: PromoBanner[] = [
     "subtitle": "Upgrade your daily cooking with rapid-air touch appliances.",
     "ctaText": "Shop Kitchen Deals",
     "category": "kitchen-appliances",
-    "image": "/assets/banners/promo-kitchen.jpg"
+    "image": "/assets/banners/promo-kitchen.webp"
   },
   {
     "id": "promo-mobile",
@@ -214,7 +214,7 @@ export const PROMO_BANNERS: PromoBanner[] = [
     "subtitle": "Trade up to pro photography and 60-hour battery endurance.",
     "ctaText": "Explore Mobile & Tech",
     "category": "mobiles",
-    "image": "/assets/banners/promo-mobile.jpg"
+    "image": "/assets/banners/promo-mobile.webp"
   }
 ];
 
@@ -238,11 +238,11 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": true,
     "isRecommended": true,
-    "image": "/assets/products/smartphone-5g.jpg",
+    "image": "/assets/products/smartphone-5g.webp",
     "gallery": [
-      "/assets/products/smartphone-5g.jpg",
-      "/assets/banners/promo-mobile.jpg",
-      "/assets/banners/hero-tech.jpg"
+      "/assets/products/smartphone-5g.webp",
+      "/assets/banners/promo-mobile.webp",
+      "/assets/banners/hero-tech.webp"
     ],
     "shortDesc": "Aerospace-grade titanium frame, 6.8\" 120Hz LTPO AMOLED display, 200MP periscope pro camera array, and 5000mAh all-day battery.",
     "variations": {
@@ -283,10 +283,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": false,
     "isRecommended": true,
-    "image": "/assets/products/ultrabook-pro.jpg",
+    "image": "/assets/products/ultrabook-pro.webp",
     "gallery": [
-      "/assets/products/ultrabook-pro.jpg",
-      "/assets/banners/hero-tech.jpg"
+      "/assets/products/ultrabook-pro.webp",
+      "/assets/banners/hero-tech.webp"
     ],
     "shortDesc": "Precision-milled aluminum chassis with 15.6\" 2.8K 120Hz OLED display, AI NPU acceleration, and ultra-fast 1TB PCIe 4.0 SSD.",
     "variations": {
@@ -326,10 +326,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": false,
     "isTrending": true,
     "isRecommended": true,
-    "image": "/assets/products/qled-tv-55.jpg",
+    "image": "/assets/products/qled-tv-55.webp",
     "gallery": [
-      "/assets/products/qled-tv-55.jpg",
-      "/assets/banners/hero-tv-gaming.jpg"
+      "/assets/products/qled-tv-55.webp",
+      "/assets/banners/hero-tv-gaming.webp"
     ],
     "shortDesc": "Quantum Dot 4K UHD panel with bezel-less metallic frame, Dolby Atmos 30W speakers, built-in Google TV & voice remote.",
     "variations": {
@@ -366,10 +366,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": true,
     "isRecommended": false,
-    "image": "/assets/products/inverter-fridge.jpg",
+    "image": "/assets/products/inverter-fridge.webp",
     "gallery": [
-      "/assets/products/inverter-fridge.jpg",
-      "/assets/banners/hero-appliances.jpg"
+      "/assets/products/inverter-fridge.webp",
+      "/assets/banners/hero-appliances.webp"
     ],
     "shortDesc": "Multi-air flow No-Frost cooling with external LED touch temperature control, R600a eco refrigerant, and tempered glass shelves.",
     "variations": {
@@ -409,10 +409,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": true,
     "isRecommended": true,
-    "image": "/assets/products/washing-machine.jpg",
+    "image": "/assets/products/washing-machine.webp",
     "gallery": [
-      "/assets/products/washing-machine.jpg",
-      "/assets/banners/hero-appliances.jpg"
+      "/assets/products/washing-machine.webp",
+      "/assets/banners/hero-appliances.webp"
     ],
     "shortDesc": "Hygienic 60°C steam wash, 1400 RPM silent direct-drive inverter motor, 15-minute quick wash, and stainless steel pearl drum.",
     "variations": {
@@ -449,10 +449,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": false,
     "isTrending": true,
     "isRecommended": true,
-    "image": "/assets/products/air-fryer-xl.jpg",
+    "image": "/assets/products/air-fryer-xl.webp",
     "gallery": [
-      "/assets/products/air-fryer-xl.jpg",
-      "/assets/banners/promo-kitchen.jpg"
+      "/assets/products/air-fryer-xl.webp",
+      "/assets/banners/promo-kitchen.webp"
     ],
     "shortDesc": "Cook crispy meals with up to 90% less oil using 8 one-touch LED presets, non-stick PFOA-free basket, and auto shut-off safety.",
     "variations": {
@@ -489,10 +489,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": false,
     "isRecommended": true,
-    "image": "/assets/products/anc-headphones.jpg",
+    "image": "/assets/products/anc-headphones.webp",
     "gallery": [
-      "/assets/products/anc-headphones.jpg",
-      "/assets/banners/hero-tech.jpg"
+      "/assets/products/anc-headphones.webp",
+      "/assets/banners/hero-tech.webp"
     ],
     "shortDesc": "Hybrid 45dB Active Noise Cancellation, 40mm titanium-coated drivers, plush memory-foam earcups, and dual-device multipoint.",
     "variations": {
@@ -528,9 +528,9 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": false,
     "isTrending": true,
     "isRecommended": false,
-    "image": "/assets/products/inverter-ac.jpg",
+    "image": "/assets/products/inverter-ac.webp",
     "gallery": [
-      "/assets/products/inverter-ac.jpg"
+      "/assets/products/inverter-ac.webp"
     ],
     "shortDesc": "Up to 60% energy savings with 100% copper condenser, Golden Fin anti-corrosion coating for coastal Sri Lankan homes, and smartphone app control.",
     "variations": {
@@ -567,10 +567,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": false,
     "isRecommended": true,
-    "image": "/assets/products/espresso-maker.jpg",
+    "image": "/assets/products/espresso-maker.webp",
     "gallery": [
-      "/assets/products/espresso-maker.jpg",
-      "/assets/banners/hero-appliances.jpg"
+      "/assets/products/espresso-maker.webp",
+      "/assets/banners/hero-appliances.webp"
     ],
     "shortDesc": "Italian 15-bar high-pressure pump, commercial-grade steam wand for silky microfoam latte art, and analog pressure gauge.",
     "variations": {
@@ -605,10 +605,10 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": true,
     "isRecommended": true,
-    "image": "/assets/products/smartwatch-ultra.jpg",
+    "image": "/assets/products/smartwatch-ultra.webp",
     "gallery": [
-      "/assets/products/smartwatch-ultra.jpg",
-      "/assets/banners/promo-mobile.jpg"
+      "/assets/products/smartwatch-ultra.webp",
+      "/assets/banners/promo-mobile.webp"
     ],
     "shortDesc": "1.43\" Always-On Sapphire AMOLED display, dual-band GPS, Bluetooth calling, 5ATM swim-proof rating, and 14-day battery life.",
     "variations": {
@@ -644,9 +644,9 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": false,
     "isTrending": true,
     "isRecommended": false,
-    "image": "/assets/products/party-speaker.jpg",
+    "image": "/assets/products/party-speaker.webp",
     "gallery": [
-      "/assets/products/party-speaker.jpg"
+      "/assets/products/party-speaker.webp"
     ],
     "shortDesc": "Deep bass woofer with beat-synced crimson LED ring lighting, UHF wireless karaoke microphone included, and 10-hour rechargeable battery.",
     "variations": {
@@ -681,9 +681,9 @@ export const PRODUCTS: Product[] = [
     "isNewArrival": true,
     "isTrending": false,
     "isRecommended": true,
-    "image": "/assets/products/microwave-oven.jpg",
+    "image": "/assets/products/microwave-oven.webp",
     "gallery": [
-      "/assets/products/microwave-oven.jpg"
+      "/assets/products/microwave-oven.webp"
     ],
     "shortDesc": "Sleek tempered mirror glass door, stainless steel pull handle, 800W microwave + 1000W quartz grill, and quick defrost presets.",
     "variations": {

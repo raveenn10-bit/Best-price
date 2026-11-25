@@ -119,7 +119,7 @@ export default function HomePage() {
                 href={shopHref({ category: b.category })}
                 className="group relative overflow-hidden rounded-[22px] min-h-[220px] sm:min-h-[260px] flex items-end"
               >
-                <img src={b.image} alt="" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={b.image} alt="" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 <div className="relative p-6 sm:p-8 text-white">
                   <span className="inline-block bg-deal text-[#080808] text-[11px] font-bold px-2.5 py-1 rounded-full mb-2">{b.badge}</span>
@@ -140,7 +140,7 @@ export default function HomePage() {
 
           <BrandShowcase theme="ugreen" />
 
-          <section>
+          <section className="cv-auto">
             <h2 className="text-xl sm:text-[26px] font-bold text-[#171717] mb-4">Popular Searches</h2>
             <div className="flex flex-wrap gap-2.5">
               {POPULAR_SEARCHES.map((q) => (
@@ -155,7 +155,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section>
+          <section className="cv-auto">
             <SectionTitle title="BEST SELLERS ⭐" href="/shop" />
             <CategoryImageTiles ids={CATEGORIES.map((c) => c.id)} />
             <div className="mt-6">
@@ -165,14 +165,14 @@ export default function HomePage() {
 
           <BrandShowcase theme="anker" />
 
-          <section>
+          <section className="cv-auto">
             <SectionTitle title="TRENDING NOW 🔥" href="/shop" />
             <ProductRow products={trending} />
           </section>
 
           <BrandShowcase theme="soundcore" />
 
-          <section>
+          <section className="cv-auto">
             <SectionTitle title="TRENDING BRANDS" />
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
               {BRANDS.map((b) => (
@@ -189,12 +189,12 @@ export default function HomePage() {
             <p className="text-[11px] text-slate-400 mt-3">Sample brand names shown for preview.</p>
           </section>
 
-          <section>
+          <section className="cv-auto">
             <SectionTitle title="RECOMMENDED FOR YOU" href="/shop" />
             <ProductRow products={recommended} />
           </section>
 
-          <section>
+          <section className="cv-auto">
             <SectionTitle title="Customer Reviews ⭐" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
               {SAMPLE_REVIEWS.map((r) => (
@@ -215,7 +215,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <section className="cv-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {TRUST.map(({ icon: Icon, title, body }) => (
               <div key={title} className="bg-white rounded-[18px] border border-[#E9E9E9] p-5 flex items-start gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
@@ -229,7 +229,7 @@ export default function HomePage() {
             ))}
           </section>
 
-          <section className="bg-white rounded-[22px] border border-[#E9E9E9] p-6 sm:p-10 text-[15px] text-slate-600 leading-relaxed space-y-4">
+          <section className="cv-auto bg-white rounded-[22px] border border-[#E9E9E9] p-6 sm:p-10 text-[15px] text-slate-600 leading-relaxed space-y-4">
             <h2 className="text-xl sm:text-2xl font-bold text-ink">Online Shopping in Sri Lanka | BestPrices.lk – Your Trusted Electronics Store</h2>
             <p>
               BestPrices.lk brings you genuine smartphones, laptops, 4K smart TVs, home appliances, kitchen essentials and smart wearables at

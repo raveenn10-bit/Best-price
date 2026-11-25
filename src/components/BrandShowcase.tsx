@@ -115,7 +115,7 @@ export function BrandShowcase({ theme }: { theme: BrandTheme }) {
 
   return (
     <section
-      className={`brand-band brand-${theme} relative -mx-4 sm:-mx-6 lg:-mx-10 overflow-hidden bg-gradient-to-r ${t.band}`}
+      className={`brand-band brand-${theme} cv-auto relative -mx-4 sm:-mx-6 lg:-mx-10 overflow-hidden bg-gradient-to-r ${t.band}`}
       style={{ ["--brand-accent" as string]: t.accent }}
       aria-label={s.title}
     >
@@ -148,7 +148,7 @@ export function BrandShowcase({ theme }: { theme: BrandTheme }) {
         <div className="overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
           <div className="min-w-[720px] sm:min-w-0 [perspective:1400px]" onPointerMove={onMove} onPointerLeave={onLeave}>
             <div ref={tiltRef} className="brand-tilt relative rounded-[18px] sm:rounded-[26px] overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-              <img src={s.src} alt={s.alt} loading="lazy" draggable={false} className="block w-full h-auto select-none" />
+              <img src={s.src} alt={s.alt} loading="lazy" decoding="async" width={2172} height={724} draggable={false} className="block w-full h-auto select-none" />
               <span className="brand-shine" aria-hidden="true" />
               <span className="brand-spot" aria-hidden="true" />
               {s.hotspots.map((h, i) => (

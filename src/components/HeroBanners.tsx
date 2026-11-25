@@ -114,7 +114,7 @@ export function HeroBanners() {
             tabIndex={i === idx ? 0 : -1}
           >
             {/* Soft blurred backdrop fills any space around the artwork and the strip below it */}
-            <img src={b.src} alt="" aria-hidden="true" draggable={false} loading="lazy" className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-80" />
+            <img src={b.src.replace("/hero/", "/hero/blur/")} alt="" aria-hidden="true" draggable={false} decoding="async" className="absolute inset-0 w-full h-full object-cover scale-110 opacity-80" />
             <span className="absolute inset-x-0 bottom-0 h-[var(--hero-strip)] bg-gradient-to-b from-transparent to-black/30" aria-hidden="true" />
             <span className="relative block w-full aspect-[2/1] max-h-[560px]">
             <span className={`relative block h-full max-w-full mx-auto overflow-hidden ${i === idx ? "hero-zoom" : ""}`} style={{ aspectRatio: b.ratio }}>
@@ -123,7 +123,8 @@ export function HeroBanners() {
                 alt={b.alt}
                 draggable={false}
                 loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "auto"}
+                decoding={i === 0 ? "sync" : "async"}
+                fetchPriority={i === 0 ? "high" : "low"}
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {b.neon?.map((n, k) => (
