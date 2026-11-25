@@ -643,7 +643,7 @@ html { -webkit-text-size-adjust: 100%; }
   animation: plAutoHide 0.5s ease 6s forwards;
 }
 .preloader.is-hidden { opacity: 0; visibility: hidden; transform: scale(1.03); pointer-events: none; }
-.pl-skip .preloader { display: none; }
+.pl-skip .preloader, .pl-skip .welcome-intro { display: none; }
 html.pl-lock, html.pl-lock body { overflow: hidden; }
 @keyframes plAutoHide { to { opacity: 0; visibility: hidden; } }
 .preloader-inner { display: flex; flex-direction: column; align-items: center; }
@@ -660,3 +660,36 @@ html.pl-lock, html.pl-lock body { overflow: hidden; }
 .preloader-bar span { display: block; height: 100%; background: #e60000; border-radius: 3px; transition: width 0.3s ease-out; }
 .preloader-label { margin-top: 14px; font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: #9a9a9a; }
 @media (prefers-reduced-motion: reduce) { .preloader-logo, .preloader-bar { animation: none; } }
+
+/* ======================= Handwritten welcome intro ======================= */
+.welcome-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9998; /* just under the preloader so the hand-off is seamless */
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.9s cubic-bezier(0.65, 0, 0.35, 1), transform 0.9s cubic-bezier(0.65, 0, 0.35, 1), filter 0.9s ease, visibility 0.9s;
+  /* Safety net if scripts never run */
+  animation: plAutoHide 0.6s ease 14s forwards;
+}
+.welcome-intro.is-leaving { opacity: 0; transform: scale(1.04); filter: blur(6px); visibility: hidden; pointer-events: none; }
+.welcome-stage { width: min(88vw, 1100px); padding: 0 4vw; }
+.welcome-svg { width: 100%; height: auto; overflow: visible; }
+.welcome-actions { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 0; right: 0; display: flex; justify-content: center; gap: 10px; }
+.welcome-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 9999px;
+  font-size: 13px; font-weight: 600; color: #fff; background: #e60000;
+  box-shadow: 0 8px 24px -8px rgba(230, 0, 0, 0.55);
+  animation: heroIn 0.5s ease both;
+}
+.welcome-btn-ghost { background: transparent; color: #8a8a8a; box-shadow: none; }
+.welcome-btn-ghost:hover { color: #111; }
+@media (max-width: 639px) {
+  .welcome-stage { width: 92vw; padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .welcome-intro, .welcome-intro.is-leaving { transform: none; filter: none; }
+}

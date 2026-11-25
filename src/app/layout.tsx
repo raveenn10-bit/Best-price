@@ -4,6 +4,7 @@ import { StoreProvider } from "@/context/StoreContext";
 import { SiteShell } from "@/components/SiteShell";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Preloader } from "@/components/Preloader";
+import { WelcomeIntro } from "@/components/WelcomeIntro";
 import "@fontsource-variable/inter";
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -27,9 +28,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <link rel="preload" href="/assets/logo/BestPrices-logo.webp" as="image" type="image/webp" />
+        <link rel="prefetch" href="/audio/welcome-voiceover.m4a" as="fetch" />
       </head>
       <body className="bg-white text-slate-900 antialiased pb-20 lg:pb-0">
         <Preloader />
+        <WelcomeIntro />
         <StoreProvider>
           <SiteShell>{children}</SiteShell>
           <SmoothScroll />

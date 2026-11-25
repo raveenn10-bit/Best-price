@@ -51,7 +51,9 @@ export function Preloader() {
 
   useEffect(() => {
     if (!hide) return;
-    document.documentElement.classList.remove("pl-lock");
+    // Hand over to the welcome intro (which unlocks scrolling when it finishes)
+    (window as unknown as { __bpPreloaderDone?: boolean }).__bpPreloaderDone = true;
+    window.dispatchEvent(new Event("bp:preloader-done"));
     const t = setTimeout(() => setGone(true), 600);
     return () => clearTimeout(t);
   }, [hide]);
