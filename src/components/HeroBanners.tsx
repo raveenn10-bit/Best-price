@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { shopHref } from "@/lib/routes";
 
 type Banner = {
@@ -35,7 +34,7 @@ const BANNERS: Banner[] = [
   { id: "smart-home-upgrade", ratio: 2, src: "/banners/hero/smart-home-upgrade.webp", alt: "Smart Home Upgrade — fridges and washing machines", href: shopHref({ category: "home-appliances" }) },
 ];
 
-const INTERVAL = 5000;
+const INTERVAL = 4000;
 
 export function HeroBanners() {
   const total = BANNERS.length;
@@ -90,8 +89,6 @@ export function HeroBanners() {
       className="hero-banners relative w-full max-w-[1400px] mx-auto overflow-hidden bg-[#1a0f2e] select-none"
       aria-roledescription="carousel"
       aria-label="Featured offers"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       <div
         ref={trackRef}
@@ -150,23 +147,6 @@ export function HeroBanners() {
           </Link>
         ))}
       </div>
-
-      <button
-        type="button"
-        onClick={() => go(idx - 1)}
-        aria-label="Previous banner"
-        className="hidden sm:flex absolute left-4 top-[calc((100%-var(--hero-strip))/2)] -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-      <button
-        type="button"
-        onClick={() => go(idx + 1)}
-        aria-label="Next banner"
-        className="hidden sm:flex absolute right-4 top-[calc((100%-var(--hero-strip))/2)] -translate-y-1/2 w-11 h-11 rounded-full bg-white/85 hover:bg-white text-ink items-center justify-center shadow-lg transition"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
 
       {/* Dots with progress fill */}
       <div className="hidden sm:flex absolute bottom-[calc(var(--hero-strip)+10px)] left-1/2 -translate-x-1/2 items-center gap-1.5 sm:gap-2 bg-black/25 backdrop-blur-sm rounded-full px-2.5 py-1.5">
