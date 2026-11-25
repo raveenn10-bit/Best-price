@@ -498,6 +498,11 @@
 @media (hover: none) {
   .brand-hotspot-cta { opacity: 1; transform: translate(-50%, 0); font-size: 10px; padding: 4px 9px; bottom: -10px; }
 }
+@media (max-width: 639px) {
+  /* Banner is small on phones: keep the art clean, the whole card is still tappable */
+  .brand-hotspot-cta { display: none; }
+  .brand-hotspot-ring { border-width: 1.5px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .brand-orb, .brand-streaks, .brand-chip, .brand-title, .brand-tilt, .brand-shine, .brand-hotspot-ring { animation: none !important; }
