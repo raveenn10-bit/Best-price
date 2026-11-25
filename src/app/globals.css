@@ -537,3 +537,6 @@ html { -webkit-text-size-adjust: 100%; }
 }
 /* Pause decorative loops while their section is off-screen (toggled by ScrollReveal) */
 .offscreen-paused, .offscreen-paused * { animation-play-state: paused !important; }
+
+/* Hero artwork height: full width, never taller than the screen */
+.hero-art { height: min(50vw, calc(100svh - 140px)); min-height: 180px; }

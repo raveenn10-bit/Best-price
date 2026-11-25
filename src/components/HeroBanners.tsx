@@ -86,7 +86,7 @@ export function HeroBanners() {
 
   return (
     <section
-      className="hero-banners relative w-full max-w-[1400px] mx-auto overflow-hidden bg-[#1a0f2e] select-none"
+      className="hero-banners relative w-full overflow-hidden bg-[#1a0f2e] select-none"
       aria-roledescription="carousel"
       aria-label="Featured offers"
     >
@@ -116,8 +116,10 @@ export function HeroBanners() {
             {/* Soft blurred backdrop fills any space around the artwork and the strip below it */}
             <img src={b.src.replace("/hero/", "/hero/blur/")} alt="" aria-hidden="true" draggable={false} decoding="async" className="absolute inset-0 w-full h-full object-cover scale-110 opacity-80" />
             <span className="absolute inset-x-0 bottom-0 h-[var(--hero-strip)] bg-gradient-to-b from-transparent to-black/30" aria-hidden="true" />
-            <span className="relative block w-full aspect-[2/1] max-h-[560px]">
-            <span className={`relative block h-full max-w-full mx-auto overflow-hidden ${i === idx ? "hero-zoom" : ""}`} style={{ aspectRatio: b.ratio }}>
+            {/* Full-width artwork: fills the screen edge to edge, centred vertically */}
+            <span className="hero-art relative block w-full overflow-hidden">
+            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 block w-full" style={{ aspectRatio: b.ratio }}>
+            <span className={`absolute inset-0 block ${i === idx ? "hero-zoom" : ""}`}>
               <img
                 src={b.src}
                 alt={b.alt}
@@ -141,6 +143,7 @@ export function HeroBanners() {
                   }}
                 />
               ))}
+            </span>
             </span>
             </span>
             {/* Strip under the artwork that the category card overlaps */}

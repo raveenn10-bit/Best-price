@@ -104,7 +104,7 @@ function MarqueeRow({ tiles, reverse = false }: { tiles: Tile[]; reverse?: boole
 export function CategoryCircles() {
   const half = Math.ceil(TILES.length / 2);
   return (
-    <section className="relative z-10 w-full max-w-[1320px] mx-auto px-3 sm:px-6 -mt-[24px] sm:-mt-[50px] lg:-mt-[64px]" aria-label="Shop by category">
+    <section className="relative z-10 w-full max-w-[1680px] mx-auto px-3 sm:px-6 lg:px-10 -mt-[24px] sm:-mt-[50px] lg:-mt-[64px]" aria-label="Shop by category">
       <div className="bg-white rounded-[20px] sm:rounded-[24px] shadow-[0_18px_50px_-18px_rgba(5,69,141,0.35)] border border-slate-100 py-5 sm:py-7 space-y-5 sm:space-y-7">
         <MarqueeRow tiles={TILES.slice(0, half)} />
         <MarqueeRow tiles={TILES.slice(half)} reverse />
