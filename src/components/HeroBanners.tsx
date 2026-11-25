@@ -2,9 +2,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { shopHref } from "@/lib/routes";
+import { HERO_VIDEO, HeroOverlay, MuteButton, VideoSlide } from "@/components/HeroVideo";
 
 type Banner = {
   id: string;
+  kind?: "image" | "video";
   src: string;
   alt: string;
   href: string;
@@ -34,12 +36,26 @@ const BANNERS: Banner[] = [
   { id: "smart-home-upgrade", ratio: 2, src: "/banners/hero/smart-home-upgrade.webp", alt: "Smart Home Upgrade — fridges and washing machines", href: shopHref({ category: "home-appliances" }) },
 ];
 
+const VIDEO_SLIDE: Banner = { id: "brand-film", kind: "video", src: HERO_VIDEO.desktop.poster, alt: HERO_VIDEO.alt, href: "/shop", ratio: 16 / 9 };
+
 const INTERVAL = 4000;
 // Alternate slow camera moves so consecutive slides feel different
 const MOVES = ["kb-in-left", "kb-in-right", "kb-out-up", "kb-in-right", "kb-in-left", "kb-out-up", "kb-in-left"];
 
 export function HeroBanners() {
-  const total = BANNERS.length;
+  // Desktop/tablet: the brand film is the first slide. Phones get the vertical cut above the carousel instead.
+  const [isPhone, setIsPhone] = useState(false);
+  const [videoOk, setVideoOk] = useState(true);
+  const [muted, setMuted] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const upd = () => setIsPhone(mq.matches);
+    upd();
+    mq.addEventListener("change", upd);
+    return () => mq.removeEventListener("change", upd);
+  }, []);
+  const SLIDES = isPhone ? BANNERS : [VIDEO_SLIDE, ...BANNERS];
+  const total = SLIDES.length;
   const [idx, setIdx] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -62,11 +78,20 @@ export function HeroBanners() {
   );
 
   // Auto-advance every 4 seconds
+  const activeIsVideo = SLIDES[idx]?.kind === "video" && videoOk;
+  const slideMs = activeIsVideo ? HERO_VIDEO.durationMs : INTERVAL;
   useEffect(() => {
     if (paused) return;
-    const id = setTimeout(() => go(idx + 1), INTERVAL);
+    // Video slides advance on "ended"; this is only a safety net
+    const id = setTimeout(() => go(idx + 1), activeIsVideo ? HERO_VIDEO.durationMs + 1500 : INTERVAL);
     return () => clearTimeout(id);
-  }, [idx, paused, go, cycle]);
+  }, [idx, paused, go, cycle, activeIsVideo]);
+
+  // Keep the index valid when the slide list changes (phone <-> desktop)
+  useEffect(() => {
+    setIdx(0);
+    setPrev(null);
+  }, [isPhone]);
 
   // Pause when the tab is hidden
   useEffect(() => {
@@ -145,8 +170,19 @@ export function HeroBanners() {
       onPointerCancel={onPointerUp}
     >
       <div className="hero-parallax absolute inset-0">
-        {BANNERS.map((b, i) => {
+        {SLIDES.map((b, i) => {
           const state = i === idx ? "is-active" : i === prev ? "is-leaving" : "";
+          if (b.kind === "video") {
+            return (
+              <div key={b.id} className={`hero-slide absolute inset-0 block ${state}`} aria-hidden={i !== idx}>
+                <VideoSlide active={i === idx} muted={muted} onEnded={() => go(i + 1)} onFail={() => setVideoOk(false)} />
+                <div className="absolute inset-0 z-[3] bg-gradient-to-r from-black/85 via-black/45 to-transparent" aria-hidden="true" />
+                <div className="absolute inset-0 z-[4] flex items-center px-8 lg:px-16 xl:px-24">
+                  <HeroOverlay animateKey={i === idx ? `ov-${cycle}` : "off"} />
+                </div>
+              </div>
+            );
+          }
           return (
             <Link
               key={b.id}
@@ -189,6 +225,8 @@ export function HeroBanners() {
       <span key={`sweep-${cycle}`} className="hero-sweep" aria-hidden="true" />
       <span className="hero-scrollfade" aria-hidden="true" />
 
+      {activeIsVideo && <MuteButton muted={muted} onToggle={() => setMuted((m) => !m)} className="absolute right-4 sm:right-8 lg:right-12 bottom-16 sm:bottom-20 z-[5]" />}
+
       {/* Slide counter */}
       <div className="pointer-events-none absolute right-4 sm:right-8 lg:right-12 bottom-6 sm:bottom-8 z-[4] hidden sm:flex items-baseline gap-1.5 text-white font-black tabular-nums drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
         <span key={idx} className="hero-count text-xl lg:text-2xl">{String(idx + 1).padStart(2, "0")}</span>
@@ -197,7 +235,7 @@ export function HeroBanners() {
 
       {/* Story-style progress bars */}
       <div className="absolute left-4 right-4 sm:left-8 sm:right-28 lg:left-12 lg:right-36 bottom-2 sm:bottom-3 z-[4] flex gap-1.5 sm:gap-2" role="tablist">
-        {BANNERS.map((b, i) => (
+        {SLIDES.map((b, i) => (
           <button
             key={b.id}
             type="button"
@@ -216,7 +254,7 @@ export function HeroBanners() {
                 className="absolute inset-y-0 left-0 bg-white rounded-full"
                 style={{
                   width: i < idx ? "100%" : i === idx ? undefined : "0%",
-                  animation: i === idx && !paused ? `dotFill ${INTERVAL}ms linear forwards` : "none",
+                  animation: i === idx && !paused ? `dotFill ${slideMs}ms linear forwards` : "none",
                 }}
               />
             </span>

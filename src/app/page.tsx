@@ -5,6 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Star, Truck, Bankno
 import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEWS } from "@/data/storeData";
 import { useCountdown } from "@/components/Countdown";
 import { HeroBanners } from "@/components/HeroBanners";
+import { MobileHeroVideo } from "@/components/HeroVideo";
 import { BrandShowcase } from "@/components/BrandShowcase";
 import { ProductRow, SectionTitle } from "@/components/ProductRow";
 import { shopHref, searchHref } from "@/lib/routes";
@@ -100,6 +101,7 @@ export default function HomePage() {
   return (
     <>
       <h1 className="sr-only">BestPrices.lk — online shopping for electronics and home appliances in Sri Lanka</h1>
+      <MobileHeroVideo />
       <HeroBanners />
       <DealsCountdownBanner />
 
