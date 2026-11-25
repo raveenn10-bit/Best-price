@@ -830,6 +830,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <Header onOpenMenu={() => setMenuOpen(true)} onOpenCategories={() => setCatsOpen(true)} />
       <main className="min-h-[75vh]">{children}</main>
       <Footer />
+      <div className="bottom-glow" aria-hidden="true" />
       <WhatsAppWidget />
       <BackToTop />
       <CategoryDrawer open={catsOpen} onClose={() => setCatsOpen(false)} />

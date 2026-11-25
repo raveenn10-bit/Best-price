@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Eye, Heart, ShoppingCart } from "lucide-react";
+import { Eye, Heart, ShoppingCart, Sparkles } from "lucide-react";
 import { Product } from "@/types/store";
 import { formatLKR } from "@/data/storeData";
 import { useStore } from "@/context/StoreContext";
@@ -87,7 +87,11 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="text-[11px] sm:text-xs text-slate-400 line-through tabular-nums">{formatLKR(product.originalPrice)}</span>
         </div>
 
-        <p className="mt-1.5 text-[11px] sm:text-xs text-[#8E8E8E] font-semibold leading-snug tabular-nums">
+        <div className="mt-2 animated-gradient text-white rounded-lg px-2.5 py-1.5 text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1.5 tabular-nums">
+          <Sparkles className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">You save LKR {lkr(product.originalPrice - product.discountPrice)}</span>
+        </div>
+        <p className="mt-1.5 text-[11px] sm:text-xs text-[#8E8E8E] font-semibold leading-snug text-center bg-slate-50 rounded-lg py-1.5 tabular-nums">
           or 3 X <b className="font-black">LKR {lkr(installment)}</b> with installments
         </p>
 
