@@ -183,6 +183,13 @@ export function MobileHeroVideo() {
     if (ref.current) ref.current.muted = muted;
   }, [muted]);
 
+  // After a manual "play" tap (data saver / slow connection), start as soon as the source is set
+  const wantPlay = useRef(false);
+  useEffect(() => {
+    const v = ref.current;
+    if (v && src && wantPlay.current) v.play().catch(() => {});
+  }, [src]);
+
   return (
     <div ref={wrap} className="sm:hidden relative w-full overflow-hidden bg-black hero-cine" style={{ height: "min(125vw, calc(100svh - 230px))" }}>
       <video
@@ -211,7 +218,7 @@ export function MobileHeroVideo() {
           light && (
             <button
               type="button"
-              onClick={() => setSrc(HERO_VIDEO.mobile.src)}
+              onClick={() => { wantPlay.current = true; setSrc(HERO_VIDEO.mobile.src); }}
               aria-label="Play video"
               className="w-11 h-11 rounded-full bg-white/90 text-ink flex items-center justify-center shadow-lg"
             >
@@ -275,6 +282,13 @@ export function DesktopHeroVideo() {
     if (ref.current) ref.current.muted = muted;
   }, [muted]);
 
+  // After a manual "play" tap (data saver / slow connection), start as soon as the source is set
+  const wantPlay = useRef(false);
+  useEffect(() => {
+    const v = ref.current;
+    if (v && src && wantPlay.current) v.play().catch(() => {});
+  }, [src]);
+
   return (
     <section ref={wrap} className="hidden sm:block hero-cine hero-art relative w-full overflow-hidden bg-black" aria-label="BestPrices.lk">
       <div className="hero-parallax absolute inset-0">
@@ -305,7 +319,7 @@ export function DesktopHeroVideo() {
           light && (
             <button
               type="button"
-              onClick={() => setSrc(HERO_VIDEO.desktop.src)}
+              onClick={() => { wantPlay.current = true; setSrc(HERO_VIDEO.desktop.src); }}
               aria-label="Play video"
               className="w-12 h-12 rounded-full bg-white/90 text-ink flex items-center justify-center shadow-lg"
             >
