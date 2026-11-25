@@ -5,8 +5,7 @@ import { Volume2 } from "lucide-react";
 type GsapNS = typeof import("gsap").gsap;
 type Glyphs = typeof import("@/data/welcomeGlyphs");
 
-// Handwriting is stretched to 5 s (voiceover is ~3 s and starts with it)
-const WRITE_SECONDS = 5;
+// Handwriting length = voiceover length (5 s); every word is drawn as it is spoken
 const HOLD_AFTER = 0.5; // seconds the finished sentence stays before the fade
 const FADE_OUT = 0.9;
 
@@ -87,9 +86,9 @@ export function WelcomeIntro() {
       if (reduce.current) {
         gsap.set(paths, { strokeDashoffset: 0, fillOpacity: 1, opacity: 1 });
         if (swash) gsap.set(swash, { strokeDashoffset: 0, opacity: 1 });
-        tl.to({}, { duration: WRITE_SECONDS });
+        tl.to({}, { duration: data.WELCOME_DURATION });
       } else {
-        const k = WRITE_SECONDS / data.WELCOME_DURATION;
+        const k = 1;
         paths.forEach((p) => {
           const g0 = data.WELCOME_GLYPHS[Number(p.dataset.g)];
           const g = { start: g0.start * k, dur: g0.dur * k };
@@ -104,7 +103,7 @@ export function WelcomeIntro() {
           gsap.set(swash, { strokeDasharray: len, strokeDashoffset: len, opacity: 0 });
           tl.to(swash, { strokeDashoffset: 0, opacity: 1, duration: data.WELCOME_SWASH.dur * k, ease: "power2.out" }, data.WELCOME_SWASH.start * k);
         }
-        tl.to({}, { duration: 0.001 }, WRITE_SECONDS - 0.001);
+        tl.to({}, { duration: 0.001 }, data.WELCOME_DURATION - 0.001);
       }
       tlRef.current = tl;
 
@@ -118,7 +117,18 @@ export function WelcomeIntro() {
         if (p) {
           p.then(() => {
             setSoundBlocked(false);
-            startClock();
+            // Lock the drawing to the audio clock so words and handwriting never drift apart
+            tl.pause(0);
+            const tick = () => {
+              if (audio.paused || audio.ended) {
+                if (tl.time() < tl.duration()) tl.play();
+                stopSync();
+                return;
+              }
+              tl.time(Math.min(audio.currentTime, tl.duration()));
+            };
+            tickRef.current = tick;
+            gsap.ticker.add(tick);
           }).catch(() => {
             // Browser blocked sound until the visitor interacts. Wait for the first
             // tap / click / key press anywhere, then write + speak together.
