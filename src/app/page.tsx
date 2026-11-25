@@ -6,6 +6,7 @@ import { BRANDS, CATEGORIES, HERO_SLIDES, PRODUCTS, PROMO_BANNERS, SAMPLE_REVIEW
 import { useCountdown } from "@/components/Countdown";
 import { CategoryCircles } from "@/components/CategoryCircles";
 import { HeroBanners } from "@/components/HeroBanners";
+import { BrandShowcase } from "@/components/BrandShowcase";
 import { ProductRow, SectionTitle } from "@/components/ProductRow";
 import { shopHref, searchHref } from "@/lib/routes";
 
@@ -137,6 +138,8 @@ export default function HomePage() {
             <ProductRow products={flash} />
           </section>
 
+          <BrandShowcase theme="ugreen" />
+
           <section>
             <h2 className="text-xl sm:text-[26px] font-bold text-[#171717] mb-4">Popular Searches</h2>
             <div className="flex flex-wrap gap-2.5">
@@ -160,10 +163,14 @@ export default function HomePage() {
             </div>
           </section>
 
+          <BrandShowcase theme="anker" />
+
           <section>
             <SectionTitle title="TRENDING NOW 🔥" href="/shop" />
             <ProductRow products={trending} />
           </section>
+
+          <BrandShowcase theme="soundcore" />
 
           <section>
             <SectionTitle title="TRENDING BRANDS" />

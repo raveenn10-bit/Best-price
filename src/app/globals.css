@@ -330,3 +330,152 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-zoom, .neon-frame, .neon-frame::before { animation: none !important; }
 }
+
+/* ======================= Brand showcase bands ======================= */
+.brand-band { isolation: isolate; }
+.brand-orb {
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--brand-accent) 0%, transparent 65%);
+  opacity: 0.22;
+  filter: blur(30px);
+  z-index: -1;
+  pointer-events: none;
+}
+.brand-orb-1 { top: -30%; left: -10%; animation: orbDrift1 14s ease-in-out infinite; }
+.brand-orb-2 { bottom: -40%; right: -12%; animation: orbDrift2 17s ease-in-out infinite; }
+@keyframes orbDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(18vw, 10%) scale(1.15); }
+}
+@keyframes orbDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-20vw, -12%) scale(0.95); }
+}
+.brand-streaks {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.18;
+  background: repeating-linear-gradient(115deg, transparent 0 60px, rgba(255, 255, 255, 0.5) 60px 61px, transparent 61px 140px);
+  background-size: 300% 100%;
+  animation: streakMove 12s linear infinite;
+}
+@keyframes streakMove {
+  from { background-position: 0 0; }
+  to { background-position: 100% 0; }
+}
+.brand-chip { animation: softPulse 2.2s ease-in-out infinite; }
+.brand-title {
+  background: linear-gradient(90deg, #fff 0%, #fff 40%, var(--brand-accent) 50%, #fff 60%, #fff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleShimmer 4.5s ease-in-out infinite;
+}
+@keyframes titleShimmer {
+  0% { background-position: 100% 0; }
+  60%, 100% { background-position: -50% 0; }
+}
+
+/* Banner with 3D tilt, shine sweep and pointer spotlight */
+.brand-tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s ease-out, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  animation: bannerFloat 6s ease-in-out infinite;
+}
+@keyframes bannerFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+.brand-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.35) 48%, transparent 60%);
+  background-size: 250% 100%;
+  mix-blend-mode: overlay;
+  animation: bannerShine 4.8s ease-in-out infinite;
+}
+@keyframes bannerShine {
+  0% { background-position: 150% 0; }
+  55%, 100% { background-position: -60% 0; }
+}
+.brand-spot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+  mix-blend-mode: soft-light;
+}
+.brand-tilt:hover .brand-spot { opacity: 1; }
+
+/* Product hotspots over each card in the artwork */
+.brand-hotspot {
+  position: absolute;
+  display: block;
+  z-index: 2;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-hotspot-ring {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 2px solid var(--brand-accent);
+  box-shadow: 0 0 14px var(--brand-accent), inset 0 0 18px color-mix(in srgb, var(--brand-accent) 45%, transparent);
+  opacity: 0;
+  animation: hotspotSpotlight 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 2s);
+}
+@keyframes hotspotSpotlight {
+  0%, 30%, 100% { opacity: 0; }
+  10%, 20% { opacity: 0.9; }
+}
+.brand-hotspot:hover,
+.brand-hotspot:focus-visible { transform: translateY(-6px) scale(1.02); outline: none; }
+.brand-hotspot:hover .brand-hotspot-ring,
+.brand-hotspot:focus-visible .brand-hotspot-ring {
+  animation: none;
+  opacity: 1;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--brand-accent), 0 0 24px var(--brand-accent), 0 0 52px var(--brand-accent), inset 0 0 26px color-mix(in srgb, var(--brand-accent) 55%, transparent);
+}
+.brand-hotspot-cta {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translate(-50%, 6px);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background: #25d366;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.brand-hotspot:hover .brand-hotspot-cta,
+.brand-hotspot:focus-visible .brand-hotspot-cta { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: none) {
+  .brand-hotspot-cta { opacity: 1; transform: translate(-50%, 0); font-size: 10px; padding: 4px 9px; bottom: -10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-orb, .brand-streaks, .brand-chip, .brand-title, .brand-tilt, .brand-shine, .brand-hotspot-ring { animation: none !important; }
+  .brand-title { color: #fff; background: none; }
+  .brand-tilt { transform: none; }
+}
