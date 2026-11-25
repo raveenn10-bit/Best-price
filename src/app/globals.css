@@ -640,14 +640,23 @@ html { -webkit-text-size-adjust: 100%; }
   justify-content: center;
   transition: opacity 0.55s ease, visibility 0.55s ease, transform 0.55s ease;
   /* Safety net: if scripts never run, fade out on its own */
-  animation: plAutoHide 0.5s ease 7s forwards;
+  animation: plAutoHide 0.5s ease 6s forwards;
 }
 .preloader.is-hidden { opacity: 0; visibility: hidden; transform: scale(1.03); pointer-events: none; }
 .pl-skip .preloader { display: none; }
 html.pl-lock, html.pl-lock body { overflow: hidden; }
 @keyframes plAutoHide { to { opacity: 0; visibility: hidden; } }
-.preloader-inner { width: min(86vw, 520px); display: flex; flex-direction: column; align-items: center; }
-.preloader-video { width: 100%; height: auto; aspect-ratio: 840 / 375; object-fit: contain; background: #fff; }
-.preloader-bar { width: 170px; height: 3px; border-radius: 3px; background: #ececec; overflow: hidden; margin-top: 18px; }
-.preloader-bar span { display: block; height: 100%; background: #e60000; border-radius: 3px; transition: width 0.3s linear; }
-.preloader-label { margin-top: 12px; font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: #9a9a9a; }
+.preloader-inner { display: flex; flex-direction: column; align-items: center; }
+.preloader-logo {
+  width: min(62vw, 300px);
+  height: auto;
+  animation: plLogoIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes plLogoIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+.preloader-bar { width: 170px; height: 3px; border-radius: 3px; background: #ececec; overflow: hidden; margin-top: 28px; animation: plLogoIn 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.preloader-bar span { display: block; height: 100%; background: #e60000; border-radius: 3px; transition: width 0.3s ease-out; }
+.preloader-label { margin-top: 14px; font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: #9a9a9a; }
+@media (prefers-reduced-motion: reduce) { .preloader-logo, .preloader-bar { animation: none; } }

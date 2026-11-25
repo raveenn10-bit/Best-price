@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "try{if(sessionStorage.getItem('bp_preloaded')){var d=document.documentElement;d.classList.add('pl-skip');d.classList.remove('pl-lock')}}catch(e){}",
           }}
         />
-        <link rel="preload" href="/videos/preloader.mp4" as="video" type="video/mp4" />
+        <link rel="preload" href="/assets/logo/BestPrices-logo.webp" as="image" type="image/webp" />
       </head>
       <body className="bg-white text-slate-900 antialiased pb-20 lg:pb-0">
         <Preloader />

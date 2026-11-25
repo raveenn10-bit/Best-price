@@ -1,21 +1,21 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { LOGO_SRC } from "@/data/storeData";
 
-const MAX_MS = 5200; // never block the page longer than this
+const MIN_MS = 900; // long enough to read the logo, short enough not to annoy
+const MAX_MS = 4000; // never block the page longer than this
 
 /**
- * Logo-reveal preloader. Shown once per browser session, rendered in the server HTML
- * so it covers the page instantly. Hides when the reveal finishes and the page has loaded.
+ * Simple branded preloader: logo, red progress bar, "LOADING".
+ * Rendered in the server HTML so it covers the page instantly; shown once per browser session.
  */
 export function Preloader() {
-  const ref = useRef<HTMLVideoElement>(null);
+  const [progress, setProgress] = useState(12);
   const [hide, setHide] = useState(false);
   const [gone, setGone] = useState(false);
-  const [progress, setProgress] = useState(8);
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (root.classList.contains("pl-skip")) {
+    if (document.documentElement.classList.contains("pl-skip")) {
       setGone(true);
       return;
     }
@@ -23,47 +23,36 @@ export function Preloader() {
       sessionStorage.setItem("bp_preloaded", "1");
     } catch {}
 
-    let videoDone = false;
-    let pageDone = document.readyState === "complete";
-    const finish = () => {
-      setProgress(100);
-      setTimeout(() => setHide(true), 250);
-    };
-    const check = () => videoDone && pageDone && finish();
+    const started = performance.now();
+    // Ease the bar toward 90% while the page loads
+    const tick = setInterval(() => setProgress((p) => (p < 90 ? p + (90 - p) * 0.12 : p)), 120);
 
-    const v = ref.current;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!v || reduce) videoDone = true;
-    else {
-      v.play().catch(() => {
-        videoDone = true;
-        check();
-      });
-      v.addEventListener("ended", () => {
-        videoDone = true;
-        check();
-      });
-      v.addEventListener("timeupdate", () => {
-        if (v.duration) setProgress((p) => Math.max(p, Math.min(92, (v.currentTime / v.duration) * 100)));
-      });
-    }
-    const onLoad = () => {
-      pageDone = true;
-      check();
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearInterval(tick);
+      const wait = Math.max(0, MIN_MS - (performance.now() - started));
+      setTimeout(() => {
+        setProgress(100);
+        setTimeout(() => setHide(true), 300);
+      }, wait);
     };
-    if (!pageDone) window.addEventListener("load", onLoad, { once: true });
-    check();
-    const cap = setTimeout(finish, reduce ? 900 : MAX_MS);
+
+    if (document.readyState === "complete") finish();
+    else window.addEventListener("load", finish, { once: true });
+    const cap = setTimeout(finish, MAX_MS);
     return () => {
+      clearInterval(tick);
       clearTimeout(cap);
-      window.removeEventListener("load", onLoad);
+      window.removeEventListener("load", finish);
     };
   }, []);
 
   useEffect(() => {
     if (!hide) return;
     document.documentElement.classList.remove("pl-lock");
-    const t = setTimeout(() => setGone(true), 650);
+    const t = setTimeout(() => setGone(true), 600);
     return () => clearTimeout(t);
   }, [hide]);
 
@@ -72,16 +61,7 @@ export function Preloader() {
   return (
     <div id="bp-preloader" className={`preloader ${hide ? "is-hidden" : ""}`} role="status" aria-label="Loading BestPrices.lk">
       <div className="preloader-inner">
-        <video
-          ref={ref}
-          src="/videos/preloader.mp4"
-          poster="/videos/preloader-poster.webp"
-          muted
-          playsInline
-          autoPlay
-          preload="auto"
-          className="preloader-video"
-        />
+        <img src={LOGO_SRC} alt="BestPrices.lk" width={300} height={100} className="preloader-logo" fetchPriority="high" />
         <div className="preloader-bar" aria-hidden="true">
           <span style={{ width: `${progress}%` }} />
         </div>
