@@ -208,7 +208,7 @@ export function MobileHeroVideo() {
       />
       <span className="hero-vignette" aria-hidden="true" />
       <span className="hero-grain" aria-hidden="true" />
-      <div className="absolute inset-x-0 bottom-0 z-[4] px-4 pb-5 pt-28 bg-gradient-to-t from-black/90 via-black/55 to-transparent">
+      <div className="hero-copy absolute inset-x-0 bottom-0 z-[4] px-4 pb-5 pt-28 bg-gradient-to-t from-black/90 via-black/55 to-transparent">
         <HeroOverlay compact />
       </div>
       <div className="absolute top-3 right-3 z-[5]">
@@ -309,7 +309,7 @@ export function DesktopHeroVideo() {
       <span className="hero-vignette" aria-hidden="true" />
       <span className="hero-grain" aria-hidden="true" />
       <span className="hero-scrollfade" aria-hidden="true" />
-      <div className="absolute inset-0 z-[4] flex items-center px-8 lg:px-16 xl:px-24">
+      <div className="hero-copy absolute inset-0 z-[4] flex items-center px-8 lg:px-16 xl:px-24">
         <HeroOverlay />
       </div>
       <div className="absolute right-6 lg:right-12 bottom-6 lg:bottom-8 z-[5]">

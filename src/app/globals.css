@@ -659,25 +659,28 @@ html.pl-lock, html.pl-lock body { overflow: hidden; }
 .preloader-bar { width: 170px; height: 3px; border-radius: 3px; background: #ececec; overflow: hidden; margin-top: 28px; animation: plLogoIn 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .preloader-bar span { display: block; height: 100%; background: #e60000; border-radius: 3px; transition: width 0.3s ease-out; }
 .preloader-label { margin-top: 14px; font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: #9a9a9a; }
-@media (prefers-reduced-motion: reduce) { .preloader-logo, .preloader-bar { animation: none; } }
 
 /* ======================= Handwritten welcome intro ======================= */
 .welcome-intro {
   position: fixed;
   inset: 0;
-  z-index: 9998; /* just under the preloader so the hand-off is seamless */
-  background: #fff;
+  z-index: 9998;
+  /* Transparent: the website shows through. A soft centre shade keeps the writing readable. */
+  background: radial-gradient(ellipse 70% 45% at 50% 50%, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.12) 70%, transparent 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none; /* never blocks the site */
   transition: opacity 0.9s cubic-bezier(0.65, 0, 0.35, 1), transform 0.9s cubic-bezier(0.65, 0, 0.35, 1), filter 0.9s ease, visibility 0.9s;
-  /* Safety net if scripts never run */
   animation: plAutoHide 0.6s ease 14s forwards;
 }
-.welcome-intro.is-leaving { opacity: 0; transform: scale(1.04); filter: blur(6px); visibility: hidden; pointer-events: none; }
+.welcome-intro.is-leaving { opacity: 0; transform: translateY(-14px) scale(1.03); filter: blur(8px); visibility: hidden; }
+.welcome-svg {
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 18px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 14px rgba(255, 42, 42, 0.25));
+}
 .welcome-stage { width: min(88vw, 1100px); padding: 0 4vw; }
 .welcome-svg { width: 100%; height: auto; overflow: visible; }
-.welcome-actions { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 0; right: 0; display: flex; justify-content: center; gap: 10px; }
+.welcome-actions { pointer-events: auto; position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 0; right: 0; display: flex; justify-content: center; gap: 10px; }
 .welcome-btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 8px 16px; border-radius: 9999px;
@@ -685,11 +688,18 @@ html.pl-lock, html.pl-lock body { overflow: hidden; }
   box-shadow: 0 8px 24px -8px rgba(230, 0, 0, 0.55);
   animation: heroIn 0.5s ease both;
 }
-.welcome-btn-ghost { background: transparent; color: #8a8a8a; box-shadow: none; }
-.welcome-btn-ghost:hover { color: #111; }
+.welcome-btn-ghost { background: rgba(0,0,0,0.45); color: #fff; box-shadow: none; backdrop-filter: blur(6px); }
+.welcome-btn-ghost:hover { background: rgba(0,0,0,0.7); }
 @media (max-width: 639px) {
   .welcome-stage { width: 92vw; padding: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .welcome-intro, .welcome-intro.is-leaving { transform: none; filter: none; }
+}
+
+/* Hero copy waits for the handwritten welcome, then rises in */
+.hero-copy { transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s; }
+html.intro-active .hero-copy { opacity: 0; transform: translateY(18px); transition: none; }
+@media (max-width: 1023px) {
+  .welcome-actions { bottom: calc(80px + env(safe-area-inset-bottom)); }
 }

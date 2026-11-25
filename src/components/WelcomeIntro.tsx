@@ -35,6 +35,7 @@ export function WelcomeIntro() {
     finishedRef.current = true;
     setLeaving(true);
     unlock();
+    document.documentElement.classList.remove("intro-active");
     window.dispatchEvent(new Event("bp:intro-done"));
     setTimeout(() => setGone(true), FADE_OUT * 1000 + 50);
   }, []);
@@ -136,7 +137,11 @@ export function WelcomeIntro() {
   // Start when the preloader hands over (or right away if it already has)
   useEffect(() => {
     if (!data || gone) return;
-    const go = () => setTimeout(() => run(true), 0);
+    const go = () => {
+      unlock();
+      document.documentElement.classList.add("intro-active");
+      setTimeout(() => run(true), 0);
+    };
     if ((window as unknown as { __bpPreloaderDone?: boolean }).__bpPreloaderDone) go();
     else window.addEventListener("bp:preloader-done", go, { once: true });
     // Safety net: never hold the site longer than this
@@ -173,9 +178,9 @@ export function WelcomeIntro() {
                       key={k}
                       data-g={k}
                       d={g.d}
-                      fill={g.accent ? "#e60000" : "#111111"}
-                      stroke={g.accent ? "#e60000" : "#111111"}
-                      strokeWidth={0.9}
+                      fill={g.accent ? "#ff2a2a" : "#ffffff"}
+                      stroke={g.accent ? "#ff2a2a" : "#ffffff"}
+                      strokeWidth={2.6}
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       style={{ opacity: 0, fillOpacity: 0 }}
@@ -183,7 +188,7 @@ export function WelcomeIntro() {
                   )
                 )}
                 {line === 2 && (
-                  <path data-swash="" d={data.WELCOME_SWASH.d} fill="none" stroke="#e60000" strokeWidth={2.4} strokeLinecap="round" style={{ opacity: 0 }} />
+                  <path data-swash="" d={data.WELCOME_SWASH.d} fill="none" stroke="#ff2a2a" strokeWidth={4} strokeLinecap="round" style={{ opacity: 0 }} />
                 )}
               </g>
             ))}
