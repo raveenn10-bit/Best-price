@@ -136,11 +136,11 @@ export function WelcomeIntro() {
   // Start when the preloader hands over (or right away if it already has)
   useEffect(() => {
     if (!data || gone) return;
-    const go = () => requestAnimationFrame(() => run(true));
+    const go = () => setTimeout(() => run(true), 0);
     if ((window as unknown as { __bpPreloaderDone?: boolean }).__bpPreloaderDone) go();
     else window.addEventListener("bp:preloader-done", go, { once: true });
     // Safety net: never hold the site longer than this
-    const cap = setTimeout(leave, 12000);
+    const cap = setTimeout(leave, 9000);
     return () => {
       window.removeEventListener("bp:preloader-done", go);
       clearTimeout(cap);
