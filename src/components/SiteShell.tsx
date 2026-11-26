@@ -447,7 +447,20 @@ function Footer() {
             </div>
             <ul className="space-y-2.5 text-sm">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 mt-0.5 text-primary-400 shrink-0" /> {BUSINESS_SETTINGS.headOffice}
+                <MapPin className="w-4 h-4 mt-0.5 text-primary-400 shrink-0" />
+                <span>
+                  <a href={BUSINESS_SETTINGS.mapsUrl} target="_blank" rel="noopener noreferrer" className={link}>
+                    {BUSINESS_SETTINGS.headOffice}
+                  </a>
+                  <a
+                    href={BUSINESS_SETTINGS.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 flex w-fit items-center gap-1.5 rounded-full bg-white/10 hover:bg-white/20 px-3 py-1.5 text-xs font-semibold text-white transition"
+                  >
+                    <MapPin className="w-3.5 h-3.5" /> Get directions on Google Maps
+                  </a>
+                </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-primary-400 shrink-0" />
